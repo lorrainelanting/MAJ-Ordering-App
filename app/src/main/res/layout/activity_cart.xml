@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".CartActivity">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cart_item"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="129dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="600dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="600dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="12dp">
+
+                <TextView
+                    android:id="@+id/txt_total_amt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:text="@string/total_amount"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:text="@string/result_total_amount"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:layout_constraintStart_toEndOf="@id/txt_total_amt"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_checkout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/check_out"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+<!--        <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="8dp">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgProduct"-->
+<!--                android:layout_width="70dp"-->
+<!--                android:layout_height="57dp"-->
+<!--                android:contentDescription="@string/product_cart_item"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                android:layout_marginEnd="20dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtProductName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:text="@string/coke_mismo"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Body2"-->
+<!--                app:layout_constraintStart_toEndOf="@id/imgProduct"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/txtUnitCost"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/coke_mismo_cost"-->
+<!--                app:layout_constraintStart_toStartOf="@id/txtProductName"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/txtProductName"-->
+<!--                tools:layout_editor_absoluteX="78dp" />-->
+
+<!--&lt;!&ndash;    TODO: Counter button        &ndash;&gt;-->
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/etQuantity"-->
+<!--                android:layout_width="64dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                app:layout_constraintStart_toStartOf="@id/txtProductName"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/txtUnitCost" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/btnDeleteCartItem"-->
+<!--                android:layout_width="24dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:contentDescription="@string/delete_cart_item"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                android:src="@drawable/ic_trash"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:tint="@color/gray" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    </LinearLayout>-->
+<!--    -->
+</layout>

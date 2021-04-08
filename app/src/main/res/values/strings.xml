@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MAJ</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="main_trolley">Main Trolley</string>
+    <string name="main_cart">Main Cart</string>
+    <string name="menu_cart">Menu Cart</string>
+    <string name="product_cart_item">Product Cart Item</string>
+    <string name="coke_mismo">Coke mismo</string>
+    <string name="coke_mismo_cost">135</string>
+    <string name="delete_cart_item">Delete Cart Item</string>
+    <string name="total_amount">Total Amount:</string>
+    <string name="result_total_amount">135.00</string>
+    <string name="check_out">Check out</string>
+    <string name="firstname_lastname">FirstName LastName</string>
+
+    <string name="nav_item_profile">Profile</string>
+    <string name="nav_item_orders">Orders</string>
+    <string name="nav_item_points">My Points</string>
+
+    <string name="navigation_drawer_open">Open Drawer</string>
+    <string name="navigation_drawer_close">Close Drawer</string>
+    <string name="consumer_goods_trading">Consumer Goods Trading</string>
+</resources>
