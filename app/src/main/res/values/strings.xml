@@ -11,10 +11,10 @@
     <string name="menu_cart">Menu Cart</string>
     <string name="product_cart_item">Product Cart Item</string>
     <string name="coke_mismo">Coke mismo</string>
-    <string name="coke_mismo_cost">135</string>
+    <string name="coke_mismo_cost">135.00</string>
     <string name="delete_cart_item">Delete Cart Item</string>
     <string name="total_amount">Total Amount:</string>
-    <string name="result_total_amount">135.00</string>
+    <string name="result_total_amount">P 1,000.00</string>
     <string name="check_out">Check out</string>
     <string name="firstname_lastname">FirstName LastName</string>
 
@@ -25,4 +25,23 @@
     <string name="navigation_drawer_open">Open Drawer</string>
     <string name="navigation_drawer_close">Close Drawer</string>
     <string name="consumer_goods_trading">Consumer Goods Trading</string>
+    <string name="store_name">Store Name</string>
+    <string name="full_name">Full Name</string>
+    <string name="helper_last_first_m_i">( Last, First, M.I )</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="hint_marites_sari_sari_store">Marites Sari-Sari Store</string>
+    <string name="hint_dela_cruz_marites_c">Dela Cruz, Marites, C.</string>
+    <string name="hint_customer_mobile">0910-1234-637</string>
+    <string name="optional">( optional )</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_page">Home</string>
+    <string name="orders">Orders</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="coming_soon">Coming soon.</string>
+    <string name="points">Points</string>
+    <string name="product_image">Product Image</string>
 </resources>

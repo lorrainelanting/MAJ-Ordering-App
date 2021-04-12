@@ -1,4 +1,4 @@
-package com.vitocuaderno.maj
+package com.vitocuaderno.maj.ui
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<B : ViewDataBinding>: AppCompatActivity() {
+
     lateinit var binding: B
 
     @LayoutRes
