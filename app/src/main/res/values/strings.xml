@@ -44,4 +44,6 @@
     <string name="coming_soon">Coming soon.</string>
     <string name="points">Points</string>
     <string name="product_image">Product Image</string>
+    <string name="btn_add_to_cart">Add to Cart</string>
+    <string name="current_address">Current Address</string>
 </resources>
