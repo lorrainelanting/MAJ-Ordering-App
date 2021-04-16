@@ -20,12 +20,12 @@
         android:name="com.vitocuaderno.maj.ui.OrdersFragment"
         android:label="Orders"
         tools:layout="@layout/fragment_orders" />
-    <activity
-        android:id="@+id/itemActivityCart"
-        android:name="com.vitocuaderno.maj.ui.cart.CartActivity"
+    <fragment
+        android:id="@+id/itemFragmentCart"
+        android:name="com.vitocuaderno.maj.ui.cart.CartFragment"
         android:label="Cart" />
     <fragment
-        android:id="@+id/itemActivityProfile"
+        android:id="@+id/itemFragmentProfile"
         android:name="com.vitocuaderno.maj.ui.ProfileFragment"
         android:label="Profile" />
 </navigation>
