@@ -1,25 +1,23 @@
 package com.vitocuaderno.maj.ui.cart
 
 import android.os.Bundle
+import android.view.View
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.CartContent
-import com.vitocuaderno.maj.databinding.ActivityCartBinding
-import com.vitocuaderno.maj.ui.BaseActivity
+import com.vitocuaderno.maj.databinding.FragmentCartBinding
+import com.vitocuaderno.maj.ui.BaseFragment
 
-
-class CartActivity : BaseActivity<ActivityCartBinding>() {
-
+class CartFragment : BaseFragment<FragmentCartBinding>() {
+    override fun getLayoutId(): Int = R.layout.fragment_cart
     var adapter: CartContentsAdapter? = null
     var cartContents = mutableListOf<CartContent>()
-    companion object {
-        const val CART: String = "cart"
-    }
-
-    override fun getLayoutId(): Int = R.layout.activity_cart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = CartContentsAdapter(cartContents)
         binding.rvCartContents.adapter = adapter
         fetchCartItems()

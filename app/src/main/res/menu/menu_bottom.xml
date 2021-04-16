@@ -16,12 +16,12 @@
         android:icon="@drawable/ic_nav_orders"/>
 
     <item
-        android:id="@+id/itemActivityCart"
+        android:id="@+id/itemFragmentCart"
         android:title="@string/cart"
         android:icon="@drawable/ic_trolley"/>
 
     <item
-        android:id="@+id/itemActivityProfile"
+        android:id="@+id/itemFragmentProfile"
         android:title="@string/profile"
         android:icon="@drawable/ic_nav_profile"/>
 </menu>
