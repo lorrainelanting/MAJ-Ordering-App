@@ -129,18 +129,18 @@
             app:layout_constraintStart_toStartOf="@id/leftGuideline"
             app:layout_constraintTop_toBottomOf="@id/editTxtFullName" />
 
-        <TextView
-            android:id="@+id/txtHelperCurAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="House #, Street, Brgy, City"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/purple_700"
-            android:textSize="16sp"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/txtCusAddress"
-            app:layout_constraintTop_toBottomOf="@id/editTxtFullName" />
+<!--        <TextView-->
+<!--            android:id="@+id/txtHelperCurAddress"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="House #, Street, Brgy, City"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+<!--            android:textColor="@color/purple_700"-->
+<!--            android:textSize="16sp"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            app:layout_constraintStart_toEndOf="@id/txtCusAddress"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/editTxtFullName" />-->
 
         <EditText
             android:id="@+id/editTxtCusAddress"
