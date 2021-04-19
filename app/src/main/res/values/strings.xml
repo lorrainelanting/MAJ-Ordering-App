@@ -20,7 +20,7 @@
 
     <string name="nav_item_profile">Profile</string>
     <string name="nav_item_orders">Orders</string>
-    <string name="nav_item_points">My Points</string>
+    <string name="nav_item_points">Points</string>
 
     <string name="navigation_drawer_open">Open Drawer</string>
     <string name="navigation_drawer_close">Close Drawer</string>
@@ -42,7 +42,7 @@
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
     <string name="coming_soon">Coming soon.</string>
-    <string name="points">Points</string>
+    <string name="points">Loyalty Points</string>
     <string name="product_image">Product Image</string>
     <string name="btn_add_to_cart">Add to Cart</string>
     <string name="current_address">Current Address</string>

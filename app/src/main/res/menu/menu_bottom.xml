@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/itemFragmentLoyaltyPoints"
-        android:title="@string/points"
+        android:title="@string/nav_item_points"
         android:icon="@drawable/ic_nav_points"/>
 
     <item
