@@ -12,13 +12,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="8dp"
             >
 
             <ImageView
                 android:id="@+id/imgProduct"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="118dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
@@ -32,8 +30,9 @@
                 android:id="@+id/txtUnitCost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="135.00"
-                android:textColor="@color/purple_500"
+                android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/txtProductDescription"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -42,7 +41,9 @@
                 android:id="@+id/txtProductDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="Coke Mismo"
+                android:textColor="@color/colorSecondaryVariant"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/txtProductPackQty"
                 />
@@ -51,6 +52,8 @@
                 android:id="@+id/txtProductPackQty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:textColor="@color/colorSecondaryVariant"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/btnAddToCart"
                 />
@@ -59,11 +62,11 @@
                 android:id="@+id/btnAddToCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:text="@string/btn_add_to_cart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 </layout>

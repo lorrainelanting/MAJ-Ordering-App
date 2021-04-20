@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">@color/phthalo_green</color>
+    <color name="colorPrimaryVariant">@color/light_green</color>
+    <color name="colorSecondary">@color/corn_yellow</color>
+    <color name="colorSecondaryVariant">@color/corn_gold</color>
+    <color name="colorAccent">@color/rich_black</color>
+    <color name="colorAccentVariant">@color/silver_sand</color>
+    <color name="colorSecondaryAccent">@color/white</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+    <color name="elegant_green">#67B027</color>
+    <color name="phthalo_green">#183C28</color>
+    <color name="light_green">#48B076</color>
+    <color name="corn_yellow">#EEC643</color>
+    <color name="corn_gold">#C29813</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="rich_black">#040F0F</color>
+    <color name="silver_sand">#BEBFC4</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#C2C2C2</color>
     <color name="lighter_gray">#F5F5F5</color>
