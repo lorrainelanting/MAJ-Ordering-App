@@ -1,4 +1,4 @@
-package com.vitocuaderno.maj.ui.home
+package com.vitocuaderno.maj.ui
 
 import android.os.Bundle
 import android.widget.Toast
@@ -6,11 +6,10 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.HomeContent
-import com.vitocuaderno.maj.databinding.ActivityHomeBinding
-import com.vitocuaderno.maj.ui.BaseActivity
+import com.vitocuaderno.maj.databinding.ActivityProductDetailBinding
 
-class HomeActivity : BaseActivity<ActivityHomeBinding>() {
-    override fun getLayoutId(): Int = R.layout.activity_home
+class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
+    override fun getLayoutId(): Int = R.layout.activity_product_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
