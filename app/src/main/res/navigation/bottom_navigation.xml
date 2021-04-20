@@ -9,7 +9,8 @@
     <fragment
         android:id="@+id/itemFragmentHome"
         android:name="com.vitocuaderno.maj.ui.home.HomeFragment"
-        android:label="Home" />
+        android:label="Home"
+        />
     <fragment
         android:id="@+id/itemFragmentLoyaltyPoints"
         android:name="com.vitocuaderno.maj.ui.LoyaltyPointsFragment"
