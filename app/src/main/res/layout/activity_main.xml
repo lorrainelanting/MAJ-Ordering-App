@@ -11,26 +11,15 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-        <fragment
-            android:id="@+id/fragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:navGraph="@navigation/bottom_navigation"
-            app:defaultNavHost="true"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"/>
+        android:layout_height="match_parent">
+        </androidx.viewpager.widget.ViewPager>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewPager"
             app:menu="@menu/menu_bottom"
             app:labelVisibilityMode="labeled"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
