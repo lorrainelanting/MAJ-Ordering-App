@@ -1,16 +1,26 @@
 package com.vitocuaderno.maj.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.HomeContent
+import com.vitocuaderno.maj.data.repository.Callback
+import com.vitocuaderno.maj.data.repository.HomeContentRepository
 import com.vitocuaderno.maj.databinding.FragmentHomeBinding
+import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
+import com.vitocuaderno.maj.ui.ProductDetailActivity
+import java.lang.Exception
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.HomeAdapterListener {
-
+    lateinit var repository: HomeContentRepository
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        repository = Injection.provideHomeContentRepository(context)
+    }
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     var adapter: HomeContentsAdapter? = null
@@ -28,20 +38,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
     }
 
     private fun fetchHomeContents() {
-        for (i in 0..10) {
-            val homeContent = HomeContent(i)
-//            homeContent.productImgUrl = ""
-            homeContent.productDescription = "Coke 1.5L"
-            homeContent.productUnitCost = 168.00
-            homeContent.productPackQty = "${12}pcs. per pack"
-            homeContents.add(homeContent)
-        }
-        //        TODO: Hide loading
-        adapter?.notifyDataSetChanged()
+        repository.getList(object: Callback<List<HomeContent>> {
+            override fun onComplete(result: List<HomeContent>) {
+                homeContents.addAll(result)
+                //        TODO: Hide loading
+                adapter?.notifyDataSetChanged()
+            }
+
+            override fun onError(exception: Exception) {
+               // TODO("Not yet implemented")
+            }
+
+        })
     }
 
     override fun onItemClick(homeContent: HomeContent) {
-        val intent = Intent(this.context, HomeActivity().javaClass)
+        val intent = Intent(this.context, ProductDetailActivity().javaClass)
+        intent.putExtra("id", homeContent.id)
         context?.startActivity(intent)
         Toast.makeText(this.context, "TODO: Item added to cart.", Toast.LENGTH_SHORT).show()
     }
