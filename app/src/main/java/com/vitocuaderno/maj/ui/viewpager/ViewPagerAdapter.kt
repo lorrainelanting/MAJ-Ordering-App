@@ -4,9 +4,8 @@ import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import com.vitocuaderno.maj.R
-import com.vitocuaderno.maj.ui.HomeFragment
+import com.vitocuaderno.maj.ui.home.HomeFragment
 import com.vitocuaderno.maj.ui.LoyaltyPointsFragment
 import com.vitocuaderno.maj.ui.OrdersFragment
 import com.vitocuaderno.maj.ui.ProfileFragment
