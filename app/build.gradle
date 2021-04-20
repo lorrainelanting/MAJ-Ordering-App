@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
 }
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -49,6 +51,12 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
     implementation 'androidx.navigation:navigation-runtime:2.2.2'
+
+    // Room components
+    implementation "androidx.room:room-ktx:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    androidTestImplementation "androidx.room:room-testing:2.2.5"
+
     //  Load image from url string
     implementation 'com.squareup.picasso:picasso:2.71828'
 
