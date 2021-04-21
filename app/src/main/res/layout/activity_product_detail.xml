@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="TODO"
-                android:scaleType="fitXY" />
+                android:scaleType="fitCenter" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -37,6 +37,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card"
             />
@@ -49,6 +50,7 @@
             android:text="135.00"
             android:textColor="@color/colorSecondaryVariant"
             android:textSize="16sp"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtProductName"/>
 
@@ -59,6 +61,7 @@
             android:layout_marginVertical="8dp"
             android:text="Coke Mismo"
             android:textColor="@color/colorSecondaryVariant"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtUnitCost"/>
 
@@ -67,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorSecondaryVariant"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtProductDescription"/>
 
