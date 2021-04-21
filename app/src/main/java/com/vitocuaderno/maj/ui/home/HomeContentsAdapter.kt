@@ -44,7 +44,7 @@ class HomeContentsAdapter(
             }
 
             binding.btnAddToCart.setOnClickListener { item ->
-                homeAdapterListener?.onItemClick(content)
+                homeAdapterListener?.onAddToCartBtnClick(content)
             }
         }
     }
@@ -72,5 +72,7 @@ class HomeContentsAdapter(
 
     interface HomeAdapterListener {
         fun onItemClick(homeContent: HomeContent)
+
+        fun onAddToCartBtnClick(homeContent: HomeContent)
     }
 }
