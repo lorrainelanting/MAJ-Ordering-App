@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.MainThread
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.databinding.ActivitySplashBinding
 

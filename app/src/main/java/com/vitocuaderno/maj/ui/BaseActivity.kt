@@ -22,5 +22,4 @@ abstract class BaseActivity<B : ViewDataBinding>: AppCompatActivity() {
         )
         binding.lifecycleOwner = this
     }
-
 }
