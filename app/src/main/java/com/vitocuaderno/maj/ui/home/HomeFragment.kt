@@ -3,13 +3,9 @@ package com.vitocuaderno.maj.ui.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.get
-import androidx.core.view.isVisible
 import androidx.lifecycle.observe
-import androidx.transition.Visibility
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.HomeContent
 import com.vitocuaderno.maj.data.repository.HomeContentRepository
@@ -44,6 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
                 adapter?.notifyDataSetChanged()
             }
         }
+        setEventsAddToCartLayout()
     }
 
     override fun onAttach(context: Context) {
@@ -60,6 +57,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
 
     override fun onAddToCartBtnClick(homeContent: HomeContent) {
         binding.frameAddToCartLayout.visibility = View.VISIBLE
-        Toast.makeText(this.context, "TODO: Item added to cart.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setEventsAddToCartLayout() {
+        binding.frameAddToCartLayout.setOnClickListener {
+            binding.frameAddToCartLayout.visibility = View.GONE
+        }
+        // Consume touch event stop propagation
+        binding.clSnackBar.setOnTouchListener { v, event ->  true}
+        binding.btnExit.setOnClickListener {
+            binding.frameAddToCartLayout.visibility = View.GONE
+        }
+        //        TODO Decrease quantity
+        binding.btnMinus.setOnClickListener {
+            Toast.makeText(this.context, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
+        }
+        //        TODO Increase quantity
+        binding.btnAdd.setOnClickListener {
+            Toast.makeText(this.context, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
+        }
     }
 }
