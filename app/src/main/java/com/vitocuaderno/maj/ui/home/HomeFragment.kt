@@ -3,8 +3,13 @@ package com.vitocuaderno.maj.ui.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.get
+import androidx.core.view.isVisible
+import androidx.lifecycle.observe
+import androidx.transition.Visibility
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.HomeContent
 import com.vitocuaderno.maj.data.repository.HomeContentRepository
@@ -54,6 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
     }
 
     override fun onAddToCartBtnClick(homeContent: HomeContent) {
+        binding.frameAddToCartLayout.visibility = View.VISIBLE
         Toast.makeText(this.context, "TODO: Item added to cart.", Toast.LENGTH_SHORT).show()
     }
 }

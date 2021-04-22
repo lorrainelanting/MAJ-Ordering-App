@@ -46,4 +46,8 @@
     <string name="product_image">Product Image</string>
     <string name="btn_add_to_cart">Add to Cart</string>
     <string name="current_address">Current Address</string>
+    <string name="quantity">Quantity</string>
+    <string name="quantity_decrease">Decrease Quantity</string>
+    <string name="quantity_increase">Increase Quantity</string>
+    <string name="exit">Exit</string>
 </resources>
