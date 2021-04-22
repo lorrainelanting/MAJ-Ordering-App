@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LayoutAddToCart">
+        <attr name="imgProduct" format="reference" />
+        <attr name="txtUnitPrice" format="string" />
+        <attr name="txtProductDescription" format="string" />
+        <attr name="txtQuantity" format="integer" />
+        <attr name="btnAddToCart" format="reference" />
+    </declare-styleable>
+</resources>
