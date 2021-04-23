@@ -98,6 +98,21 @@
                 android:layout_gravity="end|center_vertical"
                 android:text="@string/btn_add_to_cart"/>
         </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.vitocuaderno.maj.ui.common.LayoutAddToCart
+            android:id="@+id/layoutAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:translationZ="8dp"
+            android:visibility="gone"
+            app:img_product="@drawable/ic_soft_drink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:txt_product_description="Coke 1.5 L 12pcs. per pack"
+            app:txt_quantity="5"
+            app:txt_unit_price="P 658.00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

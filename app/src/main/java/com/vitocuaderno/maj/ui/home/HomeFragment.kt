@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.observe
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.HomeContent
@@ -56,25 +59,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
     }
 
     override fun onAddToCartBtnClick(homeContent: HomeContent) {
-//        binding.frameAddToCartLayout.visibility = View.VISIBLE
+        binding.layoutAddToCart.visibility = View.VISIBLE
     }
 
     private fun setEventsAddToCartLayout() {
-//        binding.frameAddToCartLayout.setOnClickListener {
-//            binding.frameAddToCartLayout.visibility = View.GONE
-//        }
-//        // Consume touch event stop propagation
-//        binding.clSnackBar.setOnTouchListener { v, event ->  true}
-//        binding.btnExit.setOnClickListener {
-//            binding.frameAddToCartLayout.visibility = View.GONE
-//        }
-//        //        TODO Decrease quantity
-//        binding.btnMinus.setOnClickListener {
-//            Toast.makeText(this.context, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
-//        }
-//        //        TODO Increase quantity
-//        binding.btnAdd.setOnClickListener {
-//            Toast.makeText(this.context, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
-//        }
+        //        TODO Decrease quantity
+        binding.layoutAddToCart.findViewById<FrameLayout>(R.id.btnMinus).setOnClickListener {
+            Toast.makeText(this.context, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
+        }
+        //        TODO Increase quantity
+        binding.layoutAddToCart.findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
+            Toast.makeText(this.context, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
+        }
+        //        TODO Item added to cart
+        binding.layoutAddToCart.findViewById<Button>(R.id.btnAddToCart).setOnClickListener {
+            Toast.makeText(this.context, "TODO: Item added to cart", Toast.LENGTH_SHORT).show()
+        }
     }
 }
