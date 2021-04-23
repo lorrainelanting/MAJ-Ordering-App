@@ -15,7 +15,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="visible">
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clSnackBar"
@@ -48,19 +48,19 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/ic_soft_drink" />
+                    tools:src="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/txtUnitCost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P 3,6580.00"
                     android:textColor="@color/colorSecondaryVariant"
                     android:textSize="24sp"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="16dp"
                     app:layout_constraintStart_toEndOf="@id/imgProduct"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="P 3,6580.00"/>
 
                 <TextView
                     android:id="@+id/txtProductDescription"

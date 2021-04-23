@@ -19,5 +19,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/item_home_content" />
+
+            <com.vitocuaderno.maj.ui.LayoutAddToCart
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:image="@drawable/ic_soft_drink"
+                app:txtUnitPrice="P 3,6580.00"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

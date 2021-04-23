@@ -56,25 +56,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
     }
 
     override fun onAddToCartBtnClick(homeContent: HomeContent) {
-        binding.frameAddToCartLayout.visibility = View.VISIBLE
+//        binding.frameAddToCartLayout.visibility = View.VISIBLE
     }
 
     private fun setEventsAddToCartLayout() {
-        binding.frameAddToCartLayout.setOnClickListener {
-            binding.frameAddToCartLayout.visibility = View.GONE
-        }
-        // Consume touch event stop propagation
-        binding.clSnackBar.setOnTouchListener { v, event ->  true}
-        binding.btnExit.setOnClickListener {
-            binding.frameAddToCartLayout.visibility = View.GONE
-        }
-        //        TODO Decrease quantity
-        binding.btnMinus.setOnClickListener {
-            Toast.makeText(this.context, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
-        }
-        //        TODO Increase quantity
-        binding.btnAdd.setOnClickListener {
-            Toast.makeText(this.context, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
-        }
+//        binding.frameAddToCartLayout.setOnClickListener {
+//            binding.frameAddToCartLayout.visibility = View.GONE
+//        }
+//        // Consume touch event stop propagation
+//        binding.clSnackBar.setOnTouchListener { v, event ->  true}
+//        binding.btnExit.setOnClickListener {
+//            binding.frameAddToCartLayout.visibility = View.GONE
+//        }
+//        //        TODO Decrease quantity
+//        binding.btnMinus.setOnClickListener {
+//            Toast.makeText(this.context, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
+//        }
+//        //        TODO Increase quantity
+//        binding.btnAdd.setOnClickListener {
+//            Toast.makeText(this.context, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
+//        }
     }
 }
