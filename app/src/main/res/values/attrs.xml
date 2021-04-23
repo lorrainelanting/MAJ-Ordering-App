@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LayoutAddToCart">
-        <attr name="image" format="reference" />
-        <attr name="txtUnitPrice" format="string" />
-        <attr name="txtProductDescription" format="string" />
-        <attr name="txtQuantity" format="integer" />
-        <attr name="btnAddToCart" format="reference" />
+        <attr name="img_product" format="reference" />
+        <attr name="txt_unit_price" format="string" />
+        <attr name="txt_product_description" format="string" />
+        <attr name="txt_quantity" format="integer" />
     </declare-styleable>
 </resources>
