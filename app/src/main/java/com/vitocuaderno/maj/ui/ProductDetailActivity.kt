@@ -6,19 +6,20 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.observe
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.vitocuaderno.maj.R
-import com.vitocuaderno.maj.data.model.HomeContent
-import com.vitocuaderno.maj.data.repository.HomeContentRepository
+import com.vitocuaderno.maj.data.model.Product
+import com.vitocuaderno.maj.data.repository.ProductRepository
 import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.ActivityProductDetailBinding
 import com.vitocuaderno.maj.di.Injection
 
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
-    lateinit var repository: HomeContentRepository
+    lateinit var repository: ProductRepository
 
-    lateinit var homeContentLiveData: LiveData<HomeContent>
+    lateinit var productLiveData: LiveData<Product>
 
     override fun getLayoutId(): Int = R.layout.activity_product_detail
 
@@ -28,20 +29,20 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository = Injection.provideHomeContentRepository(this)
+        repository = Injection.provideProductRepository(this)
         intent?.extras?.let {
-            homeContentLiveData = repository.getItem(it.getInt(ID))
-            homeContentLiveData.observe(this) { it ->
+            productLiveData = repository.getItem(it.getInt(ID))
+            productLiveData.observe(this) { it ->
                 bindData(it)
             }
         }
         setEventsAddToCartLayout()
     }
 
-    private fun bindData(homeContent: HomeContent) {
+    private fun bindData(product: Product) {
         //  Load image from url string
         val picasso = Picasso.get()
-        picasso.load(homeContent.productImgUrl).error(R.drawable.ic_homepage).into(
+        picasso.load(product.productImgUrl).error(R.drawable.ic_homepage).into(
             binding.imgProduct,
             object : Callback {
                 override fun onSuccess() {}
@@ -51,12 +52,13 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
             }
         )
 
-        binding.txtProductName.text = homeContent.productDescription
-        binding.txtUnitCost.text = CurrencyUtil.format(homeContent.productUnitCost)
-        binding.txtProductDescription.text = homeContent.productDescription
-        binding.txtProductPackQty.text = homeContent.productPackQty
+        binding.txtProductName.text = product.productDescription
+        binding.txtUnitCost.text = CurrencyUtil.format(product.productUnitCost)
+        binding.txtProductDescription.text = product.productDescription
+        binding.txtProductPackQty.text = product.productPackQty
 
         binding.btnAddToCart.setOnClickListener {
+            binding.layoutAddToCart.bind(product)
             binding.layoutAddToCart.visibility = View.VISIBLE
         }
     }

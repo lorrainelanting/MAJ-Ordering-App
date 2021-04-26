@@ -5,18 +5,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.vitocuaderno.maj.data.model.HomeContent
+import com.vitocuaderno.maj.data.model.Product
 
 @Dao
-interface HomeContentDao {
+interface ProductDao {
     @Query("SELECT * FROM home_content_table ORDER BY id ASC")
-    fun getList(): LiveData<List<HomeContent>>
+    fun getList(): LiveData<List<Product>>
 
     @Query("SELECT * FROM home_content_table WHERE id = :id LIMIT 1")
-    fun getItem(id: Int): LiveData<HomeContent>
+    fun getItem(id: Int): LiveData<Product>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(item: HomeContent)
+    fun insert(item: Product)
 
     @Query("DELETE FROM home_content_table")
     suspend fun deleteAll()

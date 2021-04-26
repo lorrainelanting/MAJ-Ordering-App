@@ -2,8 +2,8 @@ package com.vitocuaderno.maj.di
 
 import android.content.Context
 import com.vitocuaderno.maj.data.AppRoomDatabase
-import com.vitocuaderno.maj.data.repository.HomeContentRepository
-import com.vitocuaderno.maj.data.repository.HomeContentRepositoryImpl
+import com.vitocuaderno.maj.data.repository.ProductRepository
+import com.vitocuaderno.maj.data.repository.ProductRepositoryImpl
 
 class Injection {
     companion object {
@@ -11,8 +11,8 @@ class Injection {
             return AppRoomDatabase.INSTANCE!!
         }
 
-        fun provideHomeContentRepository(context: Context) : HomeContentRepository {
-            return HomeContentRepositoryImpl.getInstance(provideAppDatabase(context).homeContentDao())
+        fun provideProductRepository(context: Context) : ProductRepository {
+            return ProductRepositoryImpl.getInstance(provideAppDatabase(context).productDao())
         }
     }
 }

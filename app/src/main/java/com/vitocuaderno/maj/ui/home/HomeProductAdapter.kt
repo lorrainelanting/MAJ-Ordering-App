@@ -6,22 +6,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.vitocuaderno.maj.R
-import com.vitocuaderno.maj.data.model.HomeContent
+import com.vitocuaderno.maj.data.model.Product
 import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.ItemHomeContentBinding
 
-class HomeContentsAdapter(
-    private val dataSet: MutableList<HomeContent>,
+class HomeProductAdapter(
+    private val dataSet: MutableList<Product>,
     private val homeAdapterListener: HomeAdapterListener? = null
 ) :
-    RecyclerView.Adapter<HomeContentsAdapter.HomeContentViewHolder>() {
+    RecyclerView.Adapter<HomeProductAdapter.HomeContentViewHolder>() {
 
     class HomeContentViewHolder(
         private val binding: ItemHomeContentBinding,
         private val homeAdapterListener: HomeAdapterListener? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(content: HomeContent) {
+        fun bind(content: Product) {
         //  Load image from url string
             val picasso = Picasso.get()
             picasso.load(content.productImgUrl).error(R.drawable.ic_homepage).into(
@@ -71,8 +71,8 @@ class HomeContentsAdapter(
     }
 
     interface HomeAdapterListener {
-        fun onItemClick(homeContent: HomeContent)
+        fun onItemClick(product: Product)
 
-        fun onAddToCartBtnClick(homeContent: HomeContent)
+        fun onAddToCartBtnClick(product: Product)
     }
 }

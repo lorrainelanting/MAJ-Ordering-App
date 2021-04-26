@@ -7,20 +7,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.observe
 import com.vitocuaderno.maj.R
-import com.vitocuaderno.maj.data.model.HomeContent
-import com.vitocuaderno.maj.data.repository.HomeContentRepository
+import com.vitocuaderno.maj.data.model.Product
+import com.vitocuaderno.maj.data.repository.ProductRepository
 import com.vitocuaderno.maj.databinding.FragmentHomeBinding
 import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
 import com.vitocuaderno.maj.ui.ProductDetailActivity
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.HomeAdapterListener {
-    lateinit var repository: HomeContentRepository
-    var adapter: HomeContentsAdapter? = null
-    var homeContents = mutableListOf<HomeContent>()
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.HomeAdapterListener {
+    lateinit var repository: ProductRepository
+    var adapter: HomeProductAdapter? = null
+    var homeContents = mutableListOf<Product>()
 
     private val homeContentsLiveData by lazy {
         repository.getList()
@@ -34,7 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HomeContentsAdapter(homeContents, this)
+        adapter = HomeProductAdapter(homeContents, this)
         binding.rvHomeContents.adapter = adapter
         homeContentsLiveData.observe(viewLifecycleOwner) {it ->
             it.let {
@@ -48,17 +47,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeContentsAdapter.Ho
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        repository = Injection.provideHomeContentRepository(context)
+        repository = Injection.provideProductRepository(context)
     }
 
-    override fun onItemClick(homeContent: HomeContent) {
+    override fun onItemClick(product: Product) {
         val intent = Intent(this.context, ProductDetailActivity().javaClass)
-        intent.putExtra(ProductDetailActivity.ID, homeContent.id)
-        repository.getItem(homeContent.id)
+        intent.putExtra(ProductDetailActivity.ID, product.id)
+        repository.getItem(product.id)
         context?.startActivity(intent)
     }
 
-    override fun onAddToCartBtnClick(homeContent: HomeContent) {
+    override fun onAddToCartBtnClick(product: Product) {
+        binding.layoutAddToCart.bind(product)
         binding.layoutAddToCart.visibility = View.VISIBLE
     }
 
