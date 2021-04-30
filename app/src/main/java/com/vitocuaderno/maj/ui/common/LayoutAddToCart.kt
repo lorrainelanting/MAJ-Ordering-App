@@ -14,7 +14,7 @@ import com.vitocuaderno.maj.data.model.Product
 import com.vitocuaderno.maj.data.util.CurrencyUtil
 
 class LayoutAddToCart(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
-    private val layoutAddToCartListener: LayoutAddToCartListener? = null
+    private var layoutAddToCartListener: LayoutAddToCartListener? = null
 
     companion object {
         const val ID = "id"
@@ -26,33 +26,12 @@ class LayoutAddToCart(context: Context, attrs: AttributeSet) : FrameLayout(conte
         //Custom attributes
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.LayoutAddToCart)
 
-        val productQuantity = findViewById<TextView>(R.id.txtProductQty)
-        val btnMinus = findViewById<FrameLayout>(R.id.btnMinus)
-        val btnAdd = findViewById<FrameLayout>(R.id.btnAdd)
-        val btnAddToCart = findViewById<Button>(R.id.btnAddToCart)
         val btnExit = findViewById<ImageView>(R.id.btnExit)
         val frameLayout = findViewById<FrameLayout>(R.id.frameAddToCartLayout)
         val customSnackBar = findViewById<ConstraintLayout>(R.id.clSnackBar)
 
-        productQuantity.text = attributes.getString(R.styleable.LayoutAddToCart_txt_quantity)
-
         // Consume touch event stop propagation
         customSnackBar.setOnTouchListener { v, event ->  true}
-
-        /**
-         * Button event listeners
-         * */
-        btnMinus.setOnClickListener {
-            layoutAddToCartListener?.onMinusBtnClick()
-        }
-
-        btnAdd.setOnClickListener {
-            layoutAddToCartListener?.onAddBtnClick()
-        }
-
-        btnAddToCart.setOnClickListener {
-            layoutAddToCartListener?.onAddToCartBtnClick()
-        }
 
         /**
          * Close events
@@ -72,22 +51,46 @@ class LayoutAddToCart(context: Context, attrs: AttributeSet) : FrameLayout(conte
         this.isVisible = false
     }
 
-    fun bind(product: Product) {
+    fun bind(product: Product, quantity:Int) {
         val picasso = Picasso.get()
         val imgProduct = findViewById<ImageView>(R.id.imgProduct)
         val unitProductPrice = findViewById<TextView>(R.id.txtUnitCost)
         val productDescription = findViewById<TextView>(R.id.txtProductDescription)
+        val tvQuantity = findViewById<TextView>(R.id.txtProductQty)
+        val btnMinus = findViewById<FrameLayout>(R.id.btnMinus)
+        val btnAdd = findViewById<FrameLayout>(R.id.btnAdd)
+        val btnAddToCart = findViewById<Button>(R.id.btnAddToCart)
 
-        picasso.load(product.productImgUrl).placeholder(R.color.colorSecondary).error(R.drawable.ic_soft_drink).into(imgProduct)
-        unitProductPrice.text = CurrencyUtil.format(product.productUnitCost)
-        productDescription.text = "${product.productDescription} ${product.productPackQty}"
+        picasso.load(product.imgUrl).placeholder(R.color.colorSecondary).error(R.drawable.ic_soft_drink).into(imgProduct)
+        unitProductPrice.text = CurrencyUtil.format(product.unitCost)
+        productDescription.text = "${product.description} ${product.packQty}"
+        tvQuantity.text = quantity.toString()
+
+        /**
+         * Button event listeners
+         * */
+        btnMinus.setOnClickListener {
+            layoutAddToCartListener?.onMinusBtnClick(product)
+        }
+
+        btnAdd.setOnClickListener {
+            layoutAddToCartListener?.onAddBtnClick(product)
+        }
+
+        btnAddToCart.setOnClickListener {
+            layoutAddToCartListener?.onAddToCartBtnClick(product)
+        }
+    }
+
+    fun setLayoutAddToCartListener(listener: LayoutAddToCartListener) {
+        this.layoutAddToCartListener = listener
     }
 
     interface LayoutAddToCartListener {
-        fun onMinusBtnClick()
+        fun onMinusBtnClick(product: Product)
 
-        fun onAddBtnClick()
+        fun onAddBtnClick(product: Product)
 
-        fun onAddToCartBtnClick()
+        fun onAddToCartBtnClick(product: Product)
     }
 }
