@@ -24,7 +24,7 @@ class HomeProductAdapter(
         fun bind(content: Product) {
         //  Load image from url string
             val picasso = Picasso.get()
-            picasso.load(content.productImgUrl).error(R.drawable.ic_homepage).into(
+            picasso.load(content.imgUrl).error(R.drawable.ic_homepage).into(
                 binding.imgProduct,
                 object : Callback {
                     override fun onSuccess() {}
@@ -35,9 +35,9 @@ class HomeProductAdapter(
                 }
             )
 
-            binding.txtProductDescription.text = content.productDescription
-            binding.txtUnitCost.text = CurrencyUtil.format(content.productUnitCost)
-            binding.txtProductPackQty.text = content.productPackQty
+            binding.txtProductDescription.text = content.description
+            binding.txtUnitCost.text = CurrencyUtil.format(content.unitCost)
+            binding.txtProductPackQty.text = content.packQty
 
             binding.imgProduct.setOnClickListener { item ->
                 homeAdapterListener?.onItemClick(content)
@@ -71,8 +71,16 @@ class HomeProductAdapter(
     }
 
     interface HomeAdapterListener {
+        /**
+         * Home product click listener
+         * @param product
+         * */
         fun onItemClick(product: Product)
 
+        /**
+         * Add to cart button click listener
+         * @param product
+         * */
         fun onAddToCartBtnClick(product: Product)
     }
 }

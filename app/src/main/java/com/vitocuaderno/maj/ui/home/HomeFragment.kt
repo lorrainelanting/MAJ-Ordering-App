@@ -4,27 +4,31 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.vitocuaderno.maj.R
+import com.vitocuaderno.maj.data.model.CartContent
 import com.vitocuaderno.maj.data.model.Product
-import com.vitocuaderno.maj.data.repository.ProductRepository
+import com.vitocuaderno.maj.data.repository.cart.CartRepository
+import com.vitocuaderno.maj.data.repository.product.ProductRepository
 import com.vitocuaderno.maj.databinding.FragmentHomeBinding
 import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
 import com.vitocuaderno.maj.ui.ProductDetailActivity
+import com.vitocuaderno.maj.ui.common.LayoutAddToCart
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.HomeAdapterListener {
     lateinit var repository: ProductRepository
+    lateinit var cartRepository: CartRepository
+
     var adapter: HomeProductAdapter? = null
     var homeContents = mutableListOf<Product>()
 
     private val homeContentsLiveData by lazy {
         repository.getList()
     }
-
+    
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +46,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
                 adapter?.notifyDataSetChanged()
             }
         }
-        setEventsAddToCartLayout()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         repository = Injection.provideProductRepository(context)
+        cartRepository = Injection.provideCartRepository(context)
     }
 
     override fun onItemClick(product: Product) {
@@ -58,22 +62,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
     }
 
     override fun onAddToCartBtnClick(product: Product) {
-        binding.layoutAddToCart.bind(product)
-        binding.layoutAddToCart.visibility = View.VISIBLE
-    }
+        var quantity = 1
 
-    private fun setEventsAddToCartLayout() {
-        //        TODO Decrease quantity
-        binding.layoutAddToCart.findViewById<FrameLayout>(R.id.btnMinus).setOnClickListener {
-            Toast.makeText(this.context, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
-        }
-        //        TODO Increase quantity
-        binding.layoutAddToCart.findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
-            Toast.makeText(this.context, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
-        }
-        //        TODO Item added to cart
-        binding.layoutAddToCart.findViewById<Button>(R.id.btnAddToCart).setOnClickListener {
-            Toast.makeText(this.context, "TODO: Item added to cart", Toast.LENGTH_SHORT).show()
-        }
+        binding.layoutAddToCart.bind(product, quantity)
+        binding.layoutAddToCart.visibility = View.VISIBLE
+
+        binding.layoutAddToCart.setLayoutAddToCartListener(object:
+            LayoutAddToCart.LayoutAddToCartListener {
+            override fun onMinusBtnClick(product: Product) {
+                if (quantity > 1) {
+                    quantity--
+                    // Update binding
+                    binding.layoutAddToCart.bind(product, quantity)
+                }
+            }
+
+            override fun onAddBtnClick(product: Product) {
+                quantity++
+                // Update binding
+                binding.layoutAddToCart.bind(product, quantity)
+            }
+
+            override fun onAddToCartBtnClick(product: Product) {
+                var cartContent: CartContent = CartContent.newInstance(
+                    productId = product.id,
+                    productName = product.name,
+                    productImgUrl = product.imgUrl,
+                    productUnitCost = product.unitCost,
+                    quantity = quantity
+                )
+                cartRepository.addToCart(cartContent)
+                binding.layoutAddToCart.isVisible = false
+                Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

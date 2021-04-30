@@ -2,8 +2,6 @@ package com.vitocuaderno.maj.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.observe
@@ -11,10 +9,11 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.Product
-import com.vitocuaderno.maj.data.repository.ProductRepository
+import com.vitocuaderno.maj.data.repository.product.ProductRepository
 import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.ActivityProductDetailBinding
 import com.vitocuaderno.maj.di.Injection
+import com.vitocuaderno.maj.ui.common.LayoutAddToCart
 
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
     lateinit var repository: ProductRepository
@@ -36,13 +35,12 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
                 bindData(it)
             }
         }
-        setEventsAddToCartLayout()
     }
 
     private fun bindData(product: Product) {
         //  Load image from url string
         val picasso = Picasso.get()
-        picasso.load(product.productImgUrl).error(R.drawable.ic_homepage).into(
+        picasso.load(product.imgUrl).error(R.drawable.ic_homepage).into(
             binding.imgProduct,
             object : Callback {
                 override fun onSuccess() {}
@@ -52,29 +50,38 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
             }
         )
 
-        binding.txtProductName.text = product.productDescription
-        binding.txtUnitCost.text = CurrencyUtil.format(product.productUnitCost)
-        binding.txtProductDescription.text = product.productDescription
-        binding.txtProductPackQty.text = product.productPackQty
+        binding.txtProductName.text = product.description
+        binding.txtUnitCost.text = CurrencyUtil.format(product.unitCost)
+        binding.txtProductDescription.text = product.description
+        binding.txtProductPackQty.text = product.packQty
 
         binding.btnAddToCart.setOnClickListener {
-            binding.layoutAddToCart.bind(product)
-            binding.layoutAddToCart.visibility = View.VISIBLE
-        }
-    }
+            var quantity = 1
 
-    private fun setEventsAddToCartLayout() {
-        //        TODO Decrease quantity
-        binding.layoutAddToCart.findViewById<FrameLayout>(R.id.btnMinus).setOnClickListener {
-            Toast.makeText(this, "Minus Button clicked! TODO: Decrease quantity", Toast.LENGTH_SHORT).show()
-        }
-        //        TODO Increase quantity
-        binding.layoutAddToCart.findViewById<FrameLayout>(R.id.btnAdd).setOnClickListener {
-            Toast.makeText(this, "Add Button clicked! TODO: Increase quantity", Toast.LENGTH_SHORT).show()
-        }
-        //        TODO Item added to cart
-        binding.layoutAddToCart.findViewById<Button>(R.id.btnAddToCart).setOnClickListener {
-            Toast.makeText(this, "TODO: Item added to cart", Toast.LENGTH_SHORT).show()
+            binding.layoutAddToCart.bind(product, quantity)
+            binding.layoutAddToCart.visibility = View.VISIBLE
+
+            binding.layoutAddToCart.setLayoutAddToCartListener(object:
+                LayoutAddToCart.LayoutAddToCartListener {
+                override fun onMinusBtnClick(product: Product) {
+                    if (quantity > 1) {
+                        quantity--
+                        // Update binding
+                        binding.layoutAddToCart.bind(product, quantity)
+                    }
+                }
+
+                override fun onAddBtnClick(product: Product) {
+                    quantity++
+                    // Update binding
+                    binding.layoutAddToCart.bind(product, quantity)
+                }
+
+                override fun onAddToCartBtnClick(product: Product) {
+                    //        TODO Item added to cart
+                    Toast.makeText(this@ProductDetailActivity, "TODO: Item added to cart", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
     }
 }
