@@ -50,4 +50,11 @@
     <string name="quantity_decrease">Decrease Quantity</string>
     <string name="quantity_increase">Increase Quantity</string>
     <string name="exit">Exit</string>
+    <!--  Messages  -->
+    <string name="txt_empty_cart">There are no items in this cart.</string>
+    <string name="txt_dialog_remove_cart_title">Remove from cart</string>
+    <string name="txt_dialog_remove_cart_body">Are you sure you want to remove the item?</string>
+    <string name="txt_dialog_remove">Remove</string>
+    <string name="txt_dialog_cancel">Cancel</string>
+    <string name="txt_continue_shopping">Continue Shopping</string>
 </resources>
