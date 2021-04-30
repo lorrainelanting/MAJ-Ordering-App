@@ -29,7 +29,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>() {
 
 //        TODO: Show loading
         for (i in 0..10) {
-            val cartContent = CartContent(i)
+            val cartContent = CartContent()
             cartContent.productImgUrl = ""
             cartContent.productName = "Coke mismo"
             cartContent.productUnitCost = 135.00

@@ -21,42 +21,96 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_soft_drink" />
+                tools:src="@color/colorSecondary"/>
 
             <TextView
                 android:id="@+id/txtProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@string/coke_mismo"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 app:layout_constraintStart_toEndOf="@id/imgProduct"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/coke_mismo"/>
 
             <TextView
                 android:id="@+id/txtUnitCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/coke_mismo_cost"
                 app:layout_constraintStart_toStartOf="@id/txtProductName"
                 app:layout_constraintTop_toBottomOf="@id/txtProductName"
-                tools:layout_editor_absoluteX="78dp" />
+                tools:layout_editor_absoluteX="78dp"
+                tools:text="@string/coke_mismo_cost"/>
 
-            <!--    TODO: Counter button        -->
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etQuantity"
-                android:layout_width="64dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="32dp"
-                android:focusable="false"
-                android:textAlignment="center"
+            <FrameLayout
+                android:id="@+id/btnMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/bg_border_primary"
+                android:clickable="true"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@id/txtUnitCost"
+                app:layout_constraintEnd_toStartOf="@id/frameQuantity"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_minus"
+                    android:backgroundTint="@color/gray"
+                    android:contentDescription="@string/quantity_decrease" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/bg_border_primary"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtUnitCost" />
+                app:layout_constraintTop_toBottomOf="@id/txtUnitCost"
+                app:layout_constraintEnd_toStartOf="@id/btnAdd">
+
+                <TextView
+                    android:id="@+id/txtProductQty"
+                    android:layout_width="32dp"
+                    android:layout_height="20dp"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    tools:text="0"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_border_primary"
+                android:clickable="false"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtUnitCost"
+                >
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_plus"
+                    android:backgroundTint="@color/gray"
+                    android:contentDescription="@string/quantity_increase" />
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/btnDeleteCartItem"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="8dp"
                 android:contentDescription="@string/delete_cart_item"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_delete"

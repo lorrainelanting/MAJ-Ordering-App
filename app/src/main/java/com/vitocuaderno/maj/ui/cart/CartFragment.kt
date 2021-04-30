@@ -1,16 +1,30 @@
 package com.vitocuaderno.maj.ui.cart
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.observe
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.CartContent
+import com.vitocuaderno.maj.data.repository.cart.CartRepository
 import com.vitocuaderno.maj.databinding.FragmentCartBinding
+import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
 
-class CartFragment : BaseFragment<FragmentCartBinding>() {
-    override fun getLayoutId(): Int = R.layout.fragment_cart
+class CartFragment : BaseFragment<FragmentCartBinding>(), CartContentsAdapter.CartContentsAdapterListener {
+    lateinit var repository: CartRepository
     var adapter: CartContentsAdapter? = null
     var cartContents = mutableListOf<CartContent>()
+
+    private val cartContentsLiveData by lazy {
+        repository.getList()
+    }
+
+    override fun getLayoutId(): Int = R.layout.fragment_cart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,23 +32,89 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CartContentsAdapter(cartContents)
+        adapter = CartContentsAdapter(cartContents, this)
         binding.rvCartContents.adapter = adapter
-        fetchCartItems()
+        cartContentsLiveData.observe(viewLifecycleOwner) { it ->
+            it.let {
+                cartContents.clear()
+                //        TODO: Show loading
+                cartContents.addAll(it)
+                //  Empty cart message
+                if (it.size === 0) {
+                    binding.txtEmptyCart.visibility = View.VISIBLE
+                    binding.btnContinueShopping.visibility = View.VISIBLE
+                    binding.frameSummary.visibility = View.GONE
+                    binding.frameDivider.visibility = View.GONE
+                } else {
+                    binding.txtEmptyCart.visibility = View.GONE
+                    binding.btnContinueShopping.visibility = View.GONE
+                    binding.frameSummary.visibility = View.VISIBLE
+                    binding.frameDivider.visibility = View.VISIBLE
+                }
+
+                //        TODO: Hide loading
+                adapter?.notifyDataSetChanged()
+            }
+        }
+
+        binding.btnCheckout.setOnClickListener {
+            onCheckOutBtnClick()
+        }
     }
 
-    private fun fetchCartItems() {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        repository = Injection.provideCartRepository(context)
+    }
 
-//        TODO: Show loading
-        for (i in 0..10) {
-            val cartContent = CartContent(i)
-            cartContent.productImgUrl = ""
-            cartContent.productName = "Coke mismo"
-            cartContent.productUnitCost = 135.00
-            cartContent.quantity = 3
-            cartContents.add(cartContent)
+    override fun onItemClick(cartContent: CartContent) {
+//        TODO("Not yet implemented")
+    }
+
+    override fun onDeleteBtnClick(cartContent: CartContent) {
+        val removeBtnClick = {
+                dialog: DialogInterface, which: Int ->
+            repository.delete(cartContent.id)
         }
-//        TODO: Hide loading
+
+        val cancelBtnClick = {
+                dialog: DialogInterface, which: Int ->
+        }
+
+        alert(removeBtnClick, cancelBtnClick)
+    }
+
+    override fun onMinusBtnClick(cartContent: CartContent) {
+        if (cartContent.quantity > 1) {
+            cartContent.quantity--
+            adapter?.notifyDataSetChanged()
+        }
+    }
+
+    override fun onAddBtnClick(cartContent: CartContent) {
+        cartContent.quantity++
         adapter?.notifyDataSetChanged()
+    }
+
+    private fun onCheckOutBtnClick() {
+        Toast.makeText(this.context, "TODO: Checkout items", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun alert(
+        removeBtnClick: (DialogInterface, Int) -> Unit,
+        cancelBtnClick: (DialogInterface, Int) -> Unit
+    ) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle(R.string.txt_dialog_remove_cart_title)
+        builder.setMessage(R.string.txt_dialog_remove_cart_body)
+        builder.setPositiveButton(R.string.txt_dialog_remove, DialogInterface.OnClickListener(function = removeBtnClick))
+        builder.setNegativeButton(R.string.txt_dialog_cancel, DialogInterface.OnClickListener(function = cancelBtnClick))
+        val alert = builder.create()
+        alert.setCanceledOnTouchOutside(true)
+        alert.show()
+        val cancelBtn = alert.getButton(DialogInterface.BUTTON_NEGATIVE)
+        val removeBtn = alert.getButton(DialogInterface.BUTTON_POSITIVE)
+        cancelBtn.setTextColor(Color.parseColor("#183C28"))
+        removeBtn.setTextColor(Color.parseColor("#C29813"))
     }
 }
