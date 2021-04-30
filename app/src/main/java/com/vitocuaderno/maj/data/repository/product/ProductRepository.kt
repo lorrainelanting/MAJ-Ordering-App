@@ -1,4 +1,4 @@
-package com.vitocuaderno.maj.data.repository
+package com.vitocuaderno.maj.data.repository.product
 
 import androidx.lifecycle.LiveData
 import com.vitocuaderno.maj.data.model.Product

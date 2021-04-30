@@ -1,16 +1,20 @@
-package com.vitocuaderno.maj.data.repository
+package com.vitocuaderno.maj.data.repository.product
 
 import androidx.lifecycle.LiveData
 import com.vitocuaderno.maj.data.local.ProductDao
 import com.vitocuaderno.maj.data.model.Product
 
-class ProductRepositoryImpl private constructor(private val dao: ProductDao): ProductRepository {
+class ProductRepositoryImpl private constructor(private val dao: ProductDao):
+    ProductRepository {
     companion object {
         private var instance: ProductRepository? = null
 
         fun getInstance(dao: ProductDao) : ProductRepository {
             if (instance == null) {
-                instance = ProductRepositoryImpl(dao)
+                instance =
+                    ProductRepositoryImpl(
+                        dao
+                    )
             }
             return instance!!
         }

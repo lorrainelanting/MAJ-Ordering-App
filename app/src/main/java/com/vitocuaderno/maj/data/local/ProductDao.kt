@@ -9,15 +9,15 @@ import com.vitocuaderno.maj.data.model.Product
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM home_content_table ORDER BY id ASC")
+    @Query("SELECT * FROM product_table ORDER BY id ASC")
     fun getList(): LiveData<List<Product>>
 
-    @Query("SELECT * FROM home_content_table WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM product_table WHERE id = :id LIMIT 1")
     fun getItem(id: Int): LiveData<Product>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: Product)
 
-    @Query("DELETE FROM home_content_table")
+    @Query("DELETE FROM product_table")
     suspend fun deleteAll()
 }
