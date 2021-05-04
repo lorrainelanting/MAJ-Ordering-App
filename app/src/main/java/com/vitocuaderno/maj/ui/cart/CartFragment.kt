@@ -15,7 +15,8 @@ import com.vitocuaderno.maj.databinding.FragmentCartBinding
 import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
 
-class CartFragment : BaseFragment<FragmentCartBinding>(), CartContentsAdapter.CartContentsAdapterListener {
+class CartFragment : BaseFragment<FragmentCartBinding>(),
+    CartContentsAdapter.CartContentsAdapterListener {
     lateinit var repository: CartRepository
     var adapter: CartContentsAdapter? = null
     var cartContents = mutableListOf<CartContent>()
@@ -37,7 +38,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(), CartContentsAdapter.Ca
         cartContentsLiveData.observe(viewLifecycleOwner) { it ->
             it.let {
                 cartContents.clear()
-                //        TODO: Show loading
+                // Show loading
+                binding.pbLoadingSpinner.visibility = View.VISIBLE
                 cartContents.addAll(it)
                 //  Empty cart message
                 if (it.size === 0) {
@@ -51,8 +53,9 @@ class CartFragment : BaseFragment<FragmentCartBinding>(), CartContentsAdapter.Ca
                     binding.frameSummary.visibility = View.VISIBLE
                     binding.frameDivider.visibility = View.VISIBLE
                 }
-
-                //        TODO: Hide loading
+                // TODO: Set timeout progressbar
+                // Hide loading
+                binding.pbLoadingSpinner.visibility = View.GONE
                 adapter?.notifyDataSetChanged()
             }
         }
@@ -72,13 +75,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(), CartContentsAdapter.Ca
     }
 
     override fun onDeleteBtnClick(cartContent: CartContent) {
-        val removeBtnClick = {
-                dialog: DialogInterface, which: Int ->
+        val removeBtnClick = { dialog: DialogInterface, which: Int ->
             repository.delete(cartContent.id)
         }
 
-        val cancelBtnClick = {
-                dialog: DialogInterface, which: Int ->
+        val cancelBtnClick = { dialog: DialogInterface, which: Int ->
         }
 
         alert(removeBtnClick, cancelBtnClick)
@@ -107,8 +108,14 @@ class CartFragment : BaseFragment<FragmentCartBinding>(), CartContentsAdapter.Ca
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle(R.string.txt_dialog_remove_cart_title)
         builder.setMessage(R.string.txt_dialog_remove_cart_body)
-        builder.setPositiveButton(R.string.txt_dialog_remove, DialogInterface.OnClickListener(function = removeBtnClick))
-        builder.setNegativeButton(R.string.txt_dialog_cancel, DialogInterface.OnClickListener(function = cancelBtnClick))
+        builder.setPositiveButton(
+            R.string.txt_dialog_remove,
+            DialogInterface.OnClickListener(function = removeBtnClick)
+        )
+        builder.setNegativeButton(
+            R.string.txt_dialog_cancel,
+            DialogInterface.OnClickListener(function = cancelBtnClick)
+        )
         val alert = builder.create()
         alert.setCanceledOnTouchOutside(true)
         alert.show()
