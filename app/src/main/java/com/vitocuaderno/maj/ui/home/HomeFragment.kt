@@ -2,11 +2,13 @@ package com.vitocuaderno.maj.ui.home
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.CartContent
 import com.vitocuaderno.maj.data.model.Product
@@ -39,13 +41,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
         super.onViewCreated(view, savedInstanceState)
         adapter = HomeProductAdapter(homeContents, this)
         binding.rvHomeContents.adapter = adapter
-        homeContentsLiveData.observe(viewLifecycleOwner) {it ->
-            it.let {
-                homeContents.addAll(it)
-                //        TODO: Hide loading
-                adapter?.notifyDataSetChanged()
-            }
+        showHomeProducts()
+        //Swipe refresh
+        binding.swipeRefLayout.setOnRefreshListener{
+            showHomeProducts()
+            binding.swipeRefLayout.isRefreshing = false
         }
+        binding.swipeRefLayout.setColorSchemeColors(Color.GREEN)
     }
 
     override fun onAttach(context: Context) {
@@ -96,5 +98,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
                 Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    /**
+     * Private Methods
+     * */
+    private fun showHomeProducts() {
+        homeContentsLiveData.observe(viewLifecycleOwner) {it ->
+            it.let {
+                homeContents.addAll(it)
+                //        TODO: Hide loading
+                adapter?.notifyDataSetChanged()
+            }
+        }
     }
 }
