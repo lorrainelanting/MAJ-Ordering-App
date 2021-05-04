@@ -3,27 +3,40 @@ package com.vitocuaderno.maj.ui.cart
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.observe
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.CartContent
 import com.vitocuaderno.maj.data.repository.cart.CartRepository
 import com.vitocuaderno.maj.databinding.FragmentCartBinding
+import com.vitocuaderno.maj.databinding.FragmentHomeBinding
 import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
+import com.vitocuaderno.maj.ui.MainActivity
+import com.vitocuaderno.maj.ui.ProductDetailActivity
+import com.vitocuaderno.maj.ui.home.HomeFragment
 
 class CartFragment : BaseFragment<FragmentCartBinding>(),
     CartContentsAdapter.CartContentsAdapterListener {
     lateinit var repository: CartRepository
+    lateinit var navController: NavController
     var adapter: CartContentsAdapter? = null
     var cartContents = mutableListOf<CartContent>()
 
     private val cartContentsLiveData by lazy {
         repository.getList()
     }
+
+    private var cartFragmentListener: CartFragmentListener? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_cart
 
@@ -58,6 +71,10 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
                 binding.pbLoadingSpinner.visibility = View.GONE
                 adapter?.notifyDataSetChanged()
             }
+        }
+
+        binding.btnContinueShopping.setOnClickListener {
+            cartFragmentListener?.onContinueShoppingClick()
         }
 
         binding.btnCheckout.setOnClickListener {
@@ -123,5 +140,13 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
         val removeBtn = alert.getButton(DialogInterface.BUTTON_POSITIVE)
         cancelBtn.setTextColor(Color.parseColor("#183C28"))
         removeBtn.setTextColor(Color.parseColor("#C29813"))
+    }
+
+    fun setCartFragmentListener(listener: CartFragmentListener) {
+        this.cartFragmentListener = listener
+    }
+
+    interface CartFragmentListener {
+        fun onContinueShoppingClick()
     }
 }

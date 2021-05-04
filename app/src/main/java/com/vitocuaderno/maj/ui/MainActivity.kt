@@ -8,9 +8,10 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.badge.BadgeDrawable
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.databinding.ActivityMainBinding
+import com.vitocuaderno.maj.ui.cart.CartFragment
 import com.vitocuaderno.maj.ui.viewpager.ViewPagerAdapter
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragmentListener {
 
     private lateinit var navController: NavController
     private lateinit var mPager: ViewPager
@@ -29,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        binding.navBottom.setupWithNavController(navController)
 
         mPager = binding.viewPager
-        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources)
+        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this)
         mPager.adapter = pagerAdapter
 
         setBadgeCart()
@@ -94,6 +95,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
+    override fun onContinueShoppingClick() {
+        navigateToHome()
+    }
+
     /**
      * Private functions below
      * */
@@ -109,5 +114,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentOrders)
         badge.isVisible = true
         badge.number = 1 //    TODO: Set active order size.
+    }
+
+    private fun navigateToHome() {
+        mPager.currentItem = 0
     }
 }
