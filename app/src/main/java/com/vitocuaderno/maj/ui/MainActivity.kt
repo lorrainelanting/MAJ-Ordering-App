@@ -3,13 +3,15 @@ package com.vitocuaderno.maj.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.viewpager.widget.ViewPager
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.databinding.ActivityMainBinding
+import com.vitocuaderno.maj.ui.cart.CartFragment
 import com.vitocuaderno.maj.ui.viewpager.ViewPagerAdapter
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragmentListener {
 
     private lateinit var navController: NavController
     private lateinit var mPager: ViewPager
@@ -27,7 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 //        binding.navBottom.setupWithNavController(navController)
 
         mPager = binding.viewPager
-        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources)
+        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this)
         mPager.adapter = pagerAdapter
 //        ViewPager nav listener
         mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -86,8 +88,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             mPager.currentItem = mPager.currentItem - 1
         }
     }
+
+    override fun onContinueShoppingClick() {
+        navigateToHome()
+    }
+
     /**
      * Private functions below
      * */
 
+    private fun navigateToHome() {
+        mPager.currentItem = 0
+    }
 }

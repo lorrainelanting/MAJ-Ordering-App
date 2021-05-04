@@ -16,8 +16,8 @@
     <!-- Splash Screen -->
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
-    <style name="SecondaryButton" parent="@style/Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/colorAccentVariant</item>
+    <style name="SecondaryButton" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/colorAccentVariant</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorSecondaryAccent</item>
     </style>

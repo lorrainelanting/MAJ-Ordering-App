@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
     private val homeContentsLiveData by lazy {
         repository.getList()
     }
-    
+
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +39,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
         super.onViewCreated(view, savedInstanceState)
         adapter = HomeProductAdapter(homeContents, this)
         binding.rvHomeContents.adapter = adapter
-        homeContentsLiveData.observe(viewLifecycleOwner) {it ->
+        homeContentsLiveData.observe(viewLifecycleOwner) { it ->
             it.let {
+                homeContents.clear()
                 homeContents.addAll(it)
                 //        TODO: Hide loading
                 adapter?.notifyDataSetChanged()
@@ -67,7 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
         binding.layoutAddToCart.bind(product, quantity)
         binding.layoutAddToCart.visibility = View.VISIBLE
 
-        binding.layoutAddToCart.setLayoutAddToCartListener(object:
+        binding.layoutAddToCart.setLayoutAddToCartListener(object :
             LayoutAddToCart.LayoutAddToCartListener {
             override fun onMinusBtnClick(product: Product) {
                 if (quantity > 1) {
@@ -91,9 +92,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
                     productUnitCost = product.unitCost,
                     quantity = quantity
                 )
-                cartRepository.addToCart(cartContent)
+                cartRepository.add(cartContent)
                 binding.layoutAddToCart.isVisible = false
-                Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

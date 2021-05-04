@@ -1,10 +1,7 @@
 package com.vitocuaderno.maj.data.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.vitocuaderno.maj.data.model.CartContent
 
 @Dao
@@ -15,8 +12,14 @@ interface CartContentDao {
     @Query("SELECT * FROM cart_content_table WHERE id = :id LIMIT 1")
     fun getItem(id: Int): LiveData<CartContent>
 
+    @Query("SELECT * FROM cart_content_table WHERE productId = :id LIMIT 1")
+    fun getItemByProduct(id: Int): CartContent?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: CartContent)
+
+    @Update
+    fun update(item: CartContent)
 
     @Query("DELETE FROM cart_content_table")
     suspend fun deleteAll()

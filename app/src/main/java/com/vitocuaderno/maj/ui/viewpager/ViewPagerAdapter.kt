@@ -11,7 +11,10 @@ import com.vitocuaderno.maj.ui.OrdersFragment
 import com.vitocuaderno.maj.ui.ProfileFragment
 import com.vitocuaderno.maj.ui.cart.CartFragment
 
-class ViewPagerAdapter constructor (fm: FragmentManager, val resources : Resources) : FragmentPagerAdapter(fm) {
+class ViewPagerAdapter constructor (
+    fm: FragmentManager,
+    val resources : Resources,
+    val cartFListener : CartFragment.CartFragmentListener? = null) : FragmentPagerAdapter(fm) {
     companion object {
         const val NUM_PAGES = 5
     }
@@ -24,7 +27,11 @@ class ViewPagerAdapter constructor (fm: FragmentManager, val resources : Resourc
 //            0 -> HomeFragment()
             1 -> LoyaltyPointsFragment()
             2 -> OrdersFragment()
-            3 -> CartFragment()
+            3 -> {
+                val fragment = CartFragment()
+                cartFListener?.let { fragment.setCartFragmentListener(it) }
+                return fragment
+            }
             4 -> ProfileFragment()
             else -> HomeFragment()
         }
