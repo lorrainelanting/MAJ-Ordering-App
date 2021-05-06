@@ -11,7 +11,7 @@ import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.ItemHomeContentBinding
 
 class HomeProductAdapter(
-    private val dataSet: MutableList<Product>,
+    private var dataSet: List<Product>,
     private val homeAdapterListener: HomeAdapterListener? = null
 ) :
     RecyclerView.Adapter<HomeProductAdapter.HomeContentViewHolder>() {
@@ -82,5 +82,10 @@ class HomeProductAdapter(
          * @param product
          * */
         fun onAddToCartBtnClick(product: Product)
+    }
+
+    fun update(dataSet: List<Product>) {
+        this.dataSet = dataSet
+        notifyDataSetChanged()
     }
 }

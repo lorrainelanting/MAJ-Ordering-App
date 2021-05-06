@@ -2,33 +2,22 @@ package com.vitocuaderno.maj.ui.home
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.vitocuaderno.maj.R
-import com.vitocuaderno.maj.data.model.CartContent
 import com.vitocuaderno.maj.data.model.Product
-import com.vitocuaderno.maj.data.repository.cart.CartRepository
-import com.vitocuaderno.maj.data.repository.product.ProductRepository
 import com.vitocuaderno.maj.databinding.FragmentHomeBinding
-import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
-import com.vitocuaderno.maj.ui.ProductDetailActivity
+import com.vitocuaderno.maj.ui.productdetail.ProductDetailActivity
 import com.vitocuaderno.maj.ui.common.LayoutAddToCart
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.HomeAdapterListener {
-    lateinit var repository: ProductRepository
-    lateinit var cartRepository: CartRepository
-
     var adapter: HomeProductAdapter? = null
-    var homeContents = mutableListOf<Product>()
 
-    private val homeContentsLiveData by lazy {
-        repository.getList()
-    }
+    private val viewModel = HomeViewModel()
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 
@@ -38,7 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = HomeProductAdapter(homeContents, this)
+        adapter = HomeProductAdapter(emptyList(), this)
         binding.rvHomeContents.adapter = adapter
 
         showHomeProducts()
@@ -49,19 +38,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
 
             binding.swipeRefLayout.isRefreshing = false
         }
-        binding.swipeRefLayout.setColorSchemeColors(Color.GREEN)
+        binding.swipeRefLayout.setColorSchemeResources(R.color.colorSecondary)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        repository = Injection.provideProductRepository(context)
-        cartRepository = Injection.provideCartRepository(context)
+        viewModel.injectProduct(context)
+        viewModel.injectCart(context)
     }
 
     override fun onItemClick(product: Product) {
         val intent = Intent(this.context, ProductDetailActivity().javaClass)
         intent.putExtra(ProductDetailActivity.ID, product.id)
-        repository.getItem(product.id)
+        viewModel.repository.getItem(product.id)
         context?.startActivity(intent)
     }
 
@@ -88,14 +77,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
             }
 
             override fun onAddToCartBtnClick(product: Product) {
-                var cartContent: CartContent = CartContent.newInstance(
-                    productId = product.id,
-                    productName = product.name,
-                    productImgUrl = product.imgUrl,
-                    productUnitCost = product.unitCost,
-                    quantity = quantity
-                )
-                cartRepository.add(cartContent)
+                var cartContent = viewModel.cartContentNewInstance(product, quantity)
+                viewModel.cartRepository.add(cartContent)
                 binding.layoutAddToCart.isVisible = false
                 Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT)
                     .show()
@@ -106,13 +89,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
     /**
      * Private Methods
      * */
+
     private fun showHomeProducts() {
-        homeContentsLiveData.observe(viewLifecycleOwner) { it ->
+        viewModel.homeContentsLiveData.observe(viewLifecycleOwner) { it ->
             it.let {
-                homeContents.clear()
-                homeContents.addAll(it)
-                //        TODO: Hide loading
-                adapter?.notifyDataSetChanged()
+                adapter?.update(it)
+                // Show loading
+                binding.pbLoadingSpinner.visibility = View.VISIBLE
+                // TODO: Set timeout progressbar
+                // Hide loading
+                binding.pbLoadingSpinner.visibility = View.GONE
             }
         }
     }
