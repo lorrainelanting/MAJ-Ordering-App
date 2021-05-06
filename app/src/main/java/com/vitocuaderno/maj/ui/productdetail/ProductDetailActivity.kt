@@ -1,24 +1,21 @@
-package com.vitocuaderno.maj.ui
+package com.vitocuaderno.maj.ui.productdetail
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.LiveData
+import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.Product
-import com.vitocuaderno.maj.data.repository.product.ProductRepository
 import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.ActivityProductDetailBinding
-import com.vitocuaderno.maj.di.Injection
+import com.vitocuaderno.maj.ui.BaseActivity
 import com.vitocuaderno.maj.ui.common.LayoutAddToCart
 
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
-    lateinit var repository: ProductRepository
-
-    lateinit var productLiveData: LiveData<Product>
+    private val viewModel = ProductDetailViewModel()
 
     override fun getLayoutId(): Int = R.layout.activity_product_detail
 
@@ -28,10 +25,11 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository = Injection.provideProductRepository(this)
+        viewModel.injectProduct(this)
+        viewModel.injectCart(this)
         intent?.extras?.let {
-            productLiveData = repository.getItem(it.getInt(ID))
-            productLiveData.observe(this) { it ->
+            viewModel.productLiveData = viewModel.repository.getItem(it.getInt(ID))
+            viewModel.productLiveData.observe(this) { it ->
                 bindData(it)
             }
         }
@@ -78,8 +76,10 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
                 }
 
                 override fun onAddToCartBtnClick(product: Product) {
-                    //        TODO Item added to cart
-                    Toast.makeText(this@ProductDetailActivity, "TODO: Item added to cart", Toast.LENGTH_SHORT).show()
+                    var cartContent = viewModel.cartContentNewInstance(product, quantity)
+                    viewModel.cartRepository.add(cartContent)
+                    binding.layoutAddToCart.isVisible = false
+                    Toast.makeText(this@ProductDetailActivity, "Item successfully added to cart.", Toast.LENGTH_SHORT).show()
                 }
             })
         }
