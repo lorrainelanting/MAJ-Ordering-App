@@ -10,5 +10,7 @@ interface CartRepository {
 
     fun add(item: CartContent)
 
+    fun update(item: CartContent)
+
     fun delete(id: Int)
 }

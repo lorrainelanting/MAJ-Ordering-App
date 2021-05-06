@@ -1,6 +1,5 @@
 package com.vitocuaderno.maj.data.repository.cart
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.vitocuaderno.maj.data.local.CartContentDao
 import com.vitocuaderno.maj.data.model.CartContent
@@ -32,6 +31,8 @@ class CartRepositoryImpl private constructor(private val dao: CartContentDao): C
             dao.insert(item)
         }
     }
+
+    override fun update(item: CartContent) = dao.update(item)
 
     override fun delete(id: Int) = dao.delete(id)
 }
