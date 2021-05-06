@@ -2,16 +2,25 @@ package com.vitocuaderno.maj.ui
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.badge.BadgeDrawable
 import com.vitocuaderno.maj.R
+import com.vitocuaderno.maj.data.model.CartContent
+import com.vitocuaderno.maj.data.repository.cart.CartRepository
 import com.vitocuaderno.maj.databinding.ActivityMainBinding
+import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.cart.CartFragment
 import com.vitocuaderno.maj.ui.viewpager.ViewPagerAdapter
+import kotlin.contracts.ReturnsNotNull
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragmentListener {
+    lateinit var cartRepository: CartRepository
+    val cartContentsLiveData by lazy {
+        cartRepository.getList()
+    }
 
     private lateinit var navController: NavController
     private lateinit var mPager: ViewPager
@@ -24,16 +33,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
 
         mPager = binding.viewPager
 
-        //Getting the Navigation Controller
-//        navController = Navigation.findNavController(this, R.id.fragment)
-        //Setting the navigation controller to Bottom Nav
-//        binding.navBottom.setupWithNavController(navController)
-
         mPager = binding.viewPager
         val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this)
         mPager.adapter = pagerAdapter
-
-        setBadgeCart()
+        cartRepository = Injection.provideCartRepository(this)
+        cartContentsLiveData.observe(this) { it ->
+            setBadgeCart(it)
+        }
         setBadgeOrders()
 //        ViewPager nav listener
         mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -74,9 +80,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
             }
             true
         }
-
-        //Setting up the action bar
-//        NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
     //Setting Up the back button
@@ -103,11 +106,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
      * Private functions below
      * */
 
-    private fun setBadgeCart() {
-        badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentCart)
-        badge.isVisible = true
-        badge.number = 3 //    TODO: Set cart content size.
-
+    private fun setBadgeCart(contents: List<CartContent>) {
+        if (!contents.isNullOrEmpty()) {
+            badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentCart)
+            badge.isVisible = true
+            badge.number = contents.size
+        }
     }
 
     private fun setBadgeOrders() {
