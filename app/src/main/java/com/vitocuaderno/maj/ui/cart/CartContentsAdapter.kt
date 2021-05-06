@@ -2,17 +2,15 @@ package com.vitocuaderno.maj.ui.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.CartContent
-import com.vitocuaderno.maj.data.model.Product
 import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.ItemCartContentBinding
 
 class CartContentsAdapter(
-    private val dataSet: MutableList<CartContent>,
+    private var dataSet: List<CartContent>,
     private val cartContentsAdapterListener: CartContentsAdapterListener? = null
 ) : RecyclerView.Adapter<CartContentsAdapter.CartContentViewHolder>() {
 
@@ -87,5 +85,10 @@ class CartContentsAdapter(
          * @param cartContent
          * */
         fun onAddBtnClick(cartContent: CartContent)
+    }
+
+    fun update(dataSet: List<CartContent>) {
+        this.dataSet = dataSet
+        notifyDataSetChanged()
     }
 }

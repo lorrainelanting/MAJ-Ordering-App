@@ -7,35 +7,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.observe
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.vitocuaderno.maj.R
 import com.vitocuaderno.maj.data.model.CartContent
-import com.vitocuaderno.maj.data.repository.cart.CartRepository
+import com.vitocuaderno.maj.data.util.CurrencyUtil
 import com.vitocuaderno.maj.databinding.FragmentCartBinding
-import com.vitocuaderno.maj.databinding.FragmentHomeBinding
-import com.vitocuaderno.maj.di.Injection
 import com.vitocuaderno.maj.ui.BaseFragment
-import com.vitocuaderno.maj.ui.MainActivity
-import com.vitocuaderno.maj.ui.ProductDetailActivity
-import com.vitocuaderno.maj.ui.home.HomeFragment
+import com.vitocuaderno.maj.ui.checkout.CheckOutActivity
 
 class CartFragment : BaseFragment<FragmentCartBinding>(),
     CartContentsAdapter.CartContentsAdapterListener {
-    lateinit var repository: CartRepository
-    lateinit var navController: NavController
     var adapter: CartContentsAdapter? = null
-    var cartContents = mutableListOf<CartContent>()
 
-    private val cartContentsLiveData by lazy {
-        repository.getList()
-    }
-
+    private val viewModel = CartViewModel()
     private var cartFragmentListener: CartFragmentListener? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_cart
@@ -46,14 +30,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CartContentsAdapter(cartContents, this)
+        adapter = CartContentsAdapter(emptyList(), this)
         binding.rvCartContents.adapter = adapter
-        cartContentsLiveData.observe(viewLifecycleOwner) { it ->
+        viewModel.cartContentsLiveData.observe(viewLifecycleOwner) { it ->
             it.let {
-                cartContents.clear()
-                // Show loading
-                binding.pbLoadingSpinner.visibility = View.VISIBLE
-                cartContents.addAll(it)
+                adapter?.update(it)
                 //  Empty cart message
                 if (it.size === 0) {
                     binding.txtEmptyCart.visibility = View.VISIBLE
@@ -66,10 +47,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
                     binding.frameSummary.visibility = View.VISIBLE
                     binding.frameDivider.visibility = View.VISIBLE
                 }
-                // TODO: Set timeout progressbar
-                // Hide loading
-                binding.pbLoadingSpinner.visibility = View.GONE
-                adapter?.notifyDataSetChanged()
+                binding.txtResultTotalAmt.text = CurrencyUtil.format(computeTotal(it))
             }
         }
 
@@ -78,13 +56,23 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
         }
 
         binding.btnCheckout.setOnClickListener {
-            onCheckOutBtnClick()
+            val cartContent = CartContent()
+            onCheckOutBtnClick(cartContent)
         }
+    }
+
+    private fun computeTotal(list: List<CartContent>): Double {
+        var total = 0.00
+        for (item in list) {
+            val subTotal = item.productUnitCost * item.quantity
+            total += subTotal
+        }
+        return total
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        repository = Injection.provideCartRepository(context)
+        viewModel.injectCart(context)
     }
 
     override fun onItemClick(cartContent: CartContent) {
@@ -93,7 +81,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
     override fun onDeleteBtnClick(cartContent: CartContent) {
         val removeBtnClick = { dialog: DialogInterface, which: Int ->
-            repository.delete(cartContent.id)
+            viewModel.repository.delete(cartContent.id)
         }
 
         val cancelBtnClick = { dialog: DialogInterface, which: Int ->
@@ -105,17 +93,23 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
     override fun onMinusBtnClick(cartContent: CartContent) {
         if (cartContent.quantity > 1) {
             cartContent.quantity--
+            viewModel.repository.update(cartContent)
             adapter?.notifyDataSetChanged()
         }
     }
 
     override fun onAddBtnClick(cartContent: CartContent) {
-        cartContent.quantity++
         adapter?.notifyDataSetChanged()
+        cartContent.quantity++
+        viewModel.repository.update(cartContent)
     }
 
-    private fun onCheckOutBtnClick() {
-        Toast.makeText(this.context, "TODO: Checkout items", Toast.LENGTH_SHORT).show()
+    private fun onCheckOutBtnClick(cartContent: CartContent) {
+        val intent = Intent(this.context, CheckOutActivity().javaClass)
+        val idArray = arrayOf(cartContent.id)
+        intent.putExtra(CheckOutActivity.ID_ARR, idArray)
+        viewModel.repository.getList()
+        context?.startActivity(intent)
     }
 
     private fun alert(
