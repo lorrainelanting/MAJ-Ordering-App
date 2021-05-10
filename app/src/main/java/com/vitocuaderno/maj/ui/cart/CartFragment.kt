@@ -55,9 +55,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
             cartFragmentListener?.onContinueShoppingClick()
         }
 
-        binding.btnCheckout.setOnClickListener {
-            val cartContent = CartContent()
-            onCheckOutBtnClick(cartContent)
+        binding.btnCheckout.setOnClickListener() {
+            onCheckOutBtnClick()
         }
     }
 
@@ -104,11 +103,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
         viewModel.repository.update(cartContent)
     }
 
-    private fun onCheckOutBtnClick(cartContent: CartContent) {
-        val intent = Intent(this.context, CheckOutActivity().javaClass)
-        val idArray = arrayOf(cartContent.id)
-        intent.putExtra(CheckOutActivity.ID_ARR, idArray)
-        viewModel.repository.getList()
+    private fun onCheckOutBtnClick() {
+        val intent = Intent(context, CheckOutActivity().javaClass)
         context?.startActivity(intent)
     }
 
