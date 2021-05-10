@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCustomerDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/leftGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.03" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/rightGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.97" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/topGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.03" />
+
+            <ImageView
+                android:id="@+id/imgLocationPin"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@id/leftGuideline"
+                app:layout_constraintTop_toBottomOf="@id/topGuideline"                    android:src="@drawable/ic_location_pin"
+                style="@style/IconStyle"/>
+            <TextView
+                android:id="@+id/txtCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/imgLocationPin"
+                app:layout_constraintTop_toBottomOf="@id/topGuideline"
+                android:text="Marites C. Dela Cruz" />
+            <TextView
+                android:id="@+id/txtCustomerAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:maxLines="3"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/imgLocationPin"
+                app:layout_constraintTop_toBottomOf="@id/txtCustomerName"
+                android:text="001 Narra St., Brgy. Sabang, Lipa City" />
+
+            <ImageView
+                android:id="@+id/imgStore"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toEndOf="@id/leftGuideline"
+                app:layout_constraintTop_toBottomOf="@id/txtCustomerAddress"
+                android:src="@drawable/ic_store"
+                style="@style/IconStyle"/>
+            <TextView
+                android:id="@+id/txtStoreName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/imgStore"
+                app:layout_constraintTop_toBottomOf="@id/txtCustomerAddress"
+                android:text="Marites Sari-Sari Store" />
+
+            <ImageView
+                android:id="@+id/imgPhone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/leftGuideline"
+                app:layout_constraintTop_toBottomOf="@id/txtStoreName"
+                android:src="@drawable/ic_phone"
+                style="@style/IconStyle"
+                android:contentDescription="Phone icon" />
+
+            <EditText
+                android:id="@+id/txtCustomerMobile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/hint_customer_mobile"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:text="09101234567"
+                android:textSize="18sp"
+                android:focusable="false"
+                app:layout_constraintEnd_toStartOf="@id/rightGuideline"
+                app:layout_constraintStart_toEndOf="@id/imgPhone"
+                app:layout_constraintTop_toBottomOf="@id/txtStoreName" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/frameSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorPrimaryVariant"
+            android:layout_gravity="bottom"
+            />
+    </androidx.cardview.widget.CardView>
+</layout>

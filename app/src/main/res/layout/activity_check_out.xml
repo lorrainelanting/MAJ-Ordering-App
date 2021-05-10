@@ -7,34 +7,65 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/frameSummaryCheckout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/customerName"
+                <include
+                    android:id="@+id/layoutCustomerDetail"
+                    layout="@layout/layout_checkout_customer_detail" />
+
+                <include
+                    android:id="@+id/layoutOrderSummary"
+                    layout="@layout/layout_checkout_order_summary" />
+
+                <include
+                    android:id="@+id/layoutSummaryFees"
+                    layout="@layout/layout_checkout_summary_fees" />
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/frameSummaryCheckout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/customerAddress"
-            tools:text="Marites C. Dela Cruz"/>
-        <TextView
-            android:id="@+id/customerAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/customerName"
-            android:maxLines="3"
-            tools:text="001 Narra St., Brgy. Sabang, Lipa City"/>
-        <EditText
-            android:id="@+id/customerMobile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/customerAddress"
-            android:inputType="phone"
-            tools:text="09101234567"
-            android:importantForAutofill="no"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <TextView
+                android:id="@+id/txtTotalPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:layout_gravity="top"
+                android:text="@string/txt_total_payment" />
+            <TextView
+                android:id="@+id/txtResultTotalPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryVariant"
+                android:layout_gravity="bottom"
+                tools:text="316.00" />
+            <Button
+                android:id="@+id/btnPlaceOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/txt_place_order"/>
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

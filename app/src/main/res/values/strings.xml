@@ -57,4 +57,10 @@
     <string name="txt_dialog_remove">Remove</string>
     <string name="txt_dialog_cancel">Cancel</string>
     <string name="txt_continue_shopping">Continue Shopping</string>
+    <string name="txt_shipping_fee">Shipping Fee</string>
+    <string name="txt_total">Total:</string>
+    <string name="txt_item_s">Item(s),</string>
+    <string name="txt_place_order">Place Order</string>
+    <string name="txt_order_summary">Order Summary</string>
+    <string name="txt_total_payment">Total Payment</string>
 </resources>
