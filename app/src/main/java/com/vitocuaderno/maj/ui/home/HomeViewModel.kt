@@ -30,7 +30,8 @@ class HomeViewModel: ViewModel() {
             productName = product.name,
             productImgUrl = product.imgUrl,
             productUnitCost = product.unitCost,
-            quantity = quantity
+            quantity = quantity,
+            productPackQty = product.packQty
         )
     }
 }
