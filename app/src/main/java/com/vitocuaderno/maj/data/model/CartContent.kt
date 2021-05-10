@@ -13,14 +13,14 @@ class CartContent(): BaseModel() {
     var productPackQty: String = "${12}pcs. per pack"
 
     companion object {
-        fun newInstance(productId: Int, productName: String, productImgUrl: String, quantity: Int, productUnitCost: Double) : CartContent {
+        fun newInstance(productId: Int, productName: String, productImgUrl: String, quantity: Int, productUnitCost: Double,  productPackQty: String) : CartContent {
             val cartContent = CartContent()
             cartContent.productId = productId
             cartContent.productName = productName
             cartContent.productImgUrl = productImgUrl
             cartContent.productUnitCost = productUnitCost
             cartContent.quantity = quantity
-
+            cartContent.productPackQty = productPackQty
             return cartContent
         }
     }
