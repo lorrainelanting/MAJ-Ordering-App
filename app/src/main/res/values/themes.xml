@@ -21,4 +21,8 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorSecondaryAccent</item>
     </style>
+
+    <style name="IconStyle" parent="">
+        <item name="tint">@color/colorSecondaryVariant</item>
+    </style>
 </resources>
