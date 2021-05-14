@@ -3,30 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.ProfileActivity">
-
+        android:layout_height="match_parent">
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/rightGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.92" />
+            app:layout_constraintGuide_percent="0.96" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/leftGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.08" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/topGuideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.05" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -36,162 +28,132 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.95" />
 
-        <TextView
-            android:id="@+id/txtStoreName"
-            android:labelFor="@id/editTxtStoreName"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/store_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorSecondaryVariant"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/topGuideline" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.ProfileActivity">
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/topGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.03" />
 
-        <TextView
-            android:id="@+id/txtOptional"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/optional"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorSecondaryVariant"
-            android:textSize="18sp"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/txtStoreName"
-            app:layout_constraintBottom_toTopOf="@id/editTxtStoreName" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtStoreName"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/store_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/topGuideline">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTxtStoreName"
-            android:layout_width="340dp"
-            android:layout_height="43dp"
-            android:ems="10"
-            android:inputType="text"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintEnd_toStartOf="@id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/txtStoreName"
-            android:importantForAutofill="no"
-            android:hint="@string/hint_marites_sari_sari_store"
-            tools:ignore="LabelFor" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtFullName"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/full_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtStoreName">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/txtFullName"
-            android:labelFor="@id/editTxtFullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/full_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/purple_700"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/editTxtStoreName" />
+                <TextView
+                    android:id="@+id/txtSetAddress"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtFullName"
+                    android:textColor="@color/colorSecondaryVariant"
+                    android:textAlignment="textStart"
+                    android:text="Set Address"/>
 
-        <TextView
-            android:id="@+id/txtHelperFullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/helper_last_first_m_i"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/purple_700"
-            android:textSize="18sp"
-            android:layout_marginTop="50dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/txtFullName"
-            app:layout_constraintTop_toBottomOf="@id/editTxtStoreName" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtLayoutAddress"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_edit"
+                    app:endIconTint="@color/colorSecondary"
+                    android:hint="@string/txt_delivery_address"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtSetAddress"
+                    android:visibility="visible">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTxtDelAddress"
+                        android:inputType="text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:cursorVisible="false"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTxtFullName"
-            android:layout_width="340dp"
-            android:layout_height="51dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintEnd_toStartOf="@id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/txtFullName"
-            android:hint="@string/hint_dela_cruz_marites_c"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtCusMobileNum"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/mobile_number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtLayoutAddress">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/txtCusAddress"
-            android:labelFor="@id/editTxtCusAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/current_address"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/purple_700"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/editTxtFullName" />
-
-<!--        <TextView-->
-<!--            android:id="@+id/txtHelperCurAddress"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="House #, Street, Brgy, City"-->
-<!--            android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
-<!--            android:textColor="@color/purple_700"-->
-<!--            android:textSize="16sp"-->
-<!--            android:layout_marginTop="50dp"-->
-<!--            android:layout_marginStart="8dp"-->
-<!--            app:layout_constraintStart_toEndOf="@id/txtCusAddress"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/editTxtFullName" />-->
-
-        <EditText
-            android:id="@+id/editTxtCusAddress"
-            android:layout_width="340dp"
-            android:layout_height="51dp"
-            android:ems="10"
-            android:inputType="textPostalAddress"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintEnd_toStartOf="@id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/txtCusAddress"
-            android:hint="001 Narra St., Brgy. Sabang, Lipa City"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
-
-        <TextView
-            android:id="@+id/txtCusMobileNum"
-            android:labelFor="@id/editTxtCusMobileNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mobile_number"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/purple_700"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/editTxtCusAddress"
-            />
-
-        <EditText
-            android:id="@+id/editTxtCusMobileNum"
-            android:layout_width="340dp"
-            android:layout_height="50dp"
-            android:ems="10"
-            android:inputType="phone"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
-            app:layout_constraintEnd_toStartOf="@id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/txtCusMobileNum"
-            android:hint="@string/hint_customer_mobile"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtOtherNotes"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_other_notes"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtCusMobileNum">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="textPostalAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/btnProfileSave"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/btn_save"
-            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintStart_toEndOf="@id/leftGuideline"
             app:layout_constraintEnd_toStartOf="@id/rightGuideline"
-            app:layout_constraintBottom_toTopOf="@id/bottomGuideline" />
-
+            app:layout_constraintBottom_toTopOf="@id/bottomGuideline"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
