@@ -26,8 +26,7 @@
     <string name="navigation_drawer_close">Close Drawer</string>
     <string name="consumer_goods_trading">Consumer Goods Trading</string>
     <string name="store_name">Store Name</string>
-    <string name="full_name">Full Name</string>
-    <string name="helper_last_first_m_i">( Last, First, M.I )</string>
+    <string name="full_name">Full Name ( Last, First, M.I )</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_save">Save</string>
@@ -63,4 +62,89 @@
     <string name="txt_place_order">Place Order</string>
     <string name="txt_order_summary">Order Summary</string>
     <string name="txt_total_payment">Total Payment</string>
+    <string name="txt_city_municipality">City/Municipality</string>
+    <string name="txt_barangay">Barangay</string>
+    <string name="txt_house_number_building_and_street_name">House Number, Building and Street Name</string>
+    <string name="txt_other_notes">Other Notes</string>
+    <string name="txt_delivery_address">Delivery Address</string>
+
+    <array name="cities">
+        <item>Lipa City</item>
+        <item>Malvar City (Not yet supported)</item>
+    </array>
+
+    <array name="barangays">
+        <item>Adya</item>
+        <item>Anilao</item>
+        <item>Anilao-Labac</item>
+        <item>Antipolo Del Norte</item>
+        <item>Antipolo Del Sur</item>
+        <item>Bagong Pook</item>
+        <item>San Sebastian (Balagbag)</item>
+        <item>Balintawak</item>
+        <item>Banaybanay</item>
+        <item>Bolbok</item>
+        <item>Bugtong na Pulo</item>
+        <item>Bulacnin</item>
+        <item>Bulaklakan</item>
+        <item>Calamias</item>
+        <item>Cumba</item>
+        <item>Dagatan</item>
+        <item>Duhatan</item>
+        <item>Halang</item>
+        <item>Inosloban</item>
+        <item>Kayumanggi</item>
+        <item>Latag</item>
+        <item>Lodlod</item>
+        <item>Lumbang</item>
+        <item>Mabini</item>
+        <item>Malagonlong</item>
+        <item>Malitlit</item>
+        <item>Marauoy</item>
+        <item>Mataas Na Lupa</item>
+        <item>Munting Pulo</item>
+        <item>Pagolingin Bata</item>
+        <item>Pagolingin East</item>
+        <item>Pagolingin West</item>
+        <item>Pangao</item>
+        <item>Pinagkawitan</item>
+        <item>Pinagtongulan</item>
+        <item>Plaridel</item>
+        <item>Poblacion Barangay 1</item>
+        <item>Poblacion Barangay 10</item>
+        <item>Poblacion Barangay 11</item>
+        <item>Poblacion Barangay 2</item>
+        <item>Poblacion Barangay 3</item>
+        <item>Poblacion Barangay 4</item>
+        <item>Poblacion Barangay 5</item>
+        <item>Poblacion Barangay 6</item>
+        <item>Poblacion Barangay 7</item>
+        <item>Poblacion Barangay 8</item>
+        <item>Poblacion Barangay 9</item>
+        <item>Pusil</item>
+        <item>Quezon</item>
+        <item>Rizal</item>
+        <item>Sabang</item>
+        <item>Sampaguita</item>
+        <item>San Benito</item>
+        <item>San Carlos</item>
+        <item>San Celestino</item>
+        <item>San Francisco</item>
+        <item>San Guillermo</item>
+        <item>San Jose</item>
+        <item>San Lucas</item>
+        <item>San Salvador</item>
+        <item>Sapac</item>
+        <item>Sico</item>
+        <item>Santo Niño</item>
+        <item>Santo Toribio</item>
+        <item>Talisay</item>
+        <item>Tambo</item>
+        <item>Tangob</item>
+        <item>Tanguay</item>
+        <item>Tibig</item>
+        <item>Tipacan</item>
+        <item>Poblacion Barangay 9-A</item>
+        <item>Barangay 12 (Pob.)</item>
+    </array>
 </resources>
