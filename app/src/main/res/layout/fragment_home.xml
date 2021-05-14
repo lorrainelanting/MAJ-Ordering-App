@@ -45,7 +45,7 @@
                 tools:listitem="@layout/item_home_content" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.vitocuaderno.maj.ui.common.LayoutAddToCart
+        <com.lorrainelanting.maj.ui.common.LayoutAddToCart
             android:id="@+id/layoutAddToCart"
             android:layout_width="0dp"
             android:layout_height="0dp"

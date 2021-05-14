@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vitocuaderno.maj">
+    package="com.lorrainelanting.maj">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MajApplication"
+        android:name="com.lorrainelanting.maj.MajApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MAJ">
-        <activity android:name=".ui.checkout.CheckOutActivity" android:label="Check Out" />
-        <activity android:name=".ui.productdetail.ProductDetailActivity" />
-        <activity android:name=".ui.cart.CartActivity" />
+        <activity android:name="com.lorrainelanting.maj.ui.addresses.SetStreetActivity" android:label="Set Street Name" />
+        <activity android:name="com.lorrainelanting.maj.ui.addresses.SetBarangayActivity" android:label="Set Barangay" />
+        <activity android:name="com.lorrainelanting.maj.ui.addresses.SetCityActivity" android:label="Set City"/>
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.lorrainelanting.maj.ui.checkout.CheckOutActivity"
+            android:label="Check Out" />
+        <activity android:name="com.lorrainelanting.maj.ui.productdetail.ProductDetailActivity" />
+        <activity android:name="com.lorrainelanting.maj.ui.cart.CartActivity" />
+        <activity
+            android:name="com.lorrainelanting.maj.ui.SplashActivity"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" android:label="@string/app_name" />
+        <activity
+            android:name="com.lorrainelanting.maj.ui.MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
