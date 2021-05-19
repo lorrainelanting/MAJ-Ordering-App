@@ -12,6 +12,9 @@ interface UserDao {
     @Query("SELECT * FROM user_table WHERE id = :id LIMIT 1")
     fun getUser(id: Int): LiveData<User>
 
+    @Query("SELECT * FROM user_table ORDER BY id ASC LIMIT 1")
+    fun get(): User?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(user: User)
 
