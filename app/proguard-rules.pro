@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# To ensure that retracing stack traces is unambiguous.
+-keepattributes LineNumberTable,SourceFile
