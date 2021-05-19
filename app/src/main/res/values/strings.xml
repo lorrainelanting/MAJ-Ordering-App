@@ -51,10 +51,6 @@
     <string name="exit">Exit</string>
     <!--  Messages  -->
     <string name="txt_empty_cart">There are no items in this cart.</string>
-    <string name="txt_dialog_remove_cart_title">Remove from cart</string>
-    <string name="txt_dialog_remove_cart_body">Are you sure you want to remove the item?</string>
-    <string name="txt_dialog_remove">Remove</string>
-    <string name="txt_dialog_cancel">Cancel</string>
     <string name="txt_continue_shopping">Continue Shopping</string>
     <string name="txt_shipping_fee">Shipping Fee</string>
     <string name="txt_total">Total:</string>
@@ -68,9 +64,20 @@
     <string name="txt_other_notes">Other Notes</string>
     <string name="txt_delivery_address">Delivery Address</string>
 
+    <!--  Dialog  -->
+    <string name="txt_dialog_place_order_title">Place Order</string>
+    <string name="txt_dialog_place_order_body">Are you sure you want to complete the order?</string>
+    <string name="txt_dialog_place_order_positive">Yes</string>
+    <string name="txt_dialog_place_order_negative">No</string>
+
+    <string name="txt_dialog_remove_cart_title">Remove from cart</string>
+    <string name="txt_dialog_remove_cart_body">Are you sure you want to remove the item?</string>
+    <string name="txt_dialog_remove">Remove</string>
+    <string name="txt_dialog_cancel">Cancel</string>
+
+
     <array name="cities">
         <item>Lipa City</item>
-        <item>Malvar City (Not yet supported)</item>
     </array>
 
     <array name="barangays">
