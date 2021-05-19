@@ -4,9 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
@@ -105,7 +105,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
     private fun onCheckOutBtnClick() {
         val intent = Intent(context, CheckOutActivity().javaClass)
-        context?.startActivity(intent)
+        startActivityForResult(intent, 4)
     }
 
     private fun alert(
@@ -128,8 +128,10 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
         alert.show()
         val cancelBtn = alert.getButton(DialogInterface.BUTTON_NEGATIVE)
         val removeBtn = alert.getButton(DialogInterface.BUTTON_POSITIVE)
-        cancelBtn.setTextColor(Color.parseColor("#183C28"))
-        removeBtn.setTextColor(Color.parseColor("#C29813"))
+        context?.let { context ->
+            cancelBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            removeBtn.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryVariant))
+        }
     }
 
     fun setCartFragmentListener(listener: CartFragmentListener) {

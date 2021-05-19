@@ -1,5 +1,6 @@
 package com.lorrainelanting.maj.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.observe
@@ -17,7 +18,7 @@ import com.lorrainelanting.maj.ui.viewpager.ViewPagerAdapter
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragmentListener {
     lateinit var cartRepository: CartRepository
-    val cartContentsLiveData by lazy {
+    private val cartContentsLiveData by lazy {
         cartRepository.getList()
     }
 
@@ -102,6 +103,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
 
     override fun onContinueShoppingClick() {
         navigateToHome()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            2 -> {
+                setResult(2)
+                mPager.currentItem = 2 // OrdersFragment
+            }
+            4 -> {
+                setResult(4)
+                mPager.currentItem = 4 // ProfileFragment
+            }
+        }
     }
 
     /**
