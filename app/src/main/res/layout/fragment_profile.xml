@@ -55,6 +55,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/topGuideline">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextStoreName"
                         android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -71,6 +72,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtStoreName">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextFullName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -123,6 +125,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtLayoutAddress">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextContactNum"
                         android:inputType="phone"
                         android:maxLength="11"
                         android:layout_width="match_parent"
@@ -140,6 +143,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/txtCusMobileNum">
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextNotes"
                         android:inputType="textPostalAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

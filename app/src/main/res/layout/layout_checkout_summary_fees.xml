@@ -7,7 +7,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardSummaryFees"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginVertical="8dp"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +21,7 @@
                 android:text="Subtotal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txtShippingFee"
                 />
             <TextView
                 android:id="@+id/txtResultSubTotal"
@@ -29,6 +30,7 @@
                 android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/txtResultShippingFee"
                 tools:text="275.00"
                 />
 
@@ -40,6 +42,7 @@
                 android:text="@string/txt_shipping_fee"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtSubTotal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 />
             <TextView
                 android:id="@+id/txtResultShippingFee"
@@ -48,6 +51,7 @@
                 android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtResultSubTotal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:text="0.00"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>

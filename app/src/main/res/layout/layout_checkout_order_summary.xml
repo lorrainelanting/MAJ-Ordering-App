@@ -13,28 +13,34 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/imgOrderList"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_order_list"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-            <TextView
-                android:id="@+id/txtPackageLabel"
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:id="@+id/frameTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="4dp"
-                app:layout_constraintStart_toEndOf="@id/imgOrderList"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="@string/txt_order_summary"
-                />
+                >
+                <ImageView
+                    android:id="@+id/imgOrderList"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_order_list"/>
+                <TextView
+                    android:id="@+id/txtPackageLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="36dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="@string/txt_order_summary"
+                    />
+            </FrameLayout>
+
             <FrameLayout
                 android:id="@+id/frameSeparator"
                 android:layout_width="match_parent"
@@ -43,17 +49,18 @@
                 android:background="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgOrderList"
+                app:layout_constraintTop_toBottomOf="@id/frameTitle"
                 />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCheckOutProduct"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/frameSeparator"
-                tools:itemCount="6"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_order" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

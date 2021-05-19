@@ -9,7 +9,9 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="84dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/frameSummaryCheckout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -21,6 +23,9 @@
                 <include
                     android:id="@+id/layoutCustomerDetail"
                     layout="@layout/layout_checkout_customer_detail" />
+
+                <include android:id="@+id/layoutDeliveryOpt"
+                    layout="@layout/layout_checkout_delivery_option"/>
 
                 <include
                     android:id="@+id/layoutOrderSummary"
@@ -65,7 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
-                android:text="@string/txt_place_order"/>
+                android:text="@string/txt_place_order"
+                android:enabled="false"/>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
