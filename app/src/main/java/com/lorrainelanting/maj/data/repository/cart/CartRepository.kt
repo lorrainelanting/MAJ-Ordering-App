@@ -6,11 +6,11 @@ import com.lorrainelanting.maj.data.model.CartContent
 interface CartRepository {
     fun getList() : LiveData<List<CartContent>>
 
-    fun getItem(id: Int) : LiveData<CartContent>
+    fun getItem(id: String) : LiveData<CartContent>
 
     fun add(item: CartContent)
 
     fun update(item: CartContent)
 
-    fun delete(id: Int)
+    fun delete(id: String)
 }

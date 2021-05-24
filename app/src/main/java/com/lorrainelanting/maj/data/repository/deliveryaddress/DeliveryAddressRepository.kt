@@ -6,7 +6,7 @@ import com.lorrainelanting.maj.data.model.DeliveryAddress
 interface DeliveryAddressRepository {
     fun getList() : LiveData<List<DeliveryAddress>>
 
-    fun getDeliveryAddress(id: Int) : LiveData<DeliveryAddress>
+    fun getDeliveryAddress(id: String) : LiveData<DeliveryAddress>
 
     fun saveCity(city: String)
 
@@ -16,5 +16,5 @@ interface DeliveryAddressRepository {
 
     fun update(deliveryAddress: DeliveryAddress)
 
-    fun delete(id: Int)
+    fun delete(id: String)
 }

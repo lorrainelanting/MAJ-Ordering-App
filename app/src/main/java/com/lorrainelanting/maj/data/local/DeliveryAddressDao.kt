@@ -6,13 +6,13 @@ import com.lorrainelanting.maj.data.model.DeliveryAddress
 
 @Dao
 interface DeliveryAddressDao {
-    @Query("SELECT * FROM delivery_address_table ORDER BY id ASC")
+    @Query("SELECT * FROM delivery_address_table ORDER BY createdAtTimeStamp ASC")
     fun getList(): LiveData<List<DeliveryAddress>>
 
     @Query("SELECT * FROM delivery_address_table WHERE id = :id LIMIT 1")
-    fun getAddress(id: Int): LiveData<DeliveryAddress>
+    fun getAddress(id: String): LiveData<DeliveryAddress>
 
-    @Query("SELECT * FROM delivery_address_table ORDER BY id ASC LIMIT 1")
+    @Query("SELECT * FROM delivery_address_table ORDER BY createdAtTimeStamp ASC LIMIT 1")
     fun getDeliveryAddress(): DeliveryAddress?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -25,5 +25,5 @@ interface DeliveryAddressDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM delivery_address_table WHERE id = :id")
-    fun delete(id: Int)
+    fun delete(id: String)
 }

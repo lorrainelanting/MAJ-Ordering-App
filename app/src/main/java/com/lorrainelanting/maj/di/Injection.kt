@@ -2,10 +2,13 @@ package com.lorrainelanting.maj.di
 
 import android.content.Context
 import com.lorrainelanting.maj.data.AppRoomDatabase
+import com.lorrainelanting.maj.data.local.SharedPrefs
 import com.lorrainelanting.maj.data.repository.cart.CartRepository
 import com.lorrainelanting.maj.data.repository.cart.CartRepositoryImpl
 import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
 import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepositoryImpl
+import com.lorrainelanting.maj.data.repository.order.OrderRepository
+import com.lorrainelanting.maj.data.repository.order.OrderRepositoryImpl
 import com.lorrainelanting.maj.data.repository.product.ProductRepository
 import com.lorrainelanting.maj.data.repository.product.ProductRepositoryImpl
 import com.lorrainelanting.maj.data.repository.user.UserRepository
@@ -32,5 +35,14 @@ class Injection {
         fun provideDeliveryAddressRepository(context: Context): DeliveryAddressRepository {
             return DeliveryAddressRepositoryImpl.getInstance(provideAppDatabase(context).deliveryAddressDao())
         }
+
+        fun provideOrderRepository(context: Context): OrderRepository {
+            return OrderRepositoryImpl.getInstance(provideAppDatabase(context).orderDao())
+        }
+
+        fun provideSharedPrefs(context: Context): SharedPrefs {
+            return SharedPrefs.getInstance(context)
+        }
+
     }
 }

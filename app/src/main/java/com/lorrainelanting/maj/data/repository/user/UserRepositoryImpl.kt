@@ -19,14 +19,14 @@ class UserRepositoryImpl private constructor(private val dao: UserDao) : UserRep
 
     override fun getList(): LiveData<List<User>> = dao.getList()
 
-    override fun getUser(id: Int): LiveData<User> = dao.getUser(id)
+    override fun getUser(id: String): LiveData<User> = dao.getUser(id)
 
     override fun save(user: User) {
         val existingUser = dao.get()
 
         if (existingUser == null) {
             val model = User()
-            model.id = 0
+            model.id = "0"
             model.storeName = user.storeName
             model.fullName = user.fullName
             model.contactNum = user.contactNum
@@ -41,5 +41,5 @@ class UserRepositoryImpl private constructor(private val dao: UserDao) : UserRep
 
     override fun update(user: User) = dao.update(user)
 
-    override fun delete(id: Int) = dao.delete(id)
+    override fun delete(id: String) = dao.delete(id)
 }

@@ -6,14 +6,14 @@ import com.lorrainelanting.maj.data.model.CartContent
 
 @Dao
 interface CartContentDao {
-    @Query("SELECT * FROM cart_content_table ORDER BY id ASC")
+    @Query("SELECT * FROM cart_content_table ORDER BY createdAtTimeStamp ASC")
     fun getList(): LiveData<List<CartContent>>
 
     @Query("SELECT * FROM cart_content_table WHERE id = :id LIMIT 1")
-    fun getItem(id: Int): LiveData<CartContent>
+    fun getItem(id: String): LiveData<CartContent>
 
     @Query("SELECT * FROM cart_content_table WHERE productId = :id LIMIT 1")
-    fun getItemByProduct(id: Int): CartContent?
+    fun getItemByProduct(id: String): CartContent?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: CartContent)
@@ -25,5 +25,5 @@ interface CartContentDao {
     suspend fun deleteAll()
 
     @Query("DELETE FROM cart_content_table WHERE id = :id")
-    fun delete(id: Int)
+    fun delete(id: String)
 }

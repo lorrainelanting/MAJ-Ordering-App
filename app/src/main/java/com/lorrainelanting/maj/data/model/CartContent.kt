@@ -5,22 +5,14 @@ import androidx.room.Entity
 @Entity(tableName = "cart_content_table")
 class CartContent : BaseModel() {
     var quantity: Int = 0
-    var productId: Int = -1
-    var productName: String = ""
-    var productImgUrl: String = ""
-    var productDescription: String = ""
-    var productUnitCost: Double = 0.00
-    var productPackQty: String = "${12}pcs. per pack"
+    var productId: String = ""
 
     companion object {
-        fun newInstance(productId: Int, productName: String, productImgUrl: String, quantity: Int, productUnitCost: Double,  productPackQty: String) : CartContent {
+        fun newInstance(id: String, productId: String, quantity: Int): CartContent {
             val cartContent = CartContent()
+            cartContent.id = id
             cartContent.productId = productId
-            cartContent.productName = productName
-            cartContent.productImgUrl = productImgUrl
-            cartContent.productUnitCost = productUnitCost
             cartContent.quantity = quantity
-            cartContent.productPackQty = productPackQty
             return cartContent
         }
     }

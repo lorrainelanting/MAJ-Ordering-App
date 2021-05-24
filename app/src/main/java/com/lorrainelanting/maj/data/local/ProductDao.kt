@@ -9,15 +9,21 @@ import com.lorrainelanting.maj.data.model.Product
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM product_table ORDER BY id ASC")
+    @Query("SELECT * FROM product_table ORDER BY createdAtTimeStamp ASC")
     fun getList(): LiveData<List<Product>>
 
     @Query("SELECT * FROM product_table WHERE id = :id LIMIT 1")
-    fun getItem(id: Int): LiveData<Product>
+    fun getItem(id: String): LiveData<Product>
+
+    @Query("SELECT * FROM product_table WHERE id = :id LIMIT 1")
+    fun get(id: String): Product?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: Product)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(list: List<Product>)
+
     @Query("DELETE FROM product_table")
-    suspend fun deleteAll()
+    fun deleteAll()
 }

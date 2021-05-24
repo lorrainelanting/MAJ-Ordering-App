@@ -19,7 +19,7 @@ class CartRepositoryImpl private constructor(private val dao: CartContentDao): C
 
     override fun getList(): LiveData<List<CartContent>> = dao.getList()
 
-    override fun getItem(id: Int): LiveData<CartContent> = dao.getItem(id)
+    override fun getItem(id: String): LiveData<CartContent> = dao.getItem(id)
 
     override fun add(item: CartContent) {
         val existingItem = dao.getItemByProduct(item.productId)
@@ -34,5 +34,5 @@ class CartRepositoryImpl private constructor(private val dao: CartContentDao): C
 
     override fun update(item: CartContent) = dao.update(item)
 
-    override fun delete(id: Int) = dao.delete(id)
+    override fun delete(id: String) = dao.delete(id)
 }

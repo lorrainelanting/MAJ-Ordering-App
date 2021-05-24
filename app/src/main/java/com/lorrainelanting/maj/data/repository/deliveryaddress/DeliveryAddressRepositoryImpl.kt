@@ -21,14 +21,14 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
     override fun getList(): LiveData<List<DeliveryAddress>> = dao.getList()
 
-    override fun getDeliveryAddress(id: Int): LiveData<DeliveryAddress> = dao.getAddress(id)
+    override fun getDeliveryAddress(id: String): LiveData<DeliveryAddress> = dao.getAddress(id)
 
     override fun saveCity(city: String) {
         val existingAddress = dao.getDeliveryAddress()
 
         if (existingAddress == null) {
             val deliveryAddress = DeliveryAddress()
-            deliveryAddress.id = 0
+            deliveryAddress.id = "0"
             deliveryAddress.city = city
             dao.insert(deliveryAddress)
         } else {
@@ -42,7 +42,7 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
         if (existingAddress == null) {
             val deliveryAddress = DeliveryAddress()
-            deliveryAddress.id = 0
+            deliveryAddress.id = "0"
             deliveryAddress.barangay = barangay
             dao.insert(deliveryAddress)
         } else {
@@ -56,7 +56,7 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
         if (existingAddress == null) {
             val deliveryAddress = DeliveryAddress()
-            deliveryAddress.id = 0
+            deliveryAddress.id = "0"
             deliveryAddress.streetName = street
             dao.insert(deliveryAddress)
         } else {
@@ -67,5 +67,5 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
     override fun update(deliveryAddress: DeliveryAddress) = dao.update(deliveryAddress)
 
-    override fun delete(id: Int) = dao.delete(id)
+    override fun delete(id: String) = dao.delete(id)
 }
