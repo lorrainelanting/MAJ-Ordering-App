@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -57,6 +58,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
     implementation 'androidx.navigation:navigation-runtime:2.2.2'
+
+    // Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    // Cloud Firestore library
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     // Room components
     implementation "androidx.room:room-ktx:2.2.5"
