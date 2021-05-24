@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_cart"
-        android:title="@string/menu_cart"
-        android:icon="@drawable/ic_trolley"
-        app:showAsAction="always" />
-</menu>
