@@ -51,6 +51,7 @@
     <string name="exit">Exit</string>
     <!--  Messages  -->
     <string name="txt_empty_cart">There are no items in this cart.</string>
+    <string name="txt_empty_active_order">There are no orders placed yet.</string>
     <string name="txt_continue_shopping">Continue Shopping</string>
     <string name="txt_shipping_fee">Shipping Fee</string>
     <string name="txt_total">Total:</string>
@@ -65,8 +66,8 @@
     <string name="txt_delivery_address">Delivery Address</string>
     <string name="quantity_with_colon">Quantity:</string>
     <string name="unit_price_with_colon">Unit Price:</string>
-    <string name="txt_active_orders">Active Order(s)</string>
-    <string name="txt_past_orders">Past Orders</string>
+    <string name="txt_orders_active">Active</string>
+    <string name="txt_orders_completed">Completed</string>
 
     <!--  Place order confirmation dialog -->
     <string name="txt_dialog_place_order_title">Place Order</string>
@@ -93,6 +94,7 @@
     <string name="txt_order_details">Order Details</string>
     <string name="order_details">Test. Ignore. \n Product: %1$s \n Quantity: %2$s \n Pickup Date: %3$s \n Shipping Fee: %4$s \n Total: %5$s</string>
     <string name="btn_reorder">Reorder</string>
+    <string name="txt_select_delivery_option">Select Delivery Option (required)</string>
 
     <array name="cities">
         <item>Lipa City</item>
