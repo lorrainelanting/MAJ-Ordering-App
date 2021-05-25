@@ -1,9 +1,7 @@
 package com.lorrainelanting.maj.ui.checkout
 
 import androidx.lifecycle.ViewModel
-import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.Order
-import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.data.repository.cart.CartRepository
 import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
 import com.lorrainelanting.maj.data.repository.order.OrderRepository
@@ -29,7 +27,7 @@ class CheckOutViewModel(
         return Order.newInstance(
             id = id,
             deliveryOption = Constants.DELIVER,
-            status = Constants.PREPARING,
+            status = Constants.DELIVERED,
             productId = content.cartContent.productId,
             productName = content.product.name,
             productImgUrl = content.product.imgUrl,

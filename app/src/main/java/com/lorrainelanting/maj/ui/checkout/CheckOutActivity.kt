@@ -113,9 +113,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
                                 val order: Order = viewModel.ordersContentNewInstance("1", cartContent)
                                 viewModel.orderRepository.save(order)
 
-                                val order1: Order = viewModel.ordersContentNewInstance("2", cartContent)
-                                viewModel.orderRepository.save(order1)
-
                                 setResult(2)
                                 finish()
                             } else {
