@@ -48,9 +48,8 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
             }
         )
 
-        binding.txtProductName.text = product.description
+        binding.txtProductName.text = product.name
         binding.txtUnitCost.text = CurrencyUtil.format(product.price)
-        binding.txtProductDescription.text = product.description
         binding.txtProductPackQty.text = product.packQty
 
         binding.btnAddToCart.setOnClickListener {
