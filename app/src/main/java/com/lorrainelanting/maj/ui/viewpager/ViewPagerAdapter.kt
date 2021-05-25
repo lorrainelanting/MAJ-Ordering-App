@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.ui.home.HomeFragment
 import com.lorrainelanting.maj.ui.LoyaltyPointsFragment
-import com.lorrainelanting.maj.ui.OrdersFragment
+import com.lorrainelanting.maj.ui.order.OrdersFragment
 import com.lorrainelanting.maj.ui.profile.ProfileFragment
 import com.lorrainelanting.maj.ui.cart.CartFragment
 

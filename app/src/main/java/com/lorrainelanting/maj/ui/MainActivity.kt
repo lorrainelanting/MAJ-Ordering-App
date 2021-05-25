@@ -10,16 +10,24 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.badge.BadgeDrawable
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
+import com.lorrainelanting.maj.data.model.Order
 import com.lorrainelanting.maj.data.repository.cart.CartRepository
+import com.lorrainelanting.maj.data.repository.order.OrderRepository
 import com.lorrainelanting.maj.databinding.ActivityMainBinding
 import com.lorrainelanting.maj.di.Injection
+import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.cart.CartFragment
 import com.lorrainelanting.maj.ui.viewpager.ViewPagerAdapter
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragmentListener {
     lateinit var cartRepository: CartRepository
+    lateinit var orderRepository: OrderRepository
     private val cartContentsLiveData by lazy {
         cartRepository.getList()
+    }
+
+    private val ordersContentLiveData by lazy {
+        orderRepository.getList()
     }
 
     private lateinit var navController: NavController
@@ -39,7 +47,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
         cartContentsLiveData.observe(this) { it ->
             setBadgeCart(it)
         }
-        setBadgeOrders()
+
+        orderRepository = Injection.provideOrderRepository(this)
+        ordersContentLiveData.observe(this) {
+            setBadgeOrders(it)
+        }
+
 //        ViewPager nav listener
         mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
@@ -79,10 +92,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
             }
             true
         }
-
-        binding.layoutToolbar.btnBack.setOnClickListener {
-            onBackPressed()
-        }
     }
 
     //Setting Up the back button
@@ -105,6 +114,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
         navigateToHome()
     }
 
+    override fun onSetProfileClick() {
+        navigateToProfile()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
@@ -124,20 +137,30 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
      * */
 
     private fun setBadgeCart(contents: List<CartContent>) {
-        if (!contents.isNullOrEmpty()) {
-            badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentCart)
+        badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentCart)
+        if (contents.isNotEmpty()) {
             badge.isVisible = true
             badge.number = contents.size
+        } else {
+            badge.isVisible = false
         }
     }
 
-    private fun setBadgeOrders() {
+    private fun setBadgeOrders(contents: List<Order>) {
         badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentOrders)
-        badge.isVisible = true
-        badge.number = 1 //    TODO: Set active order size.
+        if (contents.isNotEmpty()) {
+            badge.isVisible = true
+            badge.number = contents.size
+        } else {
+            badge.isVisible = false
+        }
     }
 
     private fun navigateToHome() {
         mPager.currentItem = 0
+    }
+
+    private fun navigateToProfile() {
+        mPager.currentItem = 4
     }
 }

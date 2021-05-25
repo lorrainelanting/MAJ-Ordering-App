@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.databinding.ActivitySplashBinding
+import com.lorrainelanting.maj.ui.base.BaseActivity
 
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
