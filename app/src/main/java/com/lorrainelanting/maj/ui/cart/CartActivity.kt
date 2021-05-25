@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.databinding.ActivityCartBinding
-import com.lorrainelanting.maj.ui.BaseActivity
+import com.lorrainelanting.maj.ui.base.BaseActivity
 
 
 class CartActivity : BaseActivity<ActivityCartBinding>() {
@@ -20,23 +20,7 @@ class CartActivity : BaseActivity<ActivityCartBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = CartContentsAdapter(cartContents)
-        binding.rvCartContents.adapter = adapter
-        fetchCartItems()
-    }
-
-    private fun fetchCartItems() {
-
-//        TODO: Show loading
-        for (i in 0..10) {
-            val cartContent = CartContent()
-            cartContent.productImgUrl = ""
-            cartContent.productName = "Coke mismo"
-            cartContent.productUnitCost = 135.00
-            cartContent.quantity = 3
-            cartContents.add(cartContent)
-        }
-//        TODO: Hide loading
-        adapter?.notifyDataSetChanged()
+//        adapter = CartContentsAdapter(cartContents)
+//        binding.rvCartContents.adapter = adapter
     }
 }

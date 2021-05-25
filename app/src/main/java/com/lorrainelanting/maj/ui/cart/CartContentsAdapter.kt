@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
+import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.databinding.ItemCartContentBinding
 
 class CartContentsAdapter(
-    private var dataSet: List<CartContent>,
+    private var dataSet: List<Content>,
     private val cartContentsAdapterListener: CartContentsAdapterListener? = null
 ) : RecyclerView.Adapter<CartContentsAdapter.CartContentViewHolder>() {
 
@@ -20,31 +21,37 @@ class CartContentsAdapter(
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
-        fun bind(content: CartContent) {
+        fun bind(content: Content) {
             var picasso = Picasso.get()
-            picasso.load(content.productImgUrl).placeholder(R.color.colorSecondary)
+
+            picasso.load(content.product.imgUrl).placeholder(R.color.colorSecondary)
                 .error(R.drawable.ic_soft_drink).into(binding.imgProduct)
-            binding.txtProductName.text = content.productName
-            binding.txtUnitCost.text = CurrencyUtil.format(content.productUnitCost)
-            binding.txtProductQty.text = content.quantity.toString()
+            binding.txtProductName.text = content.product.name
+            binding.txtUnitCost.text = CurrencyUtil.format(content.product.price)
+            binding.txtProductQty.text = content.cartContent.quantity.toString()
 
             binding.imgProduct.setOnClickListener {
-                cartContentsAdapterListener?.onItemClick(content)
+                cartContentsAdapterListener?.onItemClick(content.cartContent)
             }
 
             binding.btnDeleteCartItem.setOnClickListener {
-                cartContentsAdapterListener?.onDeleteBtnClick(content)
+                cartContentsAdapterListener?.onDeleteBtnClick(content.cartContent)
             }
 
             binding.btnMinus.setOnClickListener {
-                cartContentsAdapterListener?.onMinusBtnClick(content)
+                cartContentsAdapterListener?.onMinusBtnClick(content.cartContent)
             }
 
             binding.btnAdd.setOnClickListener {
-                cartContentsAdapterListener?.onAddBtnClick(content)
+                cartContentsAdapterListener?.onAddBtnClick(content.cartContent)
             }
         }
     }
+
+    class Content(
+        val cartContent: CartContent,
+        val product: Product
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartContentViewHolder {
         val content =
@@ -87,7 +94,7 @@ class CartContentsAdapter(
         fun onAddBtnClick(cartContent: CartContent)
     }
 
-    fun update(dataSet: List<CartContent>) {
+    fun update(dataSet: List<Content>) {
         this.dataSet = dataSet
         notifyDataSetChanged()
     }

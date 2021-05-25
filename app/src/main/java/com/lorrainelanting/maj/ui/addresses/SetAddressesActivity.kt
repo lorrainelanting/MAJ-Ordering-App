@@ -5,7 +5,7 @@ import android.widget.SearchView
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.DeliveryAddress
 import com.lorrainelanting.maj.databinding.ActivitySetAddressesBinding
-import com.lorrainelanting.maj.ui.BaseActivity
+import com.lorrainelanting.maj.ui.base.BaseActivity
 
 abstract class SetAddressesActivity : BaseActivity<ActivitySetAddressesBinding>(), AddressAdapter.AddressAdapterListener {
     protected var list = ArrayList<String>()
@@ -27,10 +27,6 @@ abstract class SetAddressesActivity : BaseActivity<ActivitySetAddressesBinding>(
 
         val delAddress = DeliveryAddress()
         viewModel.deliveryAddressLiveData = viewModel.repository.getDeliveryAddress(delAddress.id)
-
-        binding.layoutToolbarSearch.btnBack.setOnClickListener {
-            onBackPressed()
-        }
 
         binding.layoutToolbarSearch.searchViewAddress.setOnQueryTextListener(onSearchQuery())
     }

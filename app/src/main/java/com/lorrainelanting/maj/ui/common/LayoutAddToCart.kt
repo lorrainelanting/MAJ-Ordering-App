@@ -62,7 +62,7 @@ class LayoutAddToCart(context: Context, attrs: AttributeSet) : FrameLayout(conte
         val btnAddToCart = findViewById<Button>(R.id.btnAddToCart)
 
         picasso.load(product.imgUrl).placeholder(R.color.colorSecondary).error(R.drawable.ic_soft_drink).into(imgProduct)
-        unitProductPrice.text = CurrencyUtil.format(product.unitCost)
+        unitProductPrice.text = CurrencyUtil.format(product.price)
         productDescription.text = "${product.description} ${product.packQty}"
         tvQuantity.text = quantity.toString()
 

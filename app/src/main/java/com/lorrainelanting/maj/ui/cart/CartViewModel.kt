@@ -1,18 +1,27 @@
 package com.lorrainelanting.maj.ui.cart
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.lorrainelanting.maj.data.repository.cart.CartRepository
-import com.lorrainelanting.maj.di.Injection
+import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
+import com.lorrainelanting.maj.data.repository.product.ProductRepository
+import com.lorrainelanting.maj.data.repository.user.UserRepository
 
-class CartViewModel: ViewModel() {
-    lateinit var repository: CartRepository
-
+class CartViewModel(
+    val cartRepository: CartRepository,
+    val productRepository: ProductRepository,
+    val userRepository: UserRepository,
+    val deliveryAddressRepository: DeliveryAddressRepository
+) :
+    ViewModel() {
     val cartContentsLiveData by lazy {
-        repository.getList()
+        cartRepository.getList()
     }
 
-    fun injectCart(context: Context) {
-        repository = Injection.provideCartRepository(context)
+    val userLiveData by lazy {
+        userRepository.getList()
+    }
+
+    val deliveryAddressLiveData by lazy {
+        deliveryAddressRepository.getList()
     }
 }

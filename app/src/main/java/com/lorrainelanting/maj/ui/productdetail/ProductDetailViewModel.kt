@@ -25,12 +25,9 @@ class ProductDetailViewModel: ViewModel() {
 
     fun cartContentNewInstance(product: Product, quantity: Int = 0) : CartContent {
         return CartContent.newInstance(
+            id = System.currentTimeMillis().toString(),
             productId = product.id,
-            productName = product.name,
-            productImgUrl = product.imgUrl,
-            productUnitCost = product.unitCost,
             quantity = quantity,
-            productPackQty = product.packQty
         )
     }
 }

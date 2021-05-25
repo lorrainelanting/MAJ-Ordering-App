@@ -3,7 +3,7 @@ package com.lorrainelanting.maj.ui.addresses
 import android.os.Bundle
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.databinding.ActivitySetStreetBinding
-import com.lorrainelanting.maj.ui.BaseActivity
+import com.lorrainelanting.maj.ui.base.BaseActivity
 
 class SetStreetActivity : BaseActivity<ActivitySetStreetBinding>() {
     private var viewModel = DeliveryAddressViewModel()
@@ -19,10 +19,6 @@ class SetStreetActivity : BaseActivity<ActivitySetStreetBinding>() {
             viewModel.repository.saveStreet(streetName)
             setResult(1)
             finish()
-        }
-
-        binding.layoutToolbar.btnBack.setOnClickListener {
-            onBackPressed()
         }
     }
 }

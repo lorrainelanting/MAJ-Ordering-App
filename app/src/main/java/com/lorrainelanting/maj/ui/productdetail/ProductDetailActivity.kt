@@ -11,7 +11,7 @@ import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.databinding.ActivityProductDetailBinding
-import com.lorrainelanting.maj.ui.BaseActivity
+import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.common.LayoutAddToCart
 
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
@@ -28,7 +28,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
         viewModel.injectProduct(this)
         viewModel.injectCart(this)
         intent?.extras?.let {
-            viewModel.productLiveData = viewModel.repository.getItem(it.getInt(ID))
+            viewModel.productLiveData = viewModel.repository.getItem(it.getString(ID, "") ?: "")
             viewModel.productLiveData.observe(this) { it ->
                 bindData(it)
             }
@@ -49,7 +49,7 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
         )
 
         binding.txtProductName.text = product.description
-        binding.txtUnitCost.text = CurrencyUtil.format(product.unitCost)
+        binding.txtUnitCost.text = CurrencyUtil.format(product.price)
         binding.txtProductDescription.text = product.description
         binding.txtProductPackQty.text = product.packQty
 

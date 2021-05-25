@@ -10,7 +10,7 @@ import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.databinding.FragmentHomeBinding
-import com.lorrainelanting.maj.ui.BaseFragment
+import com.lorrainelanting.maj.ui.base.BaseFragment
 import com.lorrainelanting.maj.ui.productdetail.ProductDetailActivity
 import com.lorrainelanting.maj.ui.common.LayoutAddToCart
 

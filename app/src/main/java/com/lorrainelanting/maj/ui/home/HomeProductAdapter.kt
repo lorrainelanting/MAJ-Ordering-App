@@ -36,7 +36,7 @@ class HomeProductAdapter(
             )
 
             binding.txtProductDescription.text = content.description
-            binding.txtUnitCost.text = CurrencyUtil.format(content.unitCost)
+            binding.txtUnitCost.text = CurrencyUtil.format(content.price)
             binding.txtProductPackQty.text = content.packQty
 
             binding.imgProduct.setOnClickListener { item ->

@@ -8,7 +8,7 @@ import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.User
 import com.lorrainelanting.maj.databinding.FragmentProfileBinding
-import com.lorrainelanting.maj.ui.BaseFragment
+import com.lorrainelanting.maj.ui.base.BaseFragment
 import com.lorrainelanting.maj.ui.addresses.SetCityActivity
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
