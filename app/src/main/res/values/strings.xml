@@ -63,18 +63,36 @@
     <string name="txt_house_number_building_and_street_name">House Number, Building and Street Name</string>
     <string name="txt_other_notes">Other Notes</string>
     <string name="txt_delivery_address">Delivery Address</string>
+    <string name="quantity_with_colon">Quantity:</string>
+    <string name="unit_price_with_colon">Unit Price:</string>
+    <string name="txt_active_orders">Active Order(s)</string>
+    <string name="txt_past_orders">Past Orders</string>
 
-    <!--  Dialog  -->
+    <!--  Place order confirmation dialog -->
     <string name="txt_dialog_place_order_title">Place Order</string>
     <string name="txt_dialog_place_order_body">Are you sure you want to complete the order?</string>
     <string name="txt_dialog_place_order_positive">Yes</string>
     <string name="txt_dialog_place_order_negative">No</string>
 
+    <!--  Confirm Profile setup dialog -->
+    <string name="txt_dialog_set_profile_title">Setup Profile</string>
+    <string name="txt_dialog_set_profile_body">Please setup your profile.</string>
+    <string name="txt_dialog_set_profile_positive">Go to Profile</string>
+    <string name="txt_dialog_set_profile_negative">Cancel</string>
+
+    <!--  Remove Cart Content dialog -->
     <string name="txt_dialog_remove_cart_title">Remove from cart</string>
     <string name="txt_dialog_remove_cart_body">Are you sure you want to remove the item?</string>
     <string name="txt_dialog_remove">Remove</string>
     <string name="txt_dialog_cancel">Cancel</string>
 
+    <!--    Placing Order-->
+    <string name="new_order">New Order</string>
+    <string name="txt_customer_info">Customer Details</string>
+    <string name="customer_details">Full Name: %1$s \n Delivery Address: %2$s \n Contact Number: %3$s  \n\n </string>
+    <string name="txt_order_details">Order Details</string>
+    <string name="order_details">Test. Ignore. \n Product: %1$s \n Quantity: %2$s \n Pickup Date: %3$s \n Shipping Fee: %4$s \n Total: %5$s</string>
+    <string name="btn_reorder">Reorder</string>
 
     <array name="cities">
         <item>Lipa City</item>

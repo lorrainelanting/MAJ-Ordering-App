@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_loyalty_points" />
     <fragment
         android:id="@+id/itemFragmentOrders"
-        android:name="com.lorrainelanting.maj.ui.OrdersFragment"
+        android:name="com.lorrainelanting.maj.ui.order.OrdersFragment"
         android:label="Orders"
         tools:layout="@layout/fragment_orders" />
     <fragment
