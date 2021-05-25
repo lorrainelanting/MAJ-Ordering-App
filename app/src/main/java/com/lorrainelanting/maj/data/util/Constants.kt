@@ -11,6 +11,7 @@ class Constants {
         // Order Status
         const val PREPARING: String = "Preparing"
         const val OUT_FOR_DELIVERY: String = "Out for Delivery"
+        const val READY_FOR_PICK_UP: String = "Ready for Pick-up"
         const val DELIVERED: String = "Delivered"
         const val PICKED_UP: String = "Picked-Up"
     }
