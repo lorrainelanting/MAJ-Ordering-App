@@ -1,4 +1,4 @@
-package com.lorrainelanting.maj.ui
+package com.lorrainelanting.maj.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
