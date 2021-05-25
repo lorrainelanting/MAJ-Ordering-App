@@ -13,12 +13,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/colorSecondaryAccent"
-            app:layout_constraintTop_toBottomOf="@id/layoutToolbar"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/navBottom"/>
-
-        <include android:id="@+id/layoutToolbar" layout="@layout/layout_toolbar_empty"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navBottom"

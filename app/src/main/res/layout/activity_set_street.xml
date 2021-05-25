@@ -8,8 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.addresses.SetStreetActivity">
 
-        <include android:id="@+id/layoutToolbar" layout="@layout/layout_toolbar_empty"/>
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="348dp"
             android:layout_height="wrap_content"
@@ -18,7 +16,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutToolbar">
+            app:layout_constraintTop_toTopOf="parent">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtAddressHouse"
                 android:inputType="textPostalAddress"

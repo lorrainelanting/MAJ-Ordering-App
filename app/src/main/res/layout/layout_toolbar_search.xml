@@ -11,20 +11,12 @@
             android:layout_height="?android:actionBarSize"
             android:background="@color/white"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-            android:layout_gravity="start|top">
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_back_button"
-                android:padding="4dp"
-                app:tint="@color/gray"
-                tools:ignore="ContentDescription" />
+            android:layout_gravity="clip_horizontal">
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchViewAddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginVertical="8dp"
                 app:queryHint="Search Here"
                 app:iconifiedByDefault="false"/>
