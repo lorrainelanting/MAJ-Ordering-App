@@ -4,20 +4,23 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.observe
+import com.google.android.material.tabs.TabLayout
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.databinding.FragmentOrdersBinding
 import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseFragment
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
-    OrdersActiveContentAdapter.AdapterCalculation,
-    OrdersPastContentAdapter.PastContentAdapterCalculation {
+    OrdersContentAdapter.OrdersContentAdapterCalculation {
 
     lateinit var viewModel: OrderViewModel
 
-    var adapterActiveOrders: OrdersActiveContentAdapter? = null
-    var adapterPastOrders: OrdersPastContentAdapter?= null
+    var adapter: OrdersContentAdapter? = null
 
+    companion object {
+        const val ACTIVE = 0
+        const val COMPLETED = 1
+    }
     override fun getLayoutId(): Int = R.layout.fragment_orders
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,20 +29,46 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapterActiveOrders = OrdersActiveContentAdapter(emptyList(), this)
-        binding.layoutActiveOrders.rvOrdersActiveContent.adapter = adapterActiveOrders
-
-        adapterPastOrders = OrdersPastContentAdapter(emptyList(), this)
-        binding.layoutPastOrders.rvOrdersPastContent.adapter = adapterPastOrders
+        adapter = OrdersContentAdapter(emptyList(), this)
+        binding.rvOrdersContent.adapter = adapter
 
         viewModel.ordersContentLiveData.observe(viewLifecycleOwner) { orders ->
-            adapterActiveOrders?.update(orders)
-            adapterPastOrders?.update(orders)
-            if (orders.isNotEmpty()) {
-                binding.layoutActiveOrders.root.visibility = View.VISIBLE
-                binding.layoutActiveOrders.txtActiveOrderCount.text = orders.size.toString()
+            adapter?.update(orders)
+
+//            TODO: Show empty banner base on order status filter
+            if (orders.isEmpty()) {
+                binding.layoutCommonBanner.imgEmptyContainer.setImageResource(R.drawable.ic_nav_orders)
+                binding.layoutCommonBanner.txtEmptyContainer.text = resources.getString(R.string.txt_empty_active_order)
+
+                binding.layoutCommonBanner.root.visibility = View.VISIBLE
+                binding.rvOrdersContent.visibility = View.GONE
+            } else {
+                binding.layoutCommonBanner.root.visibility = View.GONE
+                binding.rvOrdersContent.visibility = View.VISIBLE
             }
         }
+
+        adapter?.setOrderStatus(binding.tabOrderStatus.selectedTabPosition)
+        binding.tabOrderStatus.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    COMPLETED -> {
+                        adapter?.setOrderStatus(COMPLETED)
+                    }
+                    else -> {
+                        adapter?.setOrderStatus(ACTIVE)
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                //                TODO("Not yet implemented")
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+//                TODO("Not yet implemented")
+            }
+        })
     }
 
     override fun onAttach(context: Context) {

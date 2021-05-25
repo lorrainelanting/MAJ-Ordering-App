@@ -6,8 +6,8 @@ import com.lorrainelanting.maj.data.util.Constants
 @Entity(tableName = "order_table")
 class Order : BaseModel() {
     var quantity: Int = 0
-    var deliveryOption: Int = Constants.PICK_UP
-    var status: String = Constants.PREPARING
+    var deliveryOption: Int = -1
+    var status: String = ""
     var productId: String = ""
     var productName: String = ""
     var productImgUrl: String = ""

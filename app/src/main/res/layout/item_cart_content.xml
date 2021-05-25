@@ -17,6 +17,7 @@
                 android:id="@+id/imgProduct"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 android:contentDescription="@string/product_cart_item"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

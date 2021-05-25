@@ -55,24 +55,13 @@
             app:layout_constraintTop_toBottomOf="@id/txtProductName"/>
 
         <TextView
-            android:id="@+id/txtProductDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:text="Coke Mismo"
-            android:textColor="@color/colorSecondaryVariant"
-            android:layout_marginHorizontal="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtUnitCost"/>
-
-        <TextView
             android:id="@+id/txtProductPackQty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorSecondaryVariant"
             android:layout_marginHorizontal="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtProductDescription"/>
+            app:layout_constraintTop_toBottomOf="@id/txtUnitCost"/>
 
         <FrameLayout
             android:layout_width="0dp"
