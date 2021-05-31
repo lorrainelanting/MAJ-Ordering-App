@@ -6,6 +6,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableString
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -66,12 +68,17 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
             } else {
                 binding.layoutUserBanner.root.visibility = View.VISIBLE
                 binding.layoutCustomerDetail.root.visibility = View.GONE
+
             }
 
-            binding.layoutUserBanner.btnUpdateNow.setOnClickListener {
+            binding.layoutUserBanner.root.setOnClickListener {
                 setResult(4)
                 finish()
             }
+            binding.layoutUserBanner.txtWarningMessage.setText(
+                SpannableString(Html.fromHtml("Please complete your user profile first. <br/><b><u>Update Now</u></b>")),
+                TextView.BufferType.SPANNABLE
+            )
 
             for (user in list) {
                 if (user.contactNum != "" || user.fullName != "") {
