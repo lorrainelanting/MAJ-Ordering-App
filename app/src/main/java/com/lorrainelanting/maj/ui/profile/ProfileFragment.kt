@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     for (user in list) {
                         binding.editTextStoreName.setText(user.storeName)
                         binding.editTextFullName.setText(user.fullName)
-                        binding.editTextContactNum.setText(user.contactNum.toString())
+                        binding.editTextContactNum.setText(user.contactNum)
                     }
                 }
             }
@@ -64,7 +64,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             var user = User()
             user.storeName = binding.editTextStoreName.text.toString()
             user.fullName = binding.editTextFullName.text.toString()
-            user.contactNum = binding.editTextContactNum.text.toString().toLong()
+            user.contactNum = binding.editTextContactNum.text.toString()
             viewModel.userRepository.save(user)
 
         }

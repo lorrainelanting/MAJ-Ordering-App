@@ -8,6 +8,6 @@ class User: BaseModel() {
 //    var lastName: String = ""
 //    var firstName: String = ""
 //    var middleInitial: String = ""
-    var contactNum: Long = 0L
+    var contactNum: String = ""
     var storeName: String = ""
 }
