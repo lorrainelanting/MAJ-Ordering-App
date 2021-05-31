@@ -24,8 +24,13 @@
                     android:id="@+id/layoutCustomerDetail"
                     layout="@layout/layout_checkout_customer_detail" />
 
-                <include android:id="@+id/layoutDeliveryOpt"
-                    layout="@layout/layout_checkout_delivery_option"/>
+                <include
+                    android:id="@+id/layoutUserBanner"
+                    layout="@layout/layout_checkout_banner"
+                    android:visibility="gone"/>
+
+                <include android:id="@+id/layoutDeliveryDetails"
+                    layout="@layout/layout_checkout_delivery_details"/>
 
                 <include
                     android:id="@+id/layoutOrderSummary"
