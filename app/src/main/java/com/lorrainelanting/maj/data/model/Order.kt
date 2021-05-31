@@ -1,19 +1,25 @@
 package com.lorrainelanting.maj.data.model
 
 import androidx.room.Entity
-import com.lorrainelanting.maj.data.util.Constants
 
 @Entity(tableName = "order_table")
 class Order : BaseModel() {
     var quantity: Int = 0
     var deliveryOption: Int = -1
     var status: String = ""
+//    product details
     var productId: String = ""
     var productName: String = ""
     var productImgUrl: String = ""
     var productDescription: String = ""
     var productPrice: Double = 0.00
     var productPackQty: String = "${12}pcs. per pack"
+//    Customer info
+    var customerName: String = ""
+    var customerContactNum: String = ""
+    var deliveryAddress: String = ""
+    var deliveryDate: Long = System.currentTimeMillis() / 1000
+
 
     companion object {
         fun newInstance(
@@ -25,7 +31,11 @@ class Order : BaseModel() {
             productImgUrl: String,
             quantity: Int,
             productPrice: Double,
-            productPackQty: String
+            productPackQty: String,
+            customerName: String,
+            customerContactNum: String,
+            deliveryAddress: String,
+            deliveryDate: Long
         ): Order {
             val order = Order()
             order.id = id
@@ -38,6 +48,11 @@ class Order : BaseModel() {
             order.productImgUrl = productImgUrl
             order.productPrice = productPrice
             order.productPackQty = productPackQty
+//            Customer Info
+            order.customerName = customerName
+            order.customerContactNum = customerContactNum
+            order.deliveryAddress = deliveryAddress
+            order.deliveryDate = deliveryDate
             return order
         }
     }
