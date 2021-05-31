@@ -14,8 +14,8 @@ android {
         applicationId "com.lorrainelanting.maj"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 3
-        versionName "0.1.0"
+        versionCode 4
+        versionName "0.1.0"  // format: major.minor.patch
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
