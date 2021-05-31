@@ -47,12 +47,12 @@
                 app:layout_constraintStart_toEndOf="@id/imgProduct"
                 app:layout_constraintTop_toBottomOf="@id/txtProductDescription"
                 app:layout_constraintBottom_toTopOf="@id/txtQuantity"
-                android:text="Unit Price:"/>
+                style="@style/TextBlurred"
+                android:text="@string/unit_price_with_colon"/>
             <TextView
                 android:id="@+id/txtValUnitCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toEndOf="@id/txtUnitPrice"
@@ -68,12 +68,12 @@
                 app:layout_constraintStart_toEndOf="@id/imgProduct"
                 app:layout_constraintTop_toBottomOf="@id/txtUnitPrice"
                 app:layout_constraintBottom_toTopOf="@id/txtTotal"
-                android:text="Quantity:"/>
+                style="@style/TextBlurred"
+                android:text="@string/quantity_with_colon"/>
             <TextView
                 android:id="@+id/txtResultQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
                 android:textSize="16sp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintEnd_toEndOf="@id/txtValUnitCost"
@@ -89,6 +89,7 @@
                 app:layout_constraintStart_toEndOf="@id/imgProduct"
                 app:layout_constraintTop_toBottomOf="@id/txtQuantity"
                 app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/TextBlurred"
                 android:text="@string/txt_total"
                 />
 

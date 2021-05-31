@@ -21,6 +21,10 @@
         <item name="android:textColor">@color/gray</item>
     </style>
 
+    <style name="TextSecondary" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:textColor">@color/colorSecondaryVariant</item>
+    </style>
+
     <style name="PrimaryButton" parent="Widget.AppCompat.Button">
         <item name="android:backgroundTint">@color/colorSecondary</item>
         <item name="android:textColor">@color/colorPrimary</item>

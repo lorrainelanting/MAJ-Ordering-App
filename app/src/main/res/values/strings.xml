@@ -40,7 +40,7 @@
     <string name="orders">Orders</string>
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
-    <string name="coming_soon">Coming soon.</string>
+    <string name="coming_soon">Coming soon</string>
     <string name="points">Loyalty Points</string>
     <string name="product_image">Product Image</string>
     <string name="btn_add_to_cart">Add to Cart</string>
@@ -68,10 +68,11 @@
     <string name="unit_price_with_colon">Unit Price:</string>
     <string name="txt_orders_active">Active</string>
     <string name="txt_orders_completed">Completed</string>
+    <string name="txt_set_desired_date">Set Desired Delivery/Pick-up Date</string>
 
     <!--  Place order confirmation dialog -->
     <string name="txt_dialog_place_order_title">Place Order</string>
-    <string name="txt_dialog_place_order_body">Are you sure you want to complete the order?</string>
+    <string name="txt_dialog_place_order_body">Are you sure you want to place the order?</string>
     <string name="txt_dialog_place_order_positive">Yes</string>
     <string name="txt_dialog_place_order_negative">No</string>
 
@@ -90,11 +91,14 @@
     <!--    Placing Order-->
     <string name="new_order">New Order</string>
     <string name="txt_customer_info">Customer Details</string>
-    <string name="customer_details">Full Name: %1$s \n Delivery Address: %2$s \n Contact Number: %3$s  \n\n </string>
     <string name="txt_order_details">Order Details</string>
-    <string name="order_details">Test. Ignore. \n Product: %1$s \n Quantity: %2$s \n Pickup Date: %3$s \n Shipping Fee: %4$s \n Total: %5$s</string>
+    <string name="sms_order">MAJ pa-order. (%1$s)\n%2$s (qty) - %3$s\n%4$s: %5$s\n\n—— %6$s (%7$s)\n%8$s\n\nSalamat!</string>
     <string name="btn_reorder">Reorder</string>
     <string name="txt_select_delivery_option">Select Delivery Option (required)</string>
+    <string name="txt_your_desired_delivery_date_is">Your desired delivery date is:</string>
+    <string name="deliver_to_address">Deliver to address</string>
+    <string name="pick_up_in_store">Pick-up in store</string>
+    <string name="unit_price">Unit Price:</string>
 
     <array name="cities">
         <item>Lipa City</item>

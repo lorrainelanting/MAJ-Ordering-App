@@ -17,13 +17,14 @@
             <ImageView
                 android:id="@+id/imgProduct"
                 android:layout_width="0dp"
-                android:layout_height="118dp"
+                android:layout_height="128dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:contentDescription="TODO"
                 app:layout_constraintBottom_toTopOf="@+id/txtUnitCost"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@color/colorSecondary"
                 />
 
             <TextView

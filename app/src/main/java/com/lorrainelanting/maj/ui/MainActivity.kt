@@ -38,6 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mPager = binding.viewPager
 
         mPager = binding.viewPager
