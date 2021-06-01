@@ -37,7 +37,7 @@ class OrdersContentAdapter(
                         CurrencyUtil.format(total)
                     }
 
-            if (order.status == Constants.PLACED_ORDER) {
+            if (order.status == Constants.STATUS_PLACED_ORDER) {
                 binding.btnReorder.visibility = View.GONE
             } else {
                 binding.btnReorder.visibility = View.VISIBLE
@@ -80,12 +80,12 @@ class OrdersContentAdapter(
         return when (orderType) {
             ACTIVE_ORDERS -> {
                 dataset.filter {
-                    it.status == Constants.PLACED_ORDER
+                    it.status == Constants.STATUS_PLACED_ORDER
                 }
             }
             COMPLETED_ORDERS -> {
                 dataset.filter {
-                    it.status == Constants.DELIVERED || it.status == Constants.PICKED_UP
+                    it.status == Constants.STATUS_DELIVERED || it.status == Constants.STATUS_PICKED_UP
                 }
             }
             else -> {

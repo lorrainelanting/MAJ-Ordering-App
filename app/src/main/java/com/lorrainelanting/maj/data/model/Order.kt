@@ -23,7 +23,6 @@ class Order : BaseModel() {
 
     companion object {
         fun newInstance(
-            id:String,
             deliveryOption: Int,
             status: String,
             productId: String,
@@ -38,7 +37,6 @@ class Order : BaseModel() {
             deliveryDate: Long
         ): Order {
             val order = Order()
-            order.id = id
             order.deliveryOption = deliveryOption
             order.status = status
             order.quantity = quantity

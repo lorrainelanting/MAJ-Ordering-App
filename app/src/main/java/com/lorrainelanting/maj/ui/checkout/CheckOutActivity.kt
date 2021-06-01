@@ -129,20 +129,16 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
                 binding.btnPlaceOrder.setOnClickListener {
                     val positiveBtnClick = { dialog: DialogInterface, which: Int ->
-                        for ((i, cartContent) in cartContents.withIndex()) {
+
+                        val isConnected = networkConnectivity.execute()
+                        for (cartContent in cartContents) {
                             val deliveryOption =
                                 binding.layoutDeliveryDetails.rgDeliveryOption.checkedRadioButtonId
-                            val status = Constants.PLACED_ORDER
-                            val isConnected = networkConnectivity.execute()
+                            val status = Constants.STATUS_PLACED_ORDER
                             if (isConnected.get()) {
-                                setOrder(i.toString(), deliveryOption, status, cartContent)
+                                setOrder(deliveryOption, status, cartContent)
                             } else {
-                                onNetworkNotAvailable(
-                                    cartContent,
-                                    i.toString(),
-                                    deliveryOption,
-                                    status
-                                )
+                                onNetworkNotAvailable(cartContent)
                             }
                         }
                     }
@@ -267,13 +263,11 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     }
 
     private fun setOrder(
-        id: String,
         deliveryOption: Int,
         status: String,
         content: CheckOutOrderSummaryContentAdapter.Content,
     ) {
         val order: Order = viewModel.ordersContentNewInstance(
-            id,
             deliveryOption,
             status,
             content,
@@ -289,9 +283,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
     private fun onNetworkNotAvailable(
         cartContent: CheckOutOrderSummaryContentAdapter.Content,
-        id: String,
-        deliveryOption: Int,
-        status: String,
     ) {
 
         val selectedDeliveryOption =
@@ -303,7 +294,7 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
             cartContent.cartContent.quantity.toString(),
             cartContent.product.name,
             Constants.DELIVERY_DATE,
-            "30-May-2021",
+            DateUtil.formatToString(selectedDeliveryDate),
             customerInfo.fullName,
             customerInfo.contactNum,
             delAddress
@@ -317,7 +308,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
         if (intent.resolveActivity(this.packageManager) != null) {
             startActivity(intent)
-            setOrder(id, deliveryOption, status, cartContent)
         }
     }
 }

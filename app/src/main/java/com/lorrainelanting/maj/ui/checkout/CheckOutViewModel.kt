@@ -23,9 +23,8 @@ class CheckOutViewModel(
 
     val cartContentsLiveData by lazy { cartRepository.getList() }
 
-    fun ordersContentNewInstance(id: String, deliveryOption: Int, status: String, content: CheckOutOrderSummaryContentAdapter.Content, customer: User, deliveryAddress: String, deliveryDate: Long): Order {
+    fun ordersContentNewInstance(deliveryOption: Int, status: String, content: CheckOutOrderSummaryContentAdapter.Content, customer: User, deliveryAddress: String, deliveryDate: Long): Order {
         return Order.newInstance(
-            id = id,
             deliveryOption = deliveryOption,
             status = status,
             productId = content.cartContent.productId,
