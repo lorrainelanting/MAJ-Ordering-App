@@ -18,7 +18,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
                 android:layout_marginVertical="8dp"
-                app:queryHint="Search Here"
+                app:queryHint="Search your address here."
                 app:iconifiedByDefault="false"/>
         </androidx.appcompat.widget.Toolbar>
     </FrameLayout>
