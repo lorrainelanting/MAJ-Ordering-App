@@ -25,7 +25,7 @@
     <string name="navigation_drawer_open">Open Drawer</string>
     <string name="navigation_drawer_close">Close Drawer</string>
     <string name="consumer_goods_trading">Consumer Goods Trading</string>
-    <string name="store_name">Store Name</string>
+    <string name="store_name">Store Name  (optional)</string>
     <string name="full_name">Full Name ( Last, First, M.I )</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="btn_cancel">Cancel</string>
@@ -62,13 +62,14 @@
     <string name="txt_city_municipality">City/Municipality</string>
     <string name="txt_barangay">Barangay</string>
     <string name="txt_house_number_building_and_street_name">House Number, Building and Street Name</string>
-    <string name="txt_other_notes">Other Notes</string>
+    <string name="txt_other_notes">Other Notes (landmarks, etc.)</string>
     <string name="txt_delivery_address">Delivery Address</string>
     <string name="quantity_with_colon">Quantity:</string>
     <string name="unit_price_with_colon">Unit Price:</string>
     <string name="txt_orders_active">Active</string>
     <string name="txt_orders_completed">Completed</string>
     <string name="txt_set_desired_date">Set Desired Delivery/Pick-up Date</string>
+    <string name="txt_set_network_unavailable_tooltip">You can still place an order via SMS.</string>
 
     <!--  Place order confirmation dialog -->
     <string name="txt_dialog_place_order_title">Place Order</string>
@@ -92,13 +93,18 @@
     <string name="new_order">New Order</string>
     <string name="txt_customer_info">Customer Details</string>
     <string name="txt_order_details">Order Details</string>
-    <string name="sms_order">MAJ pa-order. (%1$s)\n%2$s (qty) - %3$s\n%4$s: %5$s\n\n—— %6$s (%7$s)\n%8$s\n\nSalamat!</string>
+    <string name="sms_order">MAJ pa-order.\n\n%1$s\n%2$s on: %3$s\n\n— %4$s (%5$s)\n%6$s\n\nSalamat!</string>
+    <string name="sms_order_detail">%1$s (qty) - %2$s</string>
     <string name="btn_reorder">Reorder</string>
     <string name="txt_select_delivery_option">Select Delivery Option (required)</string>
     <string name="txt_your_desired_delivery_date_is">Your desired delivery date is:</string>
     <string name="deliver_to_address">Deliver to address</string>
     <string name="pick_up_in_store">Pick-up in store</string>
     <string name="unit_price">Unit Price:</string>
+    <string name="price">Price</string>
+    <string name="low_to_high">Low to high</string>
+    <string name="high_to_low">High to low</string>
+    <string name="you_re_not_connected_to_the_internet">You\'re not connected to the internet.</string>
 
     <array name="cities">
         <item>Lipa City</item>

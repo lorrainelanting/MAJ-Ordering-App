@@ -10,12 +10,16 @@
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/colorAccent</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimary</item>
         <!-- Primary text color. -->
         <item name="android:textColor">@color/colorPrimary</item>
+
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Nav.Filter</item>
     </style>
     <!-- Splash Screen -->
-    <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorSecondaryAccent</item>
+    </style>
 
     <style name="TextBlurred" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:textColor">@color/gray</item>
@@ -39,5 +43,14 @@
 
     <style name="IconStyle" parent="">
         <item name="tint">@color/colorSecondaryVariant</item>
+    </style>
+    
+    <style name="Toolbar.Nav.Filter" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="tint">@color/colorPrimary</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="minWidth">0dp</item>
     </style>
 </resources>
