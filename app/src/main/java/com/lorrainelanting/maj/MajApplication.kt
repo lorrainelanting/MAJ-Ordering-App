@@ -8,7 +8,9 @@ import com.google.firebase.ktx.Firebase
 import com.lorrainelanting.maj.data.AppRoomDatabase
 import com.lorrainelanting.maj.data.local.SharedPrefs
 import com.lorrainelanting.maj.data.model.Product
+import com.lorrainelanting.maj.data.repository.order.OrderRepository
 import com.lorrainelanting.maj.data.repository.product.ProductRepository
+import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.di.Injection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -22,6 +24,7 @@ class MajApplication : Application() {
 
     private val remoteDatabase by lazy { Firebase.firestore }
     lateinit var productRepository: ProductRepository
+    lateinit var orderRepository: OrderRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -29,9 +32,34 @@ class MajApplication : Application() {
         sharedPrefs = Injection.provideSharedPrefs(this)
         localVersion = sharedPrefs.getProductsVersion()
         productRepository = Injection.provideProductRepository(this)
+        orderRepository = Injection.provideOrderRepository(this)
+
         Log.d("MajApplication", localDatabase.toString())
 
         compareVersions()
+
+
+        val order = hashMapOf(
+            "quantity" to 2,
+            "delivery_option" to Constants.OPTION_DELIVER,
+            "status" to Constants.OPTION_DELIVER,
+            "delivery_date" to "30 May 2021",
+            "order_date" to "26 May 2021",
+            "product_id" to "1XmZqHO3L3Nx7Yalyjax",
+            "product_image_url" to "https://images-na.ssl-images-amazon.com/images/I/51FN8q2j5KL._AC_UL600_SR600,600_.jpg",
+            "product_name" to "Sprite 1.5L 12's",
+            "product_price" to 658,
+            "delivery_address" to "001 Test St., Sabang, Lipa City",
+            "customer_name" to "Juan Dela Cruz",
+            "customer_contact_number" to "09123456789"
+        )
+
+//        remoteDatabase.collection("orders").add(order).addOnSuccessListener { documentReference ->
+//            documentReference.id
+//        }
+//        .addOnFailureListener { e ->
+//            Log.w("Firestore failed", "Error adding document", e)
+//        }
     }
 
     private fun compareVersions() {
