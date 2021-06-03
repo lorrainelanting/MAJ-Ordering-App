@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
     >
+        <include android:id="@+id/layoutNetworkBanner" layout="@layout/layout_network_banner"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="match_parent"
@@ -16,7 +18,7 @@
             android:outlineProvider="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/layoutNetworkBanner">
 
             <ImageView
                 android:id="@+id/imgProduct"

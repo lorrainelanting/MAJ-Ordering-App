@@ -54,7 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
             setBadgeOrders(it)
         }
 
-//        ViewPager nav listener
+//      ViewPager nav listener
         mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 //                TODO("Not yet implemented")
@@ -78,19 +78,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
                     3 -> binding.navBottom.selectedItemId = R.id.itemFragmentCart
                     4 -> binding.navBottom.selectedItemId = R.id.itemFragmentProfile
                 }
-
             }
         })
 
-//        BottomNavigation listener
+        // BottomNavigation listener
         binding.navBottom.setOnNavigationItemSelectedListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.itemFragmentHome -> mPager.currentItem = 0
-                R.id.itemFragmentLoyaltyPoints -> mPager.currentItem = 1
-                R.id.itemFragmentOrders -> mPager.currentItem = 2
-                R.id.itemFragmentCart -> mPager.currentItem = 3
-                R.id.itemFragmentProfile -> mPager.currentItem = 4
-            }
+            onNavigationItemSelected(item)
             true
         }
     }
@@ -157,11 +150,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
         }
     }
 
+    // Navigation
     private fun navigateToHome() {
         mPager.currentItem = 0
     }
 
     private fun navigateToProfile() {
         mPager.currentItem = 4
+    }
+
+    /**
+     * Listeners
+     * */
+    private fun onNavigationItemSelected(item: MenuItem) {
+        when (item.itemId) {
+            R.id.itemFragmentHome -> mPager.currentItem = 0
+            R.id.itemFragmentLoyaltyPoints -> mPager.currentItem = 1
+            R.id.itemFragmentOrders -> mPager.currentItem = 2
+            R.id.itemFragmentCart -> mPager.currentItem = 3
+            R.id.itemFragmentProfile -> mPager.currentItem = 4
+        }
     }
 }

@@ -3,23 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include android:id="@+id/layoutToolbarSearch" layout="@layout/layout_toolbar_search"/>
+        <include
+            android:id="@+id/layoutNetworkBanner"
+            layout="@layout/layout_network_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
+
+        <include
+            android:id="@+id/layoutToolbarSearch"
+            layout="@layout/layout_toolbar_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAddresses"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutToolbarSearch"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutToolbarSearch"
             tools:itemCount="5"
-            tools:listitem="@layout/item_address"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:listitem="@layout/item_address" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
 

@@ -20,6 +20,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <include android:id="@+id/layoutNetworkBanner" layout="@layout/layout_network_banner"/>
+
                 <include
                     android:id="@+id/layoutCustomerDetail"
                     layout="@layout/layout_checkout_customer_detail" />

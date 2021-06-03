@@ -8,13 +8,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
 
+        <include android:id="@+id/layoutNetworkBanner" layout="@layout/layout_network_banner"/>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/colorSecondaryAccent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutNetworkBanner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/navBottom"/>
 
