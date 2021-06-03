@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/itemPrice" android:title="@string/price">
+        <menu>
+            <item
+                android:id="@+id/itemLowToHigh"
+                android:icon="@drawable/ic_sort_low_to_high"
+                android:title="@string/low_to_high" />
+            <item
+                android:id="@+id/itemHighToLow"
+                android:icon="@drawable/ic_sort_high_to_low"
+                android:title="@string/high_to_low" />
+        </menu>
+    </item>
+</menu>

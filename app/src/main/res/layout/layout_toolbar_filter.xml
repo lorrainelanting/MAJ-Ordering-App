@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarFilter"
+        app:title="Filter"
+        app:titleTextAppearance="@style/TextBlurred"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/colorSecondaryAccent"
+        app:navigationIcon="@drawable/ic_filter"
+        style="@style/Toolbar.Nav.Filter"
+        android:elevation="0dp"/>
+</layout>
