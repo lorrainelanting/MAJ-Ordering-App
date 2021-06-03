@@ -20,7 +20,6 @@ import com.lorrainelanting.maj.data.model.User
 import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.data.util.DateUtil
-import com.lorrainelanting.maj.data.util.NetworkConnectivity
 import com.lorrainelanting.maj.databinding.ActivityCheckOutBinding
 import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseActivity
@@ -30,13 +29,15 @@ import java.util.*
 class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     CheckOutOrderSummaryContentAdapter.CheckOutOrderSummaryContentAdapterCalculation {
 
-    var adapter: CheckOutOrderSummaryContentAdapter? = null
     lateinit var viewModel: CheckOutViewModel
-    lateinit var customerInfo: User
     lateinit var delAddress: String
-    var deliveryDate: Long = 0
-    private lateinit var networkConnectivity: NetworkConnectivity
     lateinit var selectedDeliveryDate: Date
+
+    private lateinit var customerInfo: User
+
+    private var deliveryDate: Long = 0
+
+    var adapter: CheckOutOrderSummaryContentAdapter? = null
 
     companion object {
         const val MAJ_CONTACT_NUM = "09178913668"
@@ -46,7 +47,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        networkConnectivity = NetworkConnectivity()
         selectedDeliveryDate = Date()
         adapter =
             CheckOutOrderSummaryContentAdapter(emptyList(), this)
@@ -130,16 +130,16 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
                 binding.btnPlaceOrder.setOnClickListener {
                     val positiveBtnClick = { dialog: DialogInterface, which: Int ->
 
-                        val isConnected = networkConnectivity.execute()
-                        for (cartContent in cartContents) {
-                            val deliveryOption =
-                                binding.layoutDeliveryDetails.rgDeliveryOption.checkedRadioButtonId
-                            val status = Constants.STATUS_PLACED_ORDER
-                            if (isConnected.get()) {
+                        if (this.isNetworkAvailable) {
+                            for (cartContent in cartContents) {
+                                val deliveryOption =
+                                    binding.layoutDeliveryDetails.rgDeliveryOption.checkedRadioButtonId
+                                val status = Constants.STATUS_PLACED_ORDER
+
                                 setOrder(deliveryOption, status, cartContent)
-                            } else {
-                                onNetworkNotAvailable(cartContent)
                             }
+                        } else {
+                            onNetworkNotAvailable(cartContents)
                         }
                     }
 
@@ -282,28 +282,34 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     }
 
     private fun onNetworkNotAvailable(
-        cartContent: CheckOutOrderSummaryContentAdapter.Content,
+        contents: List<CheckOutOrderSummaryContentAdapter.Content>,
     ) {
 
         val selectedDeliveryOption =
             binding.layoutDeliveryDetails.rgDeliveryOption.checkedRadioButtonId
         val selectedDeliveryText = findViewById<RadioButton>(selectedDeliveryOption).text.toString()
-        val smsOrderText = getString(
-            R.string.sms_order,
+        var smsOrderDetails = ""
+
+        // Loop orders
+        for (content in contents) {
+            smsOrderDetails += getString(
+                R.string.sms_order_detail,
+                content.cartContent.quantity.toString(),
+                content.product.name
+            ) + "\n"
+        }
+
+        val smsFullMessage = getString(R.string.sms_order, smsOrderDetails,
             selectedDeliveryText,
-            cartContent.cartContent.quantity.toString(),
-            cartContent.product.name,
-            Constants.DELIVERY_DATE,
             DateUtil.formatToString(selectedDeliveryDate),
             customerInfo.fullName,
             customerInfo.contactNum,
-            delAddress
-        )
+            delAddress)
 
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             type = "text/plain"
             data = Uri.parse("smsto: $MAJ_CONTACT_NUM")
-            putExtra(Intent.EXTRA_TEXT, smsOrderText)
+            putExtra(Intent.EXTRA_TEXT, smsFullMessage)
         }
 
         if (intent.resolveActivity(this.packageManager) != null) {

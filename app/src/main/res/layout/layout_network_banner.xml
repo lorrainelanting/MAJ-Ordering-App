@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardNetworkBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorSecondary"
+        android:elevation="0dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+            <ImageView
+                android:id="@+id/imgNoInternet"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_internet_offline"
+                android:scaleType="centerInside"
+                app:tint="@color/colorPrimary" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtWarningMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                app:layout_constraintStart_toEndOf="@id/imgNoInternet"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/colorAccent"
+                android:text="@string/you_re_not_connected_to_the_internet"/>
+            <ImageView
+                android:id="@+id/imgBtnInfo"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="8dp"
+                app:layout_constraintStart_toEndOf="@id/txtWarningMessage"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_information"
+                android:scaleType="fitCenter" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
