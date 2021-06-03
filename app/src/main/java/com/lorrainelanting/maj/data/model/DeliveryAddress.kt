@@ -7,4 +7,5 @@ class DeliveryAddress: BaseModel() {
     var city: String = ""
     var barangay: String = ""
     var streetName: String = ""
+    var otherNotes: String = ""
 }

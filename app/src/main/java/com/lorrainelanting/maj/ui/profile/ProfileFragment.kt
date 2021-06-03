@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
+import com.lorrainelanting.maj.data.model.DeliveryAddress
 import com.lorrainelanting.maj.data.model.User
 import com.lorrainelanting.maj.databinding.FragmentProfileBinding
 import com.lorrainelanting.maj.ui.base.BaseFragment
@@ -38,7 +39,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         viewModel.deliveryAddressLiveData.observe(viewLifecycleOwner) { list ->
             list.let {
                 if (list.isNotEmpty()) {
-                    binding.txtSetAddress.visibility = View.GONE
+                    binding.txtLayoutSetAddress.visibility = View.GONE
                     binding.txtLayoutAddress.visibility = View.VISIBLE
                     var deliveryAddress: String
                     for (delAddress in list) {
@@ -46,13 +47,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                         binding.editTxtDelAddress.setText(deliveryAddress)
                     }
                 } else {
-                    binding.txtSetAddress.visibility = View.VISIBLE
+                    binding.txtLayoutSetAddress.visibility = View.VISIBLE
                     binding.txtLayoutAddress.visibility = View.GONE
                 }
             }
         }
 
-        binding.txtSetAddress.setOnClickListener {
+        binding.editTxtSetAddress.setOnClickListener {
             startCityActivity()
         }
 
@@ -61,12 +62,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
 
         binding.btnProfileSave.setOnClickListener {
-            var user = User()
-            user.storeName = binding.editTextStoreName.text.toString()
-            user.fullName = binding.editTextFullName.text.toString()
-            user.contactNum = binding.editTextContactNum.text.toString()
-            viewModel.userRepository.save(user)
+            val storeName = binding.editTextStoreName.text.toString()
+            val customerName = binding.editTextFullName.text.toString()
+            val contactNum = binding.editTextContactNum.text.toString()
+            val otherNotes = binding.editTextNotes.text.toString()
 
+            if (storeName.isNotEmpty() || customerName.isNotEmpty() || contactNum.isNotEmpty()) {
+                val user = User()
+                user.storeName = storeName
+                user.fullName = customerName
+                user.contactNum = contactNum
+                viewModel.userRepository.save(user)
+            }
+
+            if (otherNotes.isNotEmpty()) {
+                val delAdd = DeliveryAddress()
+                delAdd.otherNotes = otherNotes
+                viewModel.deliveryAddressRepository.saveOtherNotes(delAdd.otherNotes)
+            }
         }
     }
 

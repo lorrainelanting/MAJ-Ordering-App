@@ -14,6 +14,8 @@ interface DeliveryAddressRepository {
 
     fun saveStreet(street: String)
 
+    fun saveOtherNotes(notes: String)
+
     fun update(deliveryAddress: DeliveryAddress)
 
     fun delete(id: String)

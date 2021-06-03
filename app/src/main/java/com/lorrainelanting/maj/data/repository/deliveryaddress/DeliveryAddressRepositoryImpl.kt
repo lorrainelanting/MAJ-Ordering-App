@@ -25,7 +25,6 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
     override fun saveCity(city: String) {
         val existingAddress = dao.getDeliveryAddress()
-
         if (existingAddress == null) {
             val deliveryAddress = DeliveryAddress()
             deliveryAddress.id = "0"
@@ -39,7 +38,6 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
     override fun saveBarangay(barangay: String) {
         val existingAddress = dao.getDeliveryAddress()
-
         if (existingAddress == null) {
             val deliveryAddress = DeliveryAddress()
             deliveryAddress.id = "0"
@@ -53,7 +51,6 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
 
     override fun saveStreet(street: String) {
         val existingAddress = dao.getDeliveryAddress()
-
         if (existingAddress == null) {
             val deliveryAddress = DeliveryAddress()
             deliveryAddress.id = "0"
@@ -61,6 +58,19 @@ class DeliveryAddressRepositoryImpl private constructor(private val dao: Deliver
             dao.insert(deliveryAddress)
         } else {
             existingAddress.streetName = street
+            dao.update(existingAddress)
+        }
+    }
+
+    override fun saveOtherNotes(notes: String) {
+        val existingAddress = dao.getDeliveryAddress()
+        if (existingAddress == null) {
+            val deliveryAddress = DeliveryAddress()
+            deliveryAddress.id = "0"
+            deliveryAddress.otherNotes = notes
+            dao.insert(deliveryAddress)
+        } else {
+            existingAddress.otherNotes = notes
             dao.update(existingAddress)
         }
     }

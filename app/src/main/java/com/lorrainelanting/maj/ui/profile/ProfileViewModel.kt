@@ -7,7 +7,7 @@ import com.lorrainelanting.maj.data.repository.user.UserRepository
 import com.lorrainelanting.maj.di.Injection
 
 class ProfileViewModel : ViewModel() {
-    private lateinit var deliveryAddressRepository: DeliveryAddressRepository
+    lateinit var deliveryAddressRepository: DeliveryAddressRepository
 
     lateinit var userRepository: UserRepository
 
