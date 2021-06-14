@@ -14,7 +14,9 @@ import com.lorrainelanting.maj.ui.cart.CartFragment
 class ViewPagerAdapter constructor (
     fm: FragmentManager,
     val resources : Resources,
-    private val cartFListener : CartFragment.CartFragmentListener? = null) : FragmentPagerAdapter(fm) {
+    private val cartFListener : CartFragment.CartFragmentListener? = null,
+    private val orderFListener : OrdersFragment.OrderFragmentListener? = null
+    ) : FragmentPagerAdapter(fm) {
     companion object {
         const val NUM_PAGES = 5
     }
@@ -26,7 +28,11 @@ class ViewPagerAdapter constructor (
         return when (position) {
 //            0 -> HomeFragment()
             1 -> LoyaltyPointsFragment()
-            2 -> OrdersFragment()
+            2 -> {
+                val fragment = OrdersFragment()
+                orderFListener?.let{ fragment.setOrderFragmentListener(it) }
+                return fragment
+            }
             3 -> {
                 val fragment = CartFragment()
                 cartFListener?.let { fragment.setCartFragmentListener(it) }
