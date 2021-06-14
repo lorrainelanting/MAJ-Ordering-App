@@ -11,11 +11,12 @@
             android:id="@+id/imgEmptyContainer"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            style="@style/IconStyle.PrimaryVariant"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/txtEmptyContainer"
-            tools:src="@color/colorSecondary"/>
+            tools:src="@drawable/ic_nav_orders"/>
 
         <TextView
             android:id="@+id/txtEmptyContainer"
