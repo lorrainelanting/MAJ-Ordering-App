@@ -44,7 +44,11 @@
     <style name="IconStyle" parent="">
         <item name="tint">@color/colorSecondaryVariant</item>
     </style>
-    
+
+    <style name="IconStyle.PrimaryVariant" parent="">
+        <item name="tint">@color/colorPrimaryVariant</item>
+    </style>
+
     <style name="Toolbar.Nav.Filter" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:layoutDirection">rtl</item>
         <item name="android:scaleType">centerInside</item>
