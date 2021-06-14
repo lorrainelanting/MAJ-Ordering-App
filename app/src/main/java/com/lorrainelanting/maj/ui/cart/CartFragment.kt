@@ -6,13 +6,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
-import com.lorrainelanting.maj.data.model.DeliveryAddress
-import com.lorrainelanting.maj.data.model.User
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.databinding.FragmentCartBinding
 import com.lorrainelanting.maj.di.Injection
@@ -130,18 +127,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
     private fun onCheckOutBtnClick() {
         val intent = Intent(context, CheckOutActivity().javaClass)
         startActivityForResult(intent, 4)
-
-//        FIXME: Show alert if user is not set.
-//        if (user == null) {
-//            val confirmBtnClick = { dialog: DialogInterface, which: Int ->
-//                cartFragmentListener?.onSetProfileClick()
-//            }
-//
-//            val cancelBtnClick = { dialog: DialogInterface, which: Int ->
-//            }
-//
-//            setProfileDialog(confirmBtnClick as (DialogInterface, Int) -> Unit, cancelBtnClick)
-//        }
     }
 
     private fun removeDialog(
@@ -170,44 +155,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
         }
     }
 
-    private fun setProfileDialog(
-        confirmBtnClick: (DialogInterface, Int) -> Unit,
-        cancelBtnClick: (DialogInterface, Int) -> Unit,
-    ) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setTitle(R.string.txt_dialog_set_profile_title)
-        builder.setMessage(R.string.txt_dialog_set_profile_body)
-        builder.setPositiveButton(
-            R.string.txt_dialog_set_profile_positive,
-            DialogInterface.OnClickListener(function = confirmBtnClick)
-        )
-        builder.setNegativeButton(
-            R.string.txt_dialog_set_profile_negative,
-            DialogInterface.OnClickListener(function = cancelBtnClick)
-        )
-        val alert = builder.create()
-        alert.setCanceledOnTouchOutside(true)
-        alert.show()
-        val cancelBtn = alert.getButton(DialogInterface.BUTTON_NEGATIVE)
-        val goToProfileBtn = alert.getButton(DialogInterface.BUTTON_POSITIVE)
-        context?.let { context ->
-            cancelBtn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
-            goToProfileBtn.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.colorSecondaryVariant
-                )
-            )
-        }
-    }
-
     fun setCartFragmentListener(listener: CartFragmentListener) {
         this.cartFragmentListener = listener
     }
 
     interface CartFragmentListener {
         fun onContinueShoppingClick()
-
-        fun onSetProfileClick()
     }
 }
