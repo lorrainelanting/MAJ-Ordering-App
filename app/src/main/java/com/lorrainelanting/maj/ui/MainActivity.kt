@@ -13,15 +13,20 @@ import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.Order
 import com.lorrainelanting.maj.data.repository.cart.CartRepository
 import com.lorrainelanting.maj.data.repository.order.OrderRepository
+import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.databinding.ActivityMainBinding
 import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.cart.CartFragment
+import com.lorrainelanting.maj.ui.order.OrdersFragment
 import com.lorrainelanting.maj.ui.viewpager.ViewPagerAdapter
 
-class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragmentListener {
+class MainActivity : BaseActivity<ActivityMainBinding>(),
+    CartFragment.CartFragmentListener,
+    OrdersFragment.OrderFragmentListener {
+
     lateinit var cartRepository: CartRepository
-    lateinit var orderRepository: OrderRepository
+    private lateinit var orderRepository: OrderRepository
     private val cartContentsLiveData by lazy {
         cartRepository.getList()
     }
@@ -33,16 +38,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
     private lateinit var navController: NavController
     private lateinit var mPager: ViewPager
     private lateinit var badge: BadgeDrawable
+    private var orderType = ACTIVE_ORDERS
+
+    companion object {
+        const val ACTIVE_ORDERS = 0
+        const val COMPLETED_ORDERS = 1
+    }
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         mPager = binding.viewPager
-
-        mPager = binding.viewPager
-        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this)
+        val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this, this)
         mPager.adapter = pagerAdapter
         cartRepository = Injection.provideCartRepository(this)
         cartContentsLiveData.observe(this) { it ->
@@ -108,10 +116,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
         navigateToHome()
     }
 
-    override fun onSetProfileClick() {
-        navigateToProfile()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (resultCode) {
@@ -142,21 +146,36 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
 
     private fun setBadgeOrders(contents: List<Order>) {
         badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentOrders)
-        if (contents.isNotEmpty()) {
+
+        if (getFilteredOrders(contents).isNotEmpty() && orderType == ACTIVE_ORDERS) {
             badge.isVisible = true
-            badge.number = contents.size
+            badge.number = getFilteredOrders(contents).size
         } else {
             badge.isVisible = false
+        }
+    }
+
+    private fun getFilteredOrders(contents: List<Order>): List<Order> {
+        return when (orderType) {
+            ACTIVE_ORDERS -> {
+                contents.filter { order ->
+                    order.status == Constants.STATUS_PLACED_ORDER
+                }
+            }
+            COMPLETED_ORDERS -> {
+                contents.filter { order ->
+                    order.status == Constants.STATUS_DELIVERED || order.status == Constants.STATUS_PICKED_UP
+                }
+            }
+            else -> {
+                contents
+            }
         }
     }
 
     // Navigation
     private fun navigateToHome() {
         mPager.currentItem = 0
-    }
-
-    private fun navigateToProfile() {
-        mPager.currentItem = 4
     }
 
     /**
@@ -171,4 +190,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CartFragment.CartFragm
             R.id.itemFragmentProfile -> mPager.currentItem = 4
         }
     }
-}
+    }
