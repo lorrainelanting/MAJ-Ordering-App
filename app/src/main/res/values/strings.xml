@@ -70,6 +70,8 @@
     <string name="txt_orders_completed">Completed</string>
     <string name="txt_set_desired_date">Set Desired Delivery/Pick-up Date</string>
     <string name="txt_set_network_unavailable_tooltip">You can still place an order via SMS.</string>
+    <string name="txt_download_additional_files">Please connect to the internet to download additional files.</string>
+    <string name="txt_splash_version">version %1$s</string>
 
     <!--  Place order confirmation dialog -->
     <string name="txt_dialog_place_order_title">Place Order</string>
@@ -105,6 +107,7 @@
     <string name="low_to_high">Low to high</string>
     <string name="high_to_low">High to low</string>
     <string name="you_re_not_connected_to_the_internet">You\'re not connected to the internet.</string>
+    <string name="view_more_product">View more product</string>
 
     <array name="cities">
         <item>Lipa City</item>

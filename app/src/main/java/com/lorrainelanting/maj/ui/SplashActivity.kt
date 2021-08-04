@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import com.lorrainelanting.maj.BuildConfig
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.databinding.ActivitySplashBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
@@ -19,6 +20,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Set version name
+        val versionName = BuildConfig.VERSION_NAME
+        binding.txtAppVersion.text = getString(R.string.txt_splash_version, versionName)
 
         Handler(Looper.getMainLooper()).postDelayed({
             // This method will be executed once the timer is over
