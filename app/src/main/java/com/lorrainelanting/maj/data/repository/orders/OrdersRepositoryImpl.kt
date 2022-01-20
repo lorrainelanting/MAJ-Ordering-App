@@ -19,9 +19,9 @@ class OrderRepositoryImpl private constructor(private val dao: OrderDao): OrderR
         }
     }
 
-    override fun getList(): LiveData<List<Order>> = dao.getList()
+    override fun getList(): LiveData<List<Order>> = dao.getListLiveData()
 
-    override fun getItem(id: String): LiveData<Order> = dao.getItem(id)
+    override fun getItem(id: String): LiveData<Order> = dao.getItemLiveData(id)
 
     override fun save(order: Order) {
         val existingItem = dao.getItemByProduct(order.productId)

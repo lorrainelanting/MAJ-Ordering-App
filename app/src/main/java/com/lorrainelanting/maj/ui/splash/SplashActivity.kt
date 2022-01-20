@@ -8,6 +8,7 @@ import com.lorrainelanting.maj.BuildConfig
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.databinding.ActivitySplashBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
+import com.lorrainelanting.maj.ui.main.MainActivity
 
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {

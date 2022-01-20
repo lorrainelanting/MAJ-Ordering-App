@@ -8,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 import com.lorrainelanting.maj.data.AppRoomDatabase
 import com.lorrainelanting.maj.data.local.SharedPrefs
 import com.lorrainelanting.maj.data.model.Product
-import com.lorrainelanting.maj.data.repository.order.OrderRepository
+import com.lorrainelanting.maj.data.repository.orders.OrdersRepository
 import com.lorrainelanting.maj.data.repository.product.ProductRepository
 import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.di.Injection
@@ -24,7 +24,7 @@ class MajApplication : Application() {
 
     private val remoteDatabase by lazy { Firebase.firestore }
     lateinit var productRepository: ProductRepository
-    lateinit var orderRepository: OrderRepository
+    lateinit var ordersRepository: OrdersRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -32,7 +32,7 @@ class MajApplication : Application() {
         sharedPrefs = Injection.provideSharedPrefs(this)
         localVersion = sharedPrefs.getProductsVersion()
         productRepository = Injection.provideProductRepository(this)
-        orderRepository = Injection.provideOrderRepository(this)
+        ordersRepository = Injection.provideOrdersRepository(this)
 
         Log.d("MajApplication", localDatabase.toString())
 
@@ -81,7 +81,7 @@ class MajApplication : Application() {
 
     }
 
-    private fun fetchRemoteProducts() {
+    fun fetchRemoteProducts() {
         val data = mutableListOf<Product>()
         remoteDatabase.collection("products").get().addOnSuccessListener { result ->
             for (document in result) {

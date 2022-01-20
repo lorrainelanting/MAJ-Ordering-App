@@ -10,9 +10,9 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.badge.BadgeDrawable
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
-import com.lorrainelanting.maj.data.model.Order
+import com.lorrainelanting.maj.data.model.OrderGroup
 import com.lorrainelanting.maj.data.repository.cart.CartRepository
-import com.lorrainelanting.maj.data.repository.order.OrderRepository
+import com.lorrainelanting.maj.data.repository.orders.OrdersRepository
 import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.databinding.ActivityMainBinding
 import com.lorrainelanting.maj.di.Injection
@@ -26,13 +26,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     OrdersFragment.OrderFragmentListener {
 
     lateinit var cartRepository: CartRepository
-    private lateinit var orderRepository: OrderRepository
+    private lateinit var ordersRepository: OrdersRepository
     private val cartContentsLiveData by lazy {
         cartRepository.getList()
     }
 
     private val ordersContentLiveData by lazy {
-        orderRepository.getList()
+        ordersRepository.getOrderGroupList()
     }
 
     private lateinit var navController: NavController
@@ -57,7 +57,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             setBadgeCart(it)
         }
 
-        orderRepository = Injection.provideOrderRepository(this)
+        ordersRepository = Injection.provideOrdersRepository(this)
         ordersContentLiveData.observe(this) {
             setBadgeOrders(it)
         }
@@ -144,7 +144,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         }
     }
 
-    private fun setBadgeOrders(contents: List<Order>) {
+    private fun setBadgeOrders(contents: List<OrderGroup>) {
         badge = binding.navBottom.getOrCreateBadge(R.id.itemFragmentOrders)
 
         if (getFilteredOrders(contents).isNotEmpty() && orderType == ACTIVE_ORDERS) {
@@ -155,11 +155,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         }
     }
 
-    private fun getFilteredOrders(contents: List<Order>): List<Order> {
+    private fun getFilteredOrders(contents: List<OrderGroup>): List<OrderGroup> {
         return when (orderType) {
             ACTIVE_ORDERS -> {
-                contents.filter { order ->
-                    order.status == Constants.STATUS_PLACED_ORDER
+                contents.filter { orderGroup ->
+                    orderGroup.status == Constants.STATUS_PLACED_ORDER
                 }
             }
             COMPLETED_ORDERS -> {
