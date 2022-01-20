@@ -1,4 +1,4 @@
-package com.lorrainelanting.maj.ui
+package com.lorrainelanting.maj.ui.splash
 
 import android.content.Intent
 import android.os.Bundle

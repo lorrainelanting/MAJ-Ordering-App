@@ -13,7 +13,7 @@
         />
     <fragment
         android:id="@+id/itemFragmentLoyaltyPoints"
-        android:name="com.lorrainelanting.maj.ui.LoyaltyPointsFragment"
+        android:name="com.lorrainelanting.maj.ui.loyaltypoints.LoyaltyPointsFragment"
         android:label="Loyalty Points"
         tools:layout="@layout/fragment_loyalty_points" />
     <fragment

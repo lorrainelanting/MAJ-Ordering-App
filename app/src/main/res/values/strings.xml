@@ -34,7 +34,7 @@
     <string name="hint_dela_cruz_marites_c">Dela Cruz, Marites, C.</string>
     <string name="hint_customer_mobile">0910-1234-637</string>
     <string name="optional">( optional )</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_page">Home</string>
     <string name="orders">Orders</string>
@@ -72,6 +72,8 @@
     <string name="txt_set_network_unavailable_tooltip">You can still place an order via SMS.</string>
     <string name="txt_download_additional_files">Please connect to the internet to download additional files.</string>
     <string name="txt_splash_version">version %1$s</string>
+    <string name="txt_order_count">You ordered %1$s item(s)</string>
+    <string name="notify_success_added_to_cart">Item successfully added to cart.</string>
 
     <!--  Place order confirmation dialog -->
     <string name="txt_dialog_place_order_title">Place Order</string>
@@ -97,6 +99,7 @@
     <string name="txt_order_details">Order Details</string>
     <string name="sms_order">MAJ pa-order.\n\n%1$s\n%2$s on: %3$s\n\n— %4$s (%5$s)\n%6$s\n\nSalamat!</string>
     <string name="sms_order_detail">%1$s (qty) - %2$s</string>
+    <string name="btn_view_orders">View Orders</string>
     <string name="btn_reorder">Reorder</string>
     <string name="txt_select_delivery_option">Select Delivery Option (required)</string>
     <string name="txt_your_desired_delivery_date_is">Your desired delivery date is:</string>
@@ -108,6 +111,8 @@
     <string name="high_to_low">High to low</string>
     <string name="you_re_not_connected_to_the_internet">You\'re not connected to the internet.</string>
     <string name="view_more_product">View more product</string>
+    <string name="delivery_details">Delivery Details</string>
+    <string name="move_to_completed">Move to Completed</string>
 
     <array name="cities">
         <item>Lipa City</item>

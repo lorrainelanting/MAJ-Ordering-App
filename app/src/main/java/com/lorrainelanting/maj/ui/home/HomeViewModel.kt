@@ -1,34 +1,26 @@
 package com.lorrainelanting.maj.ui.home
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.Product
-import com.lorrainelanting.maj.data.repository.cart.CartRepository
-import com.lorrainelanting.maj.data.repository.product.ProductRepository
-import com.lorrainelanting.maj.di.Injection
+import com.lorrainelanting.maj.ui.base.BaseViewModel
 
-class HomeViewModel: ViewModel() {
-    lateinit var repository: ProductRepository
-    lateinit var cartRepository: CartRepository
+class HomeViewModel: BaseViewModel() {
+    val homeContentsLiveData by lazy { productRepository.getList() }
 
-    val homeContentsLiveData by lazy {
-        repository.getList()
-    }
-
-    fun injectProduct(context: Context) {
-        repository = Injection.provideProductRepository(context)
-    }
-
-    fun injectCart(context: Context) {
-        cartRepository = Injection.provideCartRepository(context)
-    }
-
-    fun cartContentNewInstance(product: Product, quantity: Int = 0) : CartContent {
-       return CartContent.newInstance(
-           id = System.currentTimeMillis().toString(),
+    fun cartContentNewInstance(product: Product, quantity: Int = 0): CartContent {
+        return CartContent.newInstance(
+            id = System.currentTimeMillis().toString(),
             productId = product.id,
             quantity = quantity,
         )
+    }
+
+    fun getProductLiveData(id: String): LiveData<Product> {
+        return productRepository.getItem(id)
+    }
+
+    fun insertCartContent(item: CartContent) {
+        cartRepository.add(item)
     }
 }

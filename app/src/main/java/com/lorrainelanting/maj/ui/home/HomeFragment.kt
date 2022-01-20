@@ -12,18 +12,20 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.observe
+import com.lorrainelanting.maj.app.MajApplication
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.databinding.FragmentHomeBinding
+import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.base.BaseFragment
 import com.lorrainelanting.maj.ui.common.LayoutAddToCart
 import com.lorrainelanting.maj.ui.productdetail.ProductDetailActivity
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.HomeAdapterListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(),
+    HomeProductAdapter.HomeAdapterListener {
     var adapter: HomeProductAdapter? = null
 
-    private val viewModel = HomeViewModel()
+    private lateinit var viewModel: HomeViewModel
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
 
@@ -44,27 +46,51 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
         binding.rvHomeContents.adapter = adapter
 
         setFilterToolbar()
-        showHomeProducts()
+        viewModel.homeContentsLiveData.observe(viewLifecycleOwner) { list ->
+            list.let {
+                adapter?.update(list)
+                showHomeProducts()
+                if (list.isEmpty()) {
+                    binding.layoutEmptyHome.root.visibility = View.VISIBLE
+                } else {
+                    binding.layoutEmptyHome.root.visibility = View.GONE
+                }
+            }
+        }
 
         //Swipe refresh
         binding.swipeRefLayout.setOnRefreshListener {
-            showHomeProducts()
+            val products = viewModel.homeContentsLiveData.value!!
+            if (products.isEmpty()) {
+                binding.layoutEmptyHome.root.visibility = View.VISIBLE
 
+                if ((activity as BaseActivity<*>).isNetworkAvailable) {
+                    fetchRemoteProducts()
+                }
+            } else {
+                binding.layoutEmptyHome.root.visibility = View.GONE
+            }
+            showHomeProducts()
             binding.swipeRefLayout.isRefreshing = false
         }
+
         binding.swipeRefLayout.setColorSchemeResources(R.color.colorSecondary)
+    }
+
+    private fun fetchRemoteProducts() {
+        (activity?.application as MajApplication).fetchRemoteProducts()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel.injectProduct(context)
-        viewModel.injectCart(context)
+        viewModel = HomeViewModel()
+        viewModel.initializedRepositories(context)
     }
 
     override fun onItemClick(product: Product) {
         val intent = Intent(this.context, ProductDetailActivity().javaClass)
         intent.putExtra(ProductDetailActivity.ID, product.id)
-        viewModel.repository.getItem(product.id)
+        viewModel.getProductLiveData(product.id)
         context?.startActivity(intent)
     }
 
@@ -91,8 +117,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
             }
 
             override fun onAddToCartBtnClick(product: Product) {
-                var cartContent = viewModel.cartContentNewInstance(product, quantity)
-                viewModel.cartRepository.add(cartContent)
+                val cartContent = viewModel.cartContentNewInstance(product, quantity)
+                viewModel.insertCartContent(cartContent)
                 binding.layoutAddToCart.isVisible = false
                 Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT)
                     .show()
@@ -105,17 +131,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
      * */
 
     private fun showHomeProducts() {
-        viewModel.homeContentsLiveData.observe(viewLifecycleOwner) { it ->
-            it.let {
-                adapter?.update(it)
-                // Show loading
-                binding.pbLoadingSpinner.visibility = View.VISIBLE
-                // TODO: Set timeout progressbar
-                // Hide loading
-                binding.pbLoadingSpinner.visibility = View.GONE
-            }
-        }
+        // Show loading
+        binding.pbLoadingSpinner.visibility = View.VISIBLE
+        // TODO: Set timeout progressbar
+        // Hide loading
+        binding.pbLoadingSpinner.visibility = View.GONE
     }
+
+//    private fun showEmptyHomeProductsLayout(products: List<Product>) {
+//        if (products.isEmpty()) {
+//            binding.layoutEmptyHome.root.visibility = View.VISIBLE
+//        }
+//        if (products.isNotEmpty()) {
+//            binding.layoutEmptyHome.root.visibility = View.GONE
+//        }
+//    }
 
     private fun setFilterToolbar() {
         val toolbar: Toolbar = binding.layoutFilter.toolbarFilter
@@ -159,7 +189,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeProductAdapter.Hom
 
     private fun onMenuItemSelected(menuItem: MenuItem) {
         menuItem.isChecked = true
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.itemLowToHigh -> {
                 adapter?.setSortedPrice(SORT_LOW_TO_HIGH)
             }

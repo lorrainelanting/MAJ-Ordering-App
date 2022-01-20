@@ -17,7 +17,7 @@ class UserRepositoryImpl private constructor(private val dao: UserDao) : UserRep
         }
     }
 
-    override fun getList(): LiveData<List<User>> = dao.getList()
+    override fun getList(): LiveData<List<User>> = dao.getLiveDataList()
 
     override fun getUser(id: String): LiveData<User> = dao.getUser(id)
 

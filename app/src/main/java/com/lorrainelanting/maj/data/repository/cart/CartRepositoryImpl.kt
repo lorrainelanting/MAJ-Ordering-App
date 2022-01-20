@@ -17,7 +17,7 @@ class CartRepositoryImpl private constructor(private val dao: CartContentDao): C
         }
     }
 
-    override fun getList(): LiveData<List<CartContent>> = dao.getList()
+    override fun getList(): LiveData<List<CartContent>> = dao.getLiveDataList()
 
     override fun getItem(id: String): LiveData<CartContent> = dao.getItem(id)
 

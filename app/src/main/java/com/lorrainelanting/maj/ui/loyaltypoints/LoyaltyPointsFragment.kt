@@ -1,4 +1,4 @@
-package com.lorrainelanting.maj.ui
+package com.lorrainelanting.maj.ui.loyaltypoints
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,30 +1,17 @@
 package com.lorrainelanting.maj.ui.profile
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
-import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
-import com.lorrainelanting.maj.data.repository.user.UserRepository
-import com.lorrainelanting.maj.di.Injection
+import com.lorrainelanting.maj.data.model.User
+import com.lorrainelanting.maj.ui.base.BaseViewModel
 
-class ProfileViewModel : ViewModel() {
-    lateinit var deliveryAddressRepository: DeliveryAddressRepository
+class ProfileViewModel : BaseViewModel() {
+    val usersLiveData by lazy { userRepository.getList() }
+    val deliveryAddressLiveData by lazy { deliveryAddressRepository.getList() }
 
-    lateinit var userRepository: UserRepository
-
-    val deliveryAddressLiveData by lazy {
-        deliveryAddressRepository.getList()
+    fun insertUser(user: User) {
+        userRepository.save(user)
     }
 
-    val userLiveData by lazy {
-        userRepository.getList()
+    fun insertDeliveryNote(notes: String) {
+        deliveryAddressRepository.saveOtherNotes(notes)
     }
-
-    fun injectDeliveryAddress(context: Context) {
-        deliveryAddressRepository = Injection.provideDeliveryAddressRepository(context)
-    }
-
-    fun injectUser(context: Context) {
-        userRepository = Injection.provideUserRepository(context)
-    }
-
 }

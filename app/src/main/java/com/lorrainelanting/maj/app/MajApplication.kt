@@ -1,4 +1,4 @@
-package com.lorrainelanting.maj
+package com.lorrainelanting.maj.app
 
 import android.app.Application
 import android.util.Log

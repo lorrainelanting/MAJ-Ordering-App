@@ -22,7 +22,7 @@ class CartContentsAdapter(
         binding.root
     ) {
         fun bind(content: Content) {
-            var picasso = Picasso.get()
+            val picasso = Picasso.get()
 
             picasso.load(content.product.imgUrl).placeholder(R.color.colorSecondary)
                 .error(R.drawable.ic_soft_drink).into(binding.imgProduct)

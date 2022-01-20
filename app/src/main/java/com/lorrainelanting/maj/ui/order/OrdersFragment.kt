@@ -1,20 +1,17 @@
 package com.lorrainelanting.maj.ui.order
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.observe
 import com.google.android.material.tabs.TabLayout
 import com.lorrainelanting.maj.R
-import com.lorrainelanting.maj.data.model.Order
+import com.lorrainelanting.maj.data.model.OrderGroup
 import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.databinding.FragmentOrdersBinding
-import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseFragment
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
-    OrdersContentAdapter.OrdersContentAdapterCalculation,
     OrdersContentAdapter.OrdersContentAdapterListener {
 
     lateinit var viewModel: OrderViewModel
@@ -27,6 +24,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
     companion object {
         const val ACTIVE = 0
         const val COMPLETED = 1
+        const val ORDER_GROUP_ID = "ORDER_GROUP_ID"
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_orders
@@ -37,15 +35,18 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = OrdersContentAdapter(emptyList(), this, this)
+        adapter = OrdersContentAdapter(emptyList(),this)
         binding.rvOrdersContent.adapter = adapter
 
-        viewModel.ordersContentLiveData.observe(viewLifecycleOwner) { orders ->
-            adapter?.update(orders)
+        viewModel.orderGroupLiveData.observe(viewLifecycleOwner) { list ->
+            for (orderGroup in list) {
+                orderGroup.size = viewModel.getOrderSizeByGroupId(orderGroup.id)
+            }
+            adapter?.update(list)
 
 //            TODO: Show empty banner base on order status filter
             //show empty banner layout
-            if (orders.isEmpty()) {
+            if (list.isEmpty()) {
                 binding.layoutCommonBanner.imgEmptyContainer.setImageResource(R.drawable.ic_nav_orders)
                 binding.layoutCommonBanner.txtEmptyContainer.text =
                     resources.getString(R.string.txt_empty_active_order)
@@ -57,9 +58,20 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
                 binding.layoutCommonBanner.root.visibility = View.GONE
                 binding.rvOrdersContent.visibility = View.VISIBLE
             }
+
+//            TODO:
+        //            if (getFilteredOrders(list).isEmpty()) {
+//                binding.layoutCommonBanner.imgEmptyContainer.setImageResource(R.drawable.ic_nav_orders)
+//                binding.layoutCommonBanner.txtEmptyContainer.text =
+//                    resources.getString(R.string.txt_empty_active_order)
+//
+//                binding.layoutCommonBanner.root.visibility = View.VISIBLE
+//                binding.rvOrdersContent.visibility = View.GONE
+//            }
         }
 
         adapter?.setOrderStatus(binding.tabOrderStatus.selectedTabPosition)
+
         binding.tabOrderStatus.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
@@ -88,11 +100,8 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = OrderViewModel(Injection.provideOrderRepository(context), Injection.provideCartRepository(context))
-    }
-
-    override fun getTotal(unitPrice: Double, quantity: Int): Double {
-        return unitPrice * quantity
+        viewModel = OrderViewModel()
+        viewModel.initializedRepositories(context)
     }
 
     fun setOrderFragmentListener(listener: OrderFragmentListener) {
@@ -103,26 +112,34 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
         fun onContinueShoppingClick()
     }
 
-    override fun onMoveToCompletedBtnClick(order: Order) {
-        if (order.deliveryOption == Constants.OPTION_DELIVER) {
-            order.status = Constants.STATUS_DELIVERED
+    override fun onOrderCardClick(orderGroup: OrderGroup) {
+        startOrderGroupActivity(orderGroup.id)
+    }
+
+    override fun onMoveToCompletedBtnClick(orderGroup: OrderGroup) {
+        if (orderGroup.deliveryOption == Constants.OPTION_DELIVER) {
+            orderGroup.status = Constants.STATUS_DELIVERED
         }
 
-        if (order.deliveryOption == Constants.OPTION_PICK_UP) {
-            order.status = Constants.STATUS_PICKED_UP
+        if (orderGroup.deliveryOption == Constants.OPTION_PICK_UP) {
+            orderGroup.status = Constants.STATUS_PICKED_UP
         }
 
-        viewModel.orderRepository.update(order)
+        viewModel.updateOrderGroup(orderGroup)
         adapter?.notifyDataSetChanged()
     }
 
-    override fun onReorderBtnClick(order: Order) {
-        var cartContent = viewModel.cartContentNewInstance(order.productId, order.quantity)
-        viewModel.cartRepository.add(cartContent)
-        Toast.makeText(context, "Item successfully added to cart.", Toast.LENGTH_SHORT).show()
+    override fun onViewOrdersBtnClick(orderGroup: OrderGroup) {
+        startOrderGroupActivity(orderGroup.id)
     }
 
-    private fun getFilteredOrders(contents: List<Order>): List<Order> {
+    private fun startOrderGroupActivity(orderGroupId: String) {
+        val intent = Intent(context, OrdersActivity().javaClass)
+        intent.putExtra(ORDER_GROUP_ID, orderGroupId)
+        startActivity(intent)
+    }
+
+    private fun getFilteredOrders(contents: List<OrderGroup>): List<OrderGroup> {
         return when (orderType) {
             ACTIVE -> {
                 contents.filter { order ->

@@ -5,15 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lorrainelanting.maj.R
-import com.lorrainelanting.maj.data.model.Order
+import com.lorrainelanting.maj.data.model.OrderGroup
 import com.lorrainelanting.maj.data.util.Constants
-import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.databinding.ItemOrdersContentBinding
-import com.squareup.picasso.Picasso
 
 class OrdersContentAdapter(
-    private var dataset: List<Order>,
-    private val ordersContentAdapterCalculation: OrdersContentAdapterCalculation,
+    private var dataset: List<OrderGroup>,
     private val ordersContentAdapterListener: OrdersContentAdapterListener? = null
 ) : RecyclerView.Adapter<OrdersContentAdapter.OrdersContentViewHolder>() {
 
@@ -22,50 +19,46 @@ class OrdersContentAdapter(
     companion object {
         const val ACTIVE_ORDERS = 0
         const val COMPLETED_ORDERS = 1
+        var count = 0
     }
 
     class OrdersContentViewHolder(
         private val binding: ItemOrdersContentBinding,
-        private val ordersContentAdapterCalculation: OrdersContentAdapterCalculation,
         private val ordersContentAdapterListener: OrdersContentAdapterListener? = null
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(order: Order) {
-            val picasso = Picasso.get()
-            picasso.load(order.productImgUrl).placeholder(R.color.colorSecondary)
-                .error(R.drawable.ic_soft_drink).into(binding.imgProduct)
+        fun bind(orderGroup: OrderGroup) {
+            binding.txtViewMoreProduct.text = itemView.context.getString(
+                R.string.txt_order_count,
+                (orderGroup.size ?: 0).toString()
+            )
 
-            binding.txtProductDescription.text = order.productName
-            binding.txtValUnitCost.text = CurrencyUtil.format(order.productPrice)
-            binding.txtResultQuantity.text = order.quantity.toString()
-
-            binding.txtResultTotal.text =
-                ordersContentAdapterCalculation.getTotal(order.productPrice, order.quantity)
-                    .let { total ->
-                        CurrencyUtil.format(total)
-                    }
-
-            if (order.status == Constants.STATUS_PLACED_ORDER) {
-                binding.btnReorder.visibility = View.GONE
-                binding.btnMoveToCompleted.visibility = View.VISIBLE
-            } else {
-                binding.btnReorder.visibility = View.VISIBLE
-                binding.btnMoveToCompleted.visibility = View.GONE
+            binding.btnViewOrders.visibility = View.VISIBLE
+            binding.btnMoveToCompleted.visibility = View.GONE
+//            if (orderGroup.status == Constants.STATUS_PLACED_ORDER) {
+//                binding.btnViewOrders.visibility = View.GONE
+//                binding.btnMoveToCompleted.visibility = View.VISIBLE
+//            } else {
+//                binding.btnViewOrders.visibility = View.VISIBLE
+//                binding.btnMoveToCompleted.visibility = View.GONE
+//            }
+            binding.cardOrdersContentPast.setOnClickListener {
+                ordersContentAdapterListener?.onOrderCardClick(orderGroup)
             }
 
-            binding.btnReorder.setOnClickListener {
-                ordersContentAdapterListener?.onReorderBtnClick(order)
+            binding.btnViewOrders.setOnClickListener {
+                ordersContentAdapterListener?.onViewOrdersBtnClick(orderGroup)
             }
 
             binding.btnMoveToCompleted.setOnClickListener {
-                ordersContentAdapterListener?.onMoveToCompletedBtnClick(order)
+                ordersContentAdapterListener?.onMoveToCompletedBtnClick(orderGroup)
             }
-            bindOrderStatus(order)
+            bindOrderStatus(orderGroup)
         }
 
-        private fun bindOrderStatus(order: Order) {
-            if (order.status == Constants.STATUS_DELIVERED || order.status == Constants.STATUS_PICKED_UP) {
+        private fun bindOrderStatus(orderGroup: OrderGroup) {
+            if (orderGroup.status == Constants.STATUS_DELIVERED || orderGroup.status == Constants.STATUS_PICKED_UP) {
                 binding.txtOrderStatus.visibility = View.VISIBLE
-                when(order.deliveryOption) {
+                when (orderGroup.deliveryOption) {
                     Constants.OPTION_DELIVER -> {
                         binding.txtOrderStatus.text = Constants.STATUS_DELIVERED
                     }
@@ -74,14 +67,10 @@ class OrdersContentAdapter(
                     }
                 }
             }
-            if (order.status == Constants.STATUS_PLACED_ORDER) {
+            if (orderGroup.status == Constants.STATUS_PLACED_ORDER) {
                 binding.txtOrderStatus.visibility = View.GONE
             }
         }
-    }
-
-    interface OrdersContentAdapterCalculation {
-        fun getTotal(unitPrice: Double, quantity: Int): Double
     }
 
     override fun onCreateViewHolder(
@@ -90,7 +79,10 @@ class OrdersContentAdapter(
     ): OrdersContentViewHolder {
         val content =
             ItemOrdersContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return OrdersContentViewHolder(content, ordersContentAdapterCalculation, ordersContentAdapterListener)
+        return OrdersContentViewHolder(
+            content,
+            ordersContentAdapterListener
+        )
     }
 
     override fun getItemCount(): Int {
@@ -102,12 +94,12 @@ class OrdersContentAdapter(
         holder.bind(item)
     }
 
-    fun update(dataSet: List<Order>) {
+    fun update(dataSet: List<OrderGroup>) {
         this.dataset = dataSet
         notifyDataSetChanged()
     }
 
-    private fun getFilteredDataSet(): List<Order> {
+    private fun getFilteredDataSet(): List<OrderGroup> {
         return when (orderType) {
             ACTIVE_ORDERS -> {
                 dataset.filter {
@@ -131,8 +123,10 @@ class OrdersContentAdapter(
     }
 
     interface OrdersContentAdapterListener {
-        fun onMoveToCompletedBtnClick(order: Order)
+        fun onOrderCardClick(orderGroup: OrderGroup)
 
-        fun onReorderBtnClick(order: Order)
+        fun onMoveToCompletedBtnClick(orderGroup: OrderGroup)
+
+        fun onViewOrdersBtnClick(orderGroup: OrderGroup)
     }
 }

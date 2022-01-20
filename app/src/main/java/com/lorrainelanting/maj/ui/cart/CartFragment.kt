@@ -7,12 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.databinding.FragmentCartBinding
-import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseFragment
 import com.lorrainelanting.maj.ui.checkout.CheckOutActivity
 
@@ -20,8 +18,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
     CartContentsAdapter.CartContentsAdapterListener {
     var adapter: CartContentsAdapter? = null
     lateinit var viewModel: CartViewModel
-//    lateinit var user: User
-//    lateinit var deliveryAddress: DeliveryAddress
 
     private var cartFragmentListener: CartFragmentListener? = null
 
@@ -36,11 +32,11 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
         adapter = CartContentsAdapter(emptyList(), this)
         binding.rvCartContents.adapter = adapter
 
-        viewModel.cartContentsLiveData.observe(viewLifecycleOwner) { it ->
-            it.let {
+        viewModel.cartContentsLiveData.observe(viewLifecycleOwner) { list ->
+            list.let {
                 val cartContents = mutableListOf<CartContentsAdapter.Content>()
-                for (cartContent in it) {
-                    viewModel.productRepository.get(cartContent.productId)?.let { product ->
+                for (cartContent in list) {
+                    viewModel.getProduct(cartContent.productId).let { product ->
                         cartContents.add(
                             CartContentsAdapter.Content(
                                 cartContent,
@@ -51,7 +47,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
                 }
                 adapter?.update(cartContents)
                 //  Empty cart message
-                if (it.size === 0) {
+                if (list.isEmpty()) {
                     binding.txtEmptyCart.visibility = View.VISIBLE
                     binding.btnContinueShopping.visibility = View.VISIBLE
                     binding.frameSummary.visibility = View.GONE
@@ -70,7 +66,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
             cartFragmentListener?.onContinueShoppingClick()
         }
 
-        binding.btnCheckout.setOnClickListener() {
+        binding.btnCheckout.setOnClickListener {
             onCheckOutBtnClick()
         }
 
@@ -87,12 +83,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = CartViewModel(
-            Injection.provideCartRepository(context),
-            Injection.provideProductRepository(context),
-            Injection.provideUserRepository(context),
-            Injection.provideDeliveryAddressRepository(context)
-        )
+        viewModel = CartViewModel()
+        viewModel.initializedRepositories(context)
     }
 
     override fun onItemClick(cartContent: CartContent) {
@@ -101,7 +93,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
     override fun onDeleteBtnClick(cartContent: CartContent) {
         val removeBtnClick = { dialog: DialogInterface, which: Int ->
-            viewModel.cartRepository.delete(cartContent.id)
+            viewModel.deleteCartContent(cartContent.id)
         }
 
         val cancelBtnClick = { dialog: DialogInterface, which: Int ->
@@ -113,7 +105,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
     override fun onMinusBtnClick(cartContent: CartContent) {
         if (cartContent.quantity > 1) {
             cartContent.quantity--
-            viewModel.cartRepository.update(cartContent)
+            viewModel.updateCartContent(cartContent)
             adapter?.notifyDataSetChanged()
         }
     }
@@ -121,7 +113,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
     override fun onAddBtnClick(cartContent: CartContent) {
         adapter?.notifyDataSetChanged()
         cartContent.quantity++
-        viewModel.cartRepository.update(cartContent)
+        viewModel.updateCartContent(cartContent)
     }
 
     private fun onCheckOutBtnClick() {

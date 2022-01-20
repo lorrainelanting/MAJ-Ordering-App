@@ -69,6 +69,11 @@
                         app:spanCount="2"
                         tools:listitem="@layout/item_home_content" />
 
+                    <include
+                        android:id="@+id/layoutEmptyHome"
+                        layout="@layout/layout_home_empty"
+                        android:visibility="gone"/>
+
                     <com.lorrainelanting.maj.ui.common.LayoutAddToCart
                         android:id="@+id/layoutAddToCart"
                         android:layout_width="0dp"

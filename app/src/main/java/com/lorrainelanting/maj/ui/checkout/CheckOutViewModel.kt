@@ -1,42 +1,22 @@
 package com.lorrainelanting.maj.ui.checkout
 
-import androidx.lifecycle.ViewModel
-import com.lorrainelanting.maj.data.model.Order
-import com.lorrainelanting.maj.data.model.User
-import com.lorrainelanting.maj.data.repository.cart.CartRepository
-import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
-import com.lorrainelanting.maj.data.repository.order.OrderRepository
-import com.lorrainelanting.maj.data.repository.product.ProductRepository
-import com.lorrainelanting.maj.data.repository.user.UserRepository
+import com.lorrainelanting.maj.data.model.Product
+import com.lorrainelanting.maj.ui.base.BaseViewModel
 
-class CheckOutViewModel(
-    val cartRepository: CartRepository,
-    val productRepository: ProductRepository,
-    val userRepository: UserRepository,
-    val deliveryAddressRepository: DeliveryAddressRepository,
-    val orderRepository: OrderRepository
-) : ViewModel() {
-
-    val userLiveData by lazy { userRepository.getList() }
-
-    val deliveryAddressLiveData by lazy { deliveryAddressRepository.getList() }
-
+class CheckOutViewModel : BaseViewModel() {
     val cartContentsLiveData by lazy { cartRepository.getList() }
+    val usersLiveData by lazy { userRepository.getList() }
+    val deliveryAddressesLiveData by lazy { deliveryAddressRepository.getList() }
 
-    fun ordersContentNewInstance(deliveryOption: Int, status: String, content: CheckOutOrderSummaryContentAdapter.Content, customer: User, deliveryAddress: String, deliveryDate: Long): Order {
-        return Order.newInstance(
-            deliveryOption = deliveryOption,
-            status = status,
-            productId = content.cartContent.productId,
-            productName = content.product.name,
-            productImgUrl = content.product.imgUrl,
-            quantity = content.cartContent.quantity,
-            productPrice = content.product.price,
-            productPackQty = content.product.packQty,
-            customerName = customer.fullName,
-            customerContactNum = customer.contactNum,
-            deliveryAddress = deliveryAddress,
-            deliveryDate = deliveryDate
-        )
+    fun deleteCartItem(id: String) {
+        cartRepository.delete(id)
+    }
+
+    fun insertOrder(deliveryOption: Int, status: String, deliveryDate: Long) {
+        ordersRepository.save(deliveryOption, status, deliveryDate)
+    }
+
+    fun getProduct(productId: String): Product? {
+        return productRepository.get(productId)
     }
 }

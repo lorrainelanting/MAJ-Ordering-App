@@ -3,7 +3,6 @@ package com.lorrainelanting.maj.ui.addresses
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.core.widget.addTextChangedListener
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.databinding.ActivitySetStreetBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity

@@ -7,16 +7,22 @@ import com.lorrainelanting.maj.data.model.Order
 @Dao
 interface OrderDao {
     @Query("SELECT * FROM order_table ORDER BY createdAtTimeStamp ASC")
-    fun getList(): LiveData<List<Order>>
+    fun getListLiveData(): LiveData<List<Order>>
 
     @Query("SELECT * FROM order_table ORDER BY createdAtTimeStamp ASC")
     fun getOrders(): List<Order>
 
     @Query("SELECT * FROM order_table WHERE id = :id LIMIT 1")
-    fun getItem(id: String): LiveData<Order>
+    fun getItemLiveData(id: String): LiveData<Order>
 
     @Query("SELECT * FROM order_table WHERE productId = :id LIMIT 1")
     fun getItemByProduct(id: String): Order?
+
+    @Query("SELECT * FROM order_table WHERE orderGroupId = :id")
+    fun getOrdersByGroupId(id: String): LiveData<List<Order>>
+
+    @Query("SELECT COUNT(orderGroupId) FROM order_table WHERE orderGroupId = :id")
+    fun getOrderSizeByGroupId(id: String): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(order: Order)

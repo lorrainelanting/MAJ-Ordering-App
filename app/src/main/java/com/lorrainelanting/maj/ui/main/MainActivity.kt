@@ -1,9 +1,8 @@
-package com.lorrainelanting.maj.ui
+package com.lorrainelanting.maj.ui.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.viewpager.widget.ViewPager
@@ -11,11 +10,8 @@ import com.google.android.material.badge.BadgeDrawable
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.OrderGroup
-import com.lorrainelanting.maj.data.repository.cart.CartRepository
-import com.lorrainelanting.maj.data.repository.orders.OrdersRepository
 import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.databinding.ActivityMainBinding
-import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.cart.CartFragment
 import com.lorrainelanting.maj.ui.order.OrdersFragment
@@ -24,17 +20,7 @@ import com.lorrainelanting.maj.ui.viewpager.ViewPagerAdapter
 class MainActivity : BaseActivity<ActivityMainBinding>(),
     CartFragment.CartFragmentListener,
     OrdersFragment.OrderFragmentListener {
-
-    lateinit var cartRepository: CartRepository
-    private lateinit var ordersRepository: OrdersRepository
-    private val cartContentsLiveData by lazy {
-        cartRepository.getList()
-    }
-
-    private val ordersContentLiveData by lazy {
-        ordersRepository.getOrderGroupList()
-    }
-
+    private lateinit var viewModel: MainViewModel
     private lateinit var navController: NavController
     private lateinit var mPager: ViewPager
     private lateinit var badge: BadgeDrawable
@@ -52,14 +38,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         mPager = binding.viewPager
         val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this, this)
         mPager.adapter = pagerAdapter
-        cartRepository = Injection.provideCartRepository(this)
-        cartContentsLiveData.observe(this) { it ->
-            setBadgeCart(it)
+
+        viewModel = MainViewModel()
+        viewModel.initializedRepositories(this)
+
+        viewModel.cartContentsLiveData.observe(this) { cartContents ->
+            setBadgeCart(cartContents)
         }
 
-        ordersRepository = Injection.provideOrdersRepository(this)
-        ordersContentLiveData.observe(this) {
-            setBadgeOrders(it)
+        viewModel.ordersContentLiveData.observe(this) { orders ->
+            setBadgeOrders(orders)
         }
 
 //      ViewPager nav listener
@@ -190,4 +178,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             R.id.itemFragmentProfile -> mPager.currentItem = 4
         }
     }
-    }
+}

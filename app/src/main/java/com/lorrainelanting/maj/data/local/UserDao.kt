@@ -7,7 +7,10 @@ import com.lorrainelanting.maj.data.model.User
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user_table ORDER BY createdAtTimeStamp ASC")
-    fun getList(): LiveData<List<User>>
+    fun getLiveDataList(): LiveData<List<User>>
+
+    @Query("SELECT * FROM user_table ORDER BY createdAtTimeStamp ASC")
+    fun getList(): List<User>
 
     @Query("SELECT * FROM user_table WHERE id = :id LIMIT 1")
     fun getUser(id: String): LiveData<User>

@@ -13,30 +13,23 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
-import com.lorrainelanting.maj.data.model.Order
 import com.lorrainelanting.maj.data.model.User
 import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.data.util.DateUtil
 import com.lorrainelanting.maj.databinding.ActivityCheckOutBinding
-import com.lorrainelanting.maj.di.Injection
 import com.lorrainelanting.maj.ui.base.BaseActivity
 import java.util.*
-
 
 class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     CheckOutOrderSummaryContentAdapter.CheckOutOrderSummaryContentAdapterCalculation {
 
-    lateinit var viewModel: CheckOutViewModel
-    lateinit var delAddress: String
-    lateinit var selectedDeliveryDate: Date
-
+    private lateinit var viewModel: CheckOutViewModel
+    private lateinit var delAddress: String
+    private lateinit var selectedDeliveryDate: Date
     private lateinit var customerInfo: User
-
     private var deliveryDate: Long = 0
-
     var adapter: CheckOutOrderSummaryContentAdapter? = null
 
     companion object {
@@ -53,15 +46,10 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
         binding.layoutOrderSummary.rvCheckOutProduct.adapter = adapter
 
-        viewModel = CheckOutViewModel(
-            Injection.provideCartRepository(this),
-            Injection.provideProductRepository(this),
-            Injection.provideUserRepository(this),
-            Injection.provideDeliveryAddressRepository(this),
-            Injection.provideOrderRepository(this)
-        )
+        viewModel = CheckOutViewModel()
+        viewModel.initializedRepositories(this)
 
-        viewModel.userLiveData.observe(this) { list ->
+        viewModel.usersLiveData.observe(this) { list ->
             if (list.isNotEmpty()) {
                 binding.layoutUserBanner.root.visibility = View.GONE
                 binding.layoutCustomerDetail.root.visibility = View.VISIBLE
@@ -97,7 +85,7 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
             deliveryDate = DateUtil.formatToDate(selectedDeliveryDate)
         }
 
-        viewModel.deliveryAddressLiveData.observe(this) { list ->
+        viewModel.deliveryAddressesLiveData.observe(this) { list ->
             for (deliveryAddress in list) {
                 delAddress =
                     "${deliveryAddress.streetName}, ${deliveryAddress.barangay}, ${deliveryAddress.city}"
@@ -107,47 +95,60 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
         }
 
         viewModel.cartContentsLiveData.observe(this) { list ->
-            list.let {
-                val cartContents = mutableListOf<CheckOutOrderSummaryContentAdapter.Content>()
-                for (cartContent in list) {
-                    viewModel.productRepository.get(cartContent.productId)?.let { product ->
-                        cartContents.add(
-                            CheckOutOrderSummaryContentAdapter.Content(
-                                cartContent,
-                                product
-                            )
+            val cartContents = mutableListOf<CheckOutOrderSummaryContentAdapter.Content>()
+            for (cartContent in list) {
+                viewModel.getProduct(cartContent.productId)?.let { product ->
+                    cartContents.add(
+                        CheckOutOrderSummaryContentAdapter.Content(
+                            cartContent,
+                            product
                         )
-                    }
+                    )
                 }
+            }
 
-                adapter?.update(cartContents)
+            adapter?.update(cartContents)
 
-                binding.layoutSummaryFees.txtResultSubTotal.text =
-                    CurrencyUtil.format(computeSubtotal(cartContents))
-                binding.frameSummaryCheckout.findViewById<TextView>(R.id.txtResultTotalPayment).text =
-                    CurrencyUtil.format(computeTotalPayment(computeSubtotal(cartContents), 0.00))
+            binding.layoutSummaryFees.txtResultSubTotal.text =
+                CurrencyUtil.format(computeSubtotal(cartContents))
+            binding.frameSummaryCheckout.findViewById<TextView>(R.id.txtResultTotalPayment).text =
+                CurrencyUtil.format(computeTotalPayment(computeSubtotal(cartContents), 0.00))
 
-                binding.btnPlaceOrder.setOnClickListener {
-                    val positiveBtnClick = { dialog: DialogInterface, which: Int ->
+            binding.btnPlaceOrder.setOnClickListener {
+                val positiveBtnClick = { dialog: DialogInterface, which: Int ->
+                    val optionDeliver = binding.layoutDeliveryDetails.radioBtnDeliver.isChecked
+                    val optionPickUp = binding.layoutDeliveryDetails.radioBtnPickup.isChecked
+                    var cartContentId: String
 
-                        if (this.isNetworkAvailable) {
-                            for (cartContent in cartContents) {
-                                val deliveryOption =
-                                    binding.layoutDeliveryDetails.rgDeliveryOption.checkedRadioButtonId
-                                val status = Constants.STATUS_PLACED_ORDER
+                    if (this.isNetworkAvailable) {
+                        var deliveryOption = 0
+                        val status = Constants.STATUS_PLACED_ORDER
 
-                                setOrder(deliveryOption, status, cartContent)
-                            }
-                        } else {
-                            onNetworkNotAvailable(cartContents)
+                        if (optionDeliver) {
+                            deliveryOption = Constants.OPTION_DELIVER
                         }
-                    }
+                        if (optionPickUp) {
+                            deliveryOption = Constants.OPTION_PICK_UP
+                        }
 
-                    val negativeBtnClick = { dialog: DialogInterface, which: Int ->
-                    }
+                        setOrder(deliveryOption, status)
 
-                    alert(positiveBtnClick, negativeBtnClick)
+                        for (cartContent in cartContents) {
+                            cartContentId = cartContent.cartContent.id
+
+                            // Remove placed item from cart.
+                            viewModel.deleteCartItem(cartContentId)
+                        }
+
+                    } else {
+                        onNetworkNotAvailable(cartContents)
+                    }
                 }
+
+                val negativeBtnClick = { dialog: DialogInterface, which: Int ->
+                }
+
+                alert(positiveBtnClick, negativeBtnClick)
             }
         }
 
@@ -219,7 +220,7 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     private fun computeSubtotal(list: List<CheckOutOrderSummaryContentAdapter.Content>): Double {
         var subtotal = 0.00
         for (item in list) {
-            val total = 658.00 * item.cartContent.quantity
+            val total = item.product.price * item.cartContent.quantity
             subtotal += total
         }
         return subtotal
@@ -265,18 +266,12 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     private fun setOrder(
         deliveryOption: Int,
         status: String,
-        content: CheckOutOrderSummaryContentAdapter.Content,
     ) {
-        val order: Order = viewModel.ordersContentNewInstance(
+        viewModel.insertOrder(
             deliveryOption,
             status,
-            content,
-            customerInfo,
-            delAddress,
             deliveryDate
         )
-        viewModel.orderRepository.save(order)
-
         setResult(2)
         finish()
     }
@@ -299,12 +294,14 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
             ) + "\n"
         }
 
-        val smsFullMessage = getString(R.string.sms_order, smsOrderDetails,
+        val smsFullMessage = getString(
+            R.string.sms_order, smsOrderDetails,
             selectedDeliveryText,
             DateUtil.formatToString(selectedDeliveryDate),
             customerInfo.fullName,
             customerInfo.contactNum,
-            delAddress)
+            delAddress
+        )
 
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             type = "text/plain"

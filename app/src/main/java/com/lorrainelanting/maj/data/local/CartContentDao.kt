@@ -7,7 +7,10 @@ import com.lorrainelanting.maj.data.model.CartContent
 @Dao
 interface CartContentDao {
     @Query("SELECT * FROM cart_content_table ORDER BY createdAtTimeStamp ASC")
-    fun getList(): LiveData<List<CartContent>>
+    fun getLiveDataList(): LiveData<List<CartContent>>
+
+    @Query("SELECT * FROM cart_content_table ORDER BY createdAtTimeStamp ASC")
+    fun getList(): List<CartContent>
 
     @Query("SELECT * FROM cart_content_table WHERE id = :id LIMIT 1")
     fun getItem(id: String): LiveData<CartContent>

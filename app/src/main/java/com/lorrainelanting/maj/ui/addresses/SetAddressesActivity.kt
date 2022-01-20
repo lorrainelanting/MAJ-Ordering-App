@@ -25,8 +25,8 @@ abstract class SetAddressesActivity : BaseActivity<ActivitySetAddressesBinding>(
 
         viewModel.injectDeliveryAddress(this)
 
-        val delAddress = DeliveryAddress()
-        viewModel.deliveryAddressLiveData = viewModel.repository.getDeliveryAddress(delAddress.id)
+//        val delAddress = DeliveryAddress()
+//        viewModel.getDeliveryAddressLiveData(delAddress.id)
 
         binding.layoutToolbarSearch.searchViewAddress.setOnQueryTextListener(onSearchQuery())
     }

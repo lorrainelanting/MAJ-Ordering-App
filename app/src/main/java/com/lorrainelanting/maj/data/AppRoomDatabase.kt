@@ -11,17 +11,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [Product::class, CartContent::class, User::class, DeliveryAddress::class, Order::class],
+    entities = [Product::class,
+        CartContent::class,
+        User::class,
+        DeliveryAddress::class,
+        Order::class,
+        OrderGroup::class],
     version = 1,
     exportSchema = false
 )
-public abstract class AppRoomDatabase : RoomDatabase() {
+abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun productDao(): ProductDao
     abstract fun cartContentDao(): CartContentDao
     abstract fun userDao(): UserDao
     abstract fun deliveryAddressDao(): DeliveryAddressDao
     abstract fun orderDao(): OrderDao
+    abstract fun orderGroupDao(): OrderGroupDao
 
     companion object {
         @Volatile
@@ -53,7 +59,7 @@ public abstract class AppRoomDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateDatabase(dao: ProductDao) {
+        fun populateDatabase(dao: ProductDao) {
             // Delete all content here.
             dao.deleteAll()
 

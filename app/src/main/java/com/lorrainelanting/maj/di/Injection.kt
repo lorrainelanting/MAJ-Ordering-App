@@ -7,8 +7,8 @@ import com.lorrainelanting.maj.data.repository.cart.CartRepository
 import com.lorrainelanting.maj.data.repository.cart.CartRepositoryImpl
 import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
 import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepositoryImpl
-import com.lorrainelanting.maj.data.repository.order.OrderRepository
-import com.lorrainelanting.maj.data.repository.order.OrderRepositoryImpl
+import com.lorrainelanting.maj.data.repository.orders.OrdersRepository
+import com.lorrainelanting.maj.data.repository.orders.OrdersRepositoryImpl
 import com.lorrainelanting.maj.data.repository.product.ProductRepository
 import com.lorrainelanting.maj.data.repository.product.ProductRepositoryImpl
 import com.lorrainelanting.maj.data.repository.user.UserRepository
@@ -36,8 +36,15 @@ class Injection {
             return DeliveryAddressRepositoryImpl.getInstance(provideAppDatabase(context).deliveryAddressDao())
         }
 
-        fun provideOrderRepository(context: Context): OrderRepository {
-            return OrderRepositoryImpl.getInstance(provideAppDatabase(context).orderDao())
+        fun provideOrdersRepository(context: Context): OrdersRepository {
+            return OrdersRepositoryImpl.getInstance(
+                provideAppDatabase(context).orderDao(),
+                provideAppDatabase(context).orderGroupDao(),
+                provideAppDatabase(context).cartContentDao(),
+                provideAppDatabase(context).productDao(),
+                provideAppDatabase(context).userDao(),
+                provideAppDatabase(context).deliveryAddressDao()
+            )
         }
 
         fun provideSharedPrefs(context: Context): SharedPrefs {
