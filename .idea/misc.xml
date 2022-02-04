@@ -5,9 +5,16 @@
       <map>
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/activity_check_out.xml" value="0.14666666666666667" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/activity_orders.xml" value="0.22" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/activity_product_detail.xml" value="0.1" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/activity_set_addresses.xml" value="0.22" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/activity_set_street.xml" value="0.16666666666666666" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/fragment_cart.xml" value="0.1" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/fragment_home.xml" value="0.4466666666666667" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/fragment_orders.xml" value="0.4466666666666667" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/fragment_profile.xml" value="0.3602941176470588" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/item_address.xml" value="0.22" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/item_cart_content.xml" value="0.1" />
+        <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/item_home_content.xml" value="0.1" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/item_order_group_content.xml" value="0.3333333333333333" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/item_orders_content.xml" value="0.3333333333333333" />
         <entry key="..\:/Projects/MobileDev/MAJ-app/app/src/main/res/layout/layout_toolbar_filter.xml" value="0.10009057971014493" />

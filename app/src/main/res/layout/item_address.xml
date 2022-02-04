@@ -10,7 +10,8 @@
             android:id="@+id/txtAddressItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:paddingVertical="10dp"
             android:clickable="true"
             tools:text="Sabang"
             android:focusable="true" />
