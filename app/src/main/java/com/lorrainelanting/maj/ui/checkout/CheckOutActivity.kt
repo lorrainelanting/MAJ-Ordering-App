@@ -33,7 +33,7 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     var adapter: CheckOutOrderSummaryContentAdapter? = null
 
     companion object {
-        const val MAJ_CONTACT_NUM = "09178913668"
+        const val MAJ_CONTACT_NUM = "09170000000" // 09178913668
     }
 
     override fun getLayoutId(): Int = R.layout.activity_check_out
@@ -48,7 +48,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
         viewModel = CheckOutViewModel()
         viewModel.initializedRepositories(this)
-
         viewModel.usersLiveData.observe(this) { list ->
             if (list.isNotEmpty()) {
                 binding.layoutUserBanner.root.visibility = View.GONE
@@ -81,6 +80,10 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
                 binding.layoutCustomerDetail.txtCustomerName.text = user.fullName
                 binding.layoutCustomerDetail.txtStoreName.text = user.storeName
                 binding.layoutCustomerDetail.txtCustomerMobile.setText(user.contactNum)
+
+                if (isCustomerDetailsSet(customerInfo.fullName, customerInfo.contactNum)) {
+                    binding.btnPlaceOrder.isEnabled = false
+                }
             }
             deliveryDate = DateUtil.formatToDate(selectedDeliveryDate)
         }
@@ -91,6 +94,9 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
                     "${deliveryAddress.streetName}, ${deliveryAddress.barangay}, ${deliveryAddress.city}"
                 binding.layoutCustomerDetail.txtCustomerAddress.text = delAddress
 
+                if (isDeliveryAddressSet(delAddress)) {
+                    binding.btnPlaceOrder.isEnabled = false
+                }
             }
         }
 
@@ -113,7 +119,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
                 CurrencyUtil.format(computeSubtotal(cartContents))
             binding.frameSummaryCheckout.findViewById<TextView>(R.id.txtResultTotalPayment).text =
                 CurrencyUtil.format(computeTotalPayment(computeSubtotal(cartContents), 0.00))
-
             binding.btnPlaceOrder.setOnClickListener {
                 val positiveBtnClick = { dialog: DialogInterface, which: Int ->
                     val optionDeliver = binding.layoutDeliveryDetails.radioBtnDeliver.isChecked
@@ -312,5 +317,13 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
         if (intent.resolveActivity(this.packageManager) != null) {
             startActivity(intent)
         }
+    }
+
+    private fun isCustomerDetailsSet(name: String, contactNum: String): Boolean {
+        return !(name.isEmpty() && contactNum.isEmpty())
+    }
+
+    private fun isDeliveryAddressSet(address: String): Boolean {
+        return address.isNotEmpty()
     }
 }
