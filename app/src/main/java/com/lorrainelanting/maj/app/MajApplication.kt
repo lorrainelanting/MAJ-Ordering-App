@@ -10,39 +10,42 @@ import com.lorrainelanting.maj.data.local.SharedPrefs
 import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.data.repository.orders.OrdersRepository
 import com.lorrainelanting.maj.data.repository.product.ProductRepository
-import com.lorrainelanting.maj.data.util.Constants
-import com.lorrainelanting.maj.di.Injection
+import com.lorrainelanting.maj.data.util.OPTION_DELIVER
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltAndroidApp
 class MajApplication : Application() {
+    @Inject
+    lateinit var localDatabase: AppRoomDatabase
+    @Inject
+    lateinit var sharedPrefs: SharedPrefs
+    @Inject
+    lateinit var productRepository: ProductRepository
+    @Inject
+    lateinit var ordersRepository: OrdersRepository
+
     private var remoteVersion: Int = 0
     private var localVersion: Int = 0
     private val applicationScope = CoroutineScope(SupervisorJob())
-    lateinit var localDatabase: AppRoomDatabase
-    lateinit var sharedPrefs: SharedPrefs
-
     private val remoteDatabase by lazy { Firebase.firestore }
-    lateinit var productRepository: ProductRepository
-    lateinit var ordersRepository: OrdersRepository
 
     override fun onCreate() {
         super.onCreate()
-        localDatabase = AppRoomDatabase.getDatabase(this, applicationScope)
-        sharedPrefs = Injection.provideSharedPrefs(this)
+        localDatabase = AppRoomDatabase.buildDatabase(this)
         localVersion = sharedPrefs.getProductsVersion()
-        productRepository = Injection.provideProductRepository(this)
-        ordersRepository = Injection.provideOrdersRepository(this)
 
         Log.d("MajApplication", localDatabase.toString())
 
         compareVersions()
 
-
         val order = hashMapOf(
             "quantity" to 2,
-            "delivery_option" to Constants.OPTION_DELIVER,
-            "status" to Constants.OPTION_DELIVER,
+            "delivery_option" to OPTION_DELIVER,
+            "status" to OPTION_DELIVER,
             "delivery_date" to "30 May 2021",
             "order_date" to "26 May 2021",
             "product_id" to "1XmZqHO3L3Nx7Yalyjax",
@@ -96,18 +99,20 @@ class MajApplication : Application() {
                 )
                 data.add(product) // Fetch remote products
             }
-            syncLocalProducts(data)
+            syncLocalProducts(data, applicationScope)
         }
             .addOnFailureListener { exception ->
                 Log.w("Firestore Failed", "Error getting documents.", exception)
             }
     }
 
-    private fun syncLocalProducts(remoteProducts: MutableList<Product>) {
-        productRepository.deleteAll() // Clear local products
-        productRepository.insertAll(remoteProducts) // Save remote products
-        // Update local version
-        sharedPrefs.setProductsVersion(remoteVersion)
-        localVersion = remoteVersion
+    private fun syncLocalProducts(remoteProducts: MutableList<Product>, scope: CoroutineScope) {
+        scope.launch {
+            productRepository.deleteAll() // Clear local products
+            productRepository.insertAll(remoteProducts) // Save remote products
+            // Update local version
+            sharedPrefs.setProductsVersion(remoteVersion)
+            localVersion = remoteVersion
+        }
     }
 }
