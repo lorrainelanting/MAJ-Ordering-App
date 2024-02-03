@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.Order
 import com.lorrainelanting.maj.data.model.OrderGroup
-import com.lorrainelanting.maj.data.util.Constants
 import com.lorrainelanting.maj.data.util.CurrencyUtil
+import com.lorrainelanting.maj.data.util.STATUS_DELIVERED
+import com.lorrainelanting.maj.data.util.STATUS_PICKED_UP
+import com.lorrainelanting.maj.data.util.STATUS_PLACED_ORDER
 import com.lorrainelanting.maj.databinding.ItemOrderGroupContentBinding
 import com.squareup.picasso.Picasso
 
@@ -84,12 +86,12 @@ class OrderGroupContentAdapter(
                 when (orderType) {
                     OrdersContentAdapter.ACTIVE_ORDERS -> {
                         dataset.filter {
-                            it.orderGroup.status == Constants.STATUS_PLACED_ORDER
+                            it.orderGroup.status == STATUS_PLACED_ORDER
                         }
                     }
                     OrdersContentAdapter.COMPLETED_ORDERS -> {
                         dataset.filter {
-                            it.orderGroup.status == Constants.STATUS_DELIVERED || it.orderGroup.status == Constants.STATUS_PICKED_UP
+                            it.orderGroup.status == STATUS_DELIVERED || it.orderGroup.status == STATUS_PICKED_UP
                         }
                     }
                     else -> {

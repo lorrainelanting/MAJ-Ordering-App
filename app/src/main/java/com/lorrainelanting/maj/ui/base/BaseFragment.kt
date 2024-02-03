@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     lateinit var binding: B
 
+    abstract val viewModel: BaseViewModel
+
     @LayoutRes
     abstract fun getLayoutId(): Int
 
@@ -29,8 +31,5 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    companion object {
     }
 }

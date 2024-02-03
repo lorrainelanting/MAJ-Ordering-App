@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.OrderGroup
-import com.lorrainelanting.maj.data.util.Constants
+import com.lorrainelanting.maj.data.util.*
 import com.lorrainelanting.maj.databinding.ItemOrdersContentBinding
 
 class OrdersContentAdapter(
@@ -56,18 +56,18 @@ class OrdersContentAdapter(
         }
 
         private fun bindOrderStatus(orderGroup: OrderGroup) {
-            if (orderGroup.status == Constants.STATUS_DELIVERED || orderGroup.status == Constants.STATUS_PICKED_UP) {
+            if (orderGroup.status == STATUS_DELIVERED || orderGroup.status == STATUS_PICKED_UP) {
                 binding.txtOrderStatus.visibility = View.VISIBLE
                 when (orderGroup.deliveryOption) {
-                    Constants.OPTION_DELIVER -> {
-                        binding.txtOrderStatus.text = Constants.STATUS_DELIVERED
+                    OPTION_DELIVER -> {
+                        binding.txtOrderStatus.text = STATUS_DELIVERED
                     }
-                    Constants.OPTION_PICK_UP -> {
-                        binding.txtOrderStatus.text = Constants.STATUS_PICKED_UP
+                    OPTION_PICK_UP -> {
+                        binding.txtOrderStatus.text = STATUS_PICKED_UP
                     }
                 }
             }
-            if (orderGroup.status == Constants.STATUS_PLACED_ORDER) {
+            if (orderGroup.status == STATUS_PLACED_ORDER) {
                 binding.txtOrderStatus.visibility = View.GONE
             }
         }
@@ -103,12 +103,12 @@ class OrdersContentAdapter(
         return when (orderType) {
             ACTIVE_ORDERS -> {
                 dataset.filter {
-                    it.status == Constants.STATUS_PLACED_ORDER
+                    it.status == STATUS_PLACED_ORDER
                 }
             }
             COMPLETED_ORDERS -> {
                 dataset.filter {
-                    it.status == Constants.STATUS_DELIVERED || it.status == Constants.STATUS_PICKED_UP
+                    it.status == STATUS_DELIVERED || it.status == STATUS_PICKED_UP
                 }
             }
             else -> {

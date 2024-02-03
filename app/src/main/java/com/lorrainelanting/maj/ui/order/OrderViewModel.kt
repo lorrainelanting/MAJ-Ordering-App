@@ -1,13 +1,23 @@
 package com.lorrainelanting.maj.ui.order
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.Order
 import com.lorrainelanting.maj.data.model.OrderGroup
 import com.lorrainelanting.maj.data.model.Product
+import com.lorrainelanting.maj.data.repository.cart.CartRepository
+import com.lorrainelanting.maj.data.repository.orders.OrdersRepository
 import com.lorrainelanting.maj.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderViewModel : BaseViewModel() {
+@HiltViewModel
+class OrderViewModel @Inject constructor(
+    private val ordersRepository: OrdersRepository,
+    private val cartRepository: CartRepository
+) : BaseViewModel() {
     val orderGroupLiveData by lazy { ordersRepository.getOrderGroupList() }
 
     fun getOrderSizeByGroupId(orderGroupId: String): Int {
@@ -35,6 +45,8 @@ class OrderViewModel : BaseViewModel() {
     }
 
     fun reorderItem(cartContent: CartContent) {
-        cartRepository.add(cartContent)
+        viewModelScope.launch {
+            cartRepository.add(cartContent)
+        }
     }
 }

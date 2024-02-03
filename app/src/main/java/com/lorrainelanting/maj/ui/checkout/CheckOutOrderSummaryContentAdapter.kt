@@ -21,7 +21,7 @@ class CheckOutOrderSummaryContentAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(content: Content) {
-            var picasso = Picasso.get()
+            val picasso = Picasso.get()
             picasso.load(content.product.imgUrl).placeholder(R.color.colorSecondary)
                 .error(R.drawable.ic_soft_drink).into(binding.imgProduct)
             binding.txtProductDescription.text = "${content.product.name}  ${content.product.packQty}"

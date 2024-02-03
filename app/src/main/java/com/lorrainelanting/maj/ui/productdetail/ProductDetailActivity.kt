@@ -3,6 +3,7 @@ package com.lorrainelanting.maj.ui.productdetail
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.Product
@@ -12,9 +13,11 @@ import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.common.LayoutAddToCart
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
-    private val viewModel = ProductDetailViewModel()
+    override val viewModel: ProductDetailViewModel by viewModels()
 
     override fun getLayoutId(): Int = R.layout.activity_product_detail
 
@@ -24,7 +27,6 @@ class ProductDetailActivity : BaseActivity<ActivityProductDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.initializedRepositories(this)
 
         intent?.extras?.let {
             viewModel.getProductLiveData(it.getString(ID, "") ?: "").observe(this) { product ->

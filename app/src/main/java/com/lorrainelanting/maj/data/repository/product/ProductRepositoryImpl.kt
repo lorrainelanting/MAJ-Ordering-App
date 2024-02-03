@@ -24,7 +24,9 @@ class ProductRepositoryImpl private constructor(private val dao: ProductDao):
 
     override fun getItem(id: String): LiveData<Product> = dao.getItem(id)
 
-    override fun get(id: String): Product? = dao.get(id)
+    override suspend fun get(id: String): Product? {
+        return dao.get(id)
+    }
 
     override fun insert(product: Product) = dao.insert(product)
 

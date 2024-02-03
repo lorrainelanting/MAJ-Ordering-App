@@ -27,6 +27,8 @@ abstract class BaseActivity<B : ViewDataBinding>: AppCompatActivity(), NetworkCo
             field = value
         }
 
+    abstract val viewModel: BaseViewModel
+
     lateinit var binding: B
 
     private lateinit var connectivityReceiver : ConnectivityReceiver
@@ -50,6 +52,8 @@ abstract class BaseActivity<B : ViewDataBinding>: AppCompatActivity(), NetworkCo
         binding.lifecycleOwner = this
 
         connectivityReceiver = ConnectivityReceiver(this)
+
+        viewModel.start()
     }
 
     override fun onPause() {

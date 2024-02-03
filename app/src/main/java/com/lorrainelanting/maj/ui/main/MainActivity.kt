@@ -3,6 +3,7 @@ package com.lorrainelanting.maj.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import androidx.viewpager.widget.ViewPager
@@ -10,17 +11,20 @@ import com.google.android.material.badge.BadgeDrawable
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.OrderGroup
-import com.lorrainelanting.maj.data.util.Constants
+import com.lorrainelanting.maj.data.util.STATUS_DELIVERED
+import com.lorrainelanting.maj.data.util.STATUS_PICKED_UP
+import com.lorrainelanting.maj.data.util.STATUS_PLACED_ORDER
 import com.lorrainelanting.maj.databinding.ActivityMainBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.cart.CartFragment
 import com.lorrainelanting.maj.ui.order.OrdersFragment
 import com.lorrainelanting.maj.ui.viewpager.ViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(),
     CartFragment.CartFragmentListener,
     OrdersFragment.OrderFragmentListener {
-    private lateinit var viewModel: MainViewModel
     private lateinit var navController: NavController
     private lateinit var mPager: ViewPager
     private lateinit var badge: BadgeDrawable
@@ -31,6 +35,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         const val COMPLETED_ORDERS = 1
     }
 
+
+    override val viewModel: MainViewModel by viewModels()
+
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         mPager = binding.viewPager
         val pagerAdapter = ViewPagerAdapter(supportFragmentManager, this.resources, this, this)
         mPager.adapter = pagerAdapter
-
-        viewModel = MainViewModel()
-        viewModel.initializedRepositories(this)
 
         viewModel.cartContentsLiveData.observe(this) { cartContents ->
             setBadgeCart(cartContents)
@@ -147,12 +151,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         return when (orderType) {
             ACTIVE_ORDERS -> {
                 contents.filter { orderGroup ->
-                    orderGroup.status == Constants.STATUS_PLACED_ORDER
+                    orderGroup.status == STATUS_PLACED_ORDER
                 }
             }
             COMPLETED_ORDERS -> {
                 contents.filter { order ->
-                    order.status == Constants.STATUS_DELIVERED || order.status == Constants.STATUS_PICKED_UP
+                    order.status == STATUS_DELIVERED || order.status == STATUS_PICKED_UP
                 }
             }
             else -> {

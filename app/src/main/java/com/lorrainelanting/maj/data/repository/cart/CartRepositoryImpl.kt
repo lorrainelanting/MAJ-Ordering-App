@@ -21,7 +21,7 @@ class CartRepositoryImpl private constructor(private val dao: CartContentDao): C
 
     override fun getItem(id: String): LiveData<CartContent> = dao.getItem(id)
 
-    override fun add(item: CartContent) {
+    override suspend fun add(item: CartContent) {
         val existingItem = dao.getItemByProduct(item.productId)
 
         if(existingItem != null) {

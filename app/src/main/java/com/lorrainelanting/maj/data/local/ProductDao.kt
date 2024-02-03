@@ -16,7 +16,7 @@ interface ProductDao {
     fun getItem(id: String): LiveData<Product>
 
     @Query("SELECT * FROM product_table WHERE id = :id LIMIT 1")
-    fun get(id: String): Product?
+    suspend fun get(id: String): Product?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(item: Product)

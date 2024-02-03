@@ -3,21 +3,23 @@ package com.lorrainelanting.maj.ui.order
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.model.Order
 import com.lorrainelanting.maj.data.model.OrderGroup
 import com.lorrainelanting.maj.data.model.Product
-import com.lorrainelanting.maj.data.util.Constants
-import com.lorrainelanting.maj.data.util.CurrencyUtil
+import com.lorrainelanting.maj.data.util.*
 import com.lorrainelanting.maj.databinding.ActivityOrdersBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrdersActivity : BaseActivity<ActivityOrdersBinding>(),
     OrderGroupContentAdapter.OrderGroupContentAdapterCalculation {
 
-    lateinit var viewModel: OrderViewModel
+    override val viewModel: OrderViewModel by viewModels()
     var adapter: OrderGroupContentAdapter? = null
 
     companion object {
@@ -31,8 +33,6 @@ class OrdersActivity : BaseActivity<ActivityOrdersBinding>(),
         val orderGroupId = intent?.getStringExtra(ORDER_GROUP_ID)
         adapter = OrderGroupContentAdapter(emptyList(), this)
         binding.rvOrderGroupContent.adapter = adapter
-        viewModel = OrderViewModel()
-        viewModel.initializedRepositories(this)
 
         viewModel.orderGroupLiveData.observe(this) { list ->
             for (detail in list) {
@@ -63,7 +63,7 @@ class OrdersActivity : BaseActivity<ActivityOrdersBinding>(),
             binding.txtResultTotalAmt.text =
                 CurrencyUtil.format(calcTotal(calcSubTotal(orderGroupContents), 0.00))
 
-            if (orderStatus == Constants.STATUS_PLACED_ORDER) {
+            if (orderStatus == STATUS_PLACED_ORDER) {
                 binding.btnMoveToCompleted.visibility = View.VISIBLE
                 binding.btnReorder.visibility = View.GONE
 
@@ -82,12 +82,12 @@ class OrdersActivity : BaseActivity<ActivityOrdersBinding>(),
     }
 
     private fun onBtnMoveToCompletedClicked(orderGroup: OrderGroup) {
-        if (orderGroup.deliveryOption == Constants.OPTION_DELIVER) {
-            orderGroup.status = Constants.STATUS_DELIVERED
+        if (orderGroup.deliveryOption == OPTION_DELIVER) {
+            orderGroup.status = STATUS_DELIVERED
         }
 
-        if (orderGroup.deliveryOption == Constants.OPTION_PICK_UP) {
-            orderGroup.status = Constants.STATUS_PICKED_UP
+        if (orderGroup.deliveryOption == OPTION_PICK_UP) {
+            orderGroup.status = STATUS_PICKED_UP
         }
 
         viewModel.updateOrderGroup(orderGroup)

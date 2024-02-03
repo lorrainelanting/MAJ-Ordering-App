@@ -48,7 +48,7 @@ class OrdersRepositoryImpl private constructor(
 
     override fun getItemByGroup(id: String): OrderGroup? = orderGroupDao.getOrderGroup(id)
 
-    override fun save(deliveryOption: Int, status: String, deliveryDate: Long) {
+    override suspend fun save(deliveryOption: Int, status: String, deliveryDate: Long) {
         val customerInfo = userDao.get()!!
         val deliveryAddress = deliveryAddressDao.getDeliveryAddress()!!
         var orderGroupId = ""

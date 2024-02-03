@@ -8,7 +8,7 @@ interface CartRepository {
 
     fun getItem(id: String) : LiveData<CartContent>
 
-    fun add(item: CartContent)
+    suspend fun add(item: CartContent)
 
     fun update(item: CartContent)
 

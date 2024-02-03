@@ -2,17 +2,19 @@ package com.lorrainelanting.maj.ui.addresses
 
 import android.content.Intent
 import com.lorrainelanting.maj.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SetCityActivity : SetAddressesActivity() {
     override fun populate() {
-        var cities = resources.getStringArray(R.array.cities)
+        val cities = resources.getStringArray(R.array.cities)
         for (city in cities) {
             list.add(city)
         }
     }
 
-    override fun onItemClick(city: String) {
-        viewModel.repository.saveCity(city)
+    override fun onItemClick(item: String) {
+        viewModel.saveCity(item)
         val intent = Intent(this, SetBarangayActivity().javaClass)
         startActivityForResult(intent, 1)
     }

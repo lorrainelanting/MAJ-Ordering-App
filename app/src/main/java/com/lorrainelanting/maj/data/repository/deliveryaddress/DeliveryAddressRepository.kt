@@ -8,13 +8,13 @@ interface DeliveryAddressRepository {
 
     fun getDeliveryAddress(id: String) : LiveData<DeliveryAddress>
 
-    fun saveCity(city: String)
+    suspend fun saveCity(city: String)
 
-    fun saveBarangay(barangay: String)
+    suspend fun saveBarangay(barangay: String)
 
-    fun saveStreet(street: String)
+    suspend fun saveStreet(street: String)
 
-    fun saveOtherNotes(notes: String)
+    suspend fun saveOtherNotes(notes: String)
 
     fun update(deliveryAddress: DeliveryAddress)
 

@@ -12,20 +12,24 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.lorrainelanting.maj.R
+import com.lorrainelanting.maj.data.model.CartContent
+import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.data.model.User
-import com.lorrainelanting.maj.data.util.Constants
-import com.lorrainelanting.maj.data.util.CurrencyUtil
-import com.lorrainelanting.maj.data.util.DateUtil
+import com.lorrainelanting.maj.data.util.*
 import com.lorrainelanting.maj.databinding.ActivityCheckOutBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
     CheckOutOrderSummaryContentAdapter.CheckOutOrderSummaryContentAdapterCalculation {
 
-    private lateinit var viewModel: CheckOutViewModel
+    override val viewModel: CheckOutViewModel by viewModels()
+
     private lateinit var delAddress: String
     private lateinit var selectedDeliveryDate: Date
     private lateinit var customerInfo: User
@@ -46,8 +50,6 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
         binding.layoutOrderSummary.rvCheckOutProduct.adapter = adapter
 
-        viewModel = CheckOutViewModel()
-        viewModel.initializedRepositories(this)
         viewModel.usersLiveData.observe(this) { list ->
             if (list.isNotEmpty()) {
                 binding.layoutUserBanner.root.visibility = View.GONE
@@ -101,24 +103,19 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
         }
 
         viewModel.cartContentsLiveData.observe(this) { list ->
-            val cartContents = mutableListOf<CheckOutOrderSummaryContentAdapter.Content>()
+            val contents = mutableListOf<CheckOutOrderSummaryContentAdapter.Content>()
+
             for (cartContent in list) {
-                viewModel.getProduct(cartContent.productId)?.let { product ->
-                    cartContents.add(
-                        CheckOutOrderSummaryContentAdapter.Content(
-                            cartContent,
-                            product
-                        )
-                    )
+                fetchProduct(cartContent.productId)
+                viewModel.state.observe(this) {
+                    handleState(state = it, contents = contents, cartContent = cartContent)
                 }
             }
 
-            adapter?.update(cartContents)
-
             binding.layoutSummaryFees.txtResultSubTotal.text =
-                CurrencyUtil.format(computeSubtotal(cartContents))
+                CurrencyUtil.format(computeSubtotal(contents))
             binding.frameSummaryCheckout.findViewById<TextView>(R.id.txtResultTotalPayment).text =
-                CurrencyUtil.format(computeTotalPayment(computeSubtotal(cartContents), 0.00))
+                CurrencyUtil.format(computeTotalPayment(computeSubtotal(contents), 0.00))
             binding.btnPlaceOrder.setOnClickListener {
                 val positiveBtnClick = { dialog: DialogInterface, which: Int ->
                     val optionDeliver = binding.layoutDeliveryDetails.radioBtnDeliver.isChecked
@@ -127,18 +124,18 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
 
                     if (this.isNetworkAvailable) {
                         var deliveryOption = 0
-                        val status = Constants.STATUS_PLACED_ORDER
+                        val status = STATUS_PLACED_ORDER
 
                         if (optionDeliver) {
-                            deliveryOption = Constants.OPTION_DELIVER
+                            deliveryOption = OPTION_DELIVER
                         }
                         if (optionPickUp) {
-                            deliveryOption = Constants.OPTION_PICK_UP
+                            deliveryOption = OPTION_PICK_UP
                         }
 
                         setOrder(deliveryOption, status)
 
-                        for (cartContent in cartContents) {
+                        for (cartContent in contents) {
                             cartContentId = cartContent.cartContent.id
 
                             // Remove placed item from cart.
@@ -146,7 +143,7 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
                         }
 
                     } else {
-                        onNetworkNotAvailable(cartContents)
+                        onNetworkNotAvailable(contents)
                     }
                 }
 
@@ -173,6 +170,43 @@ class CheckOutActivity : BaseActivity<ActivityCheckOutBinding>(),
         binding.layoutDeliveryDetails.txtSelectDate.setOnClickListener {
             onSetDateClicked()
         }
+    }
+
+    private fun fetchProduct(productId: String) {
+        viewModel.fetchProduct(productId)
+    }
+
+    private fun handleState(
+        state: CheckOutState,
+        cartContent: CartContent,
+        contents: MutableList<CheckOutOrderSummaryContentAdapter.Content>
+    ) {
+        when (state) {
+            is CheckOutState.FetchedProduct -> {
+                addProductForCheckout(
+                    product = state.product,
+                    cartContent = cartContent,
+                    contents = contents
+                )
+                adapter?.update(contents)
+            }
+            else -> {
+                // TODO
+            }
+        }
+    }
+
+    private fun addProductForCheckout(
+        contents: MutableList<CheckOutOrderSummaryContentAdapter.Content>,
+        cartContent: CartContent,
+        product: Product
+    ) {
+        contents.add(
+            CheckOutOrderSummaryContentAdapter.Content(
+                cartContent,
+                product
+            )
+        )
     }
 
     private fun showSelectedDate() {

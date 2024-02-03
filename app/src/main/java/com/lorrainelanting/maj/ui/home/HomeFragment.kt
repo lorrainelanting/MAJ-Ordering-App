@@ -1,6 +1,5 @@
 package com.lorrainelanting.maj.ui.home
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -12,22 +11,26 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import com.lorrainelanting.maj.app.MajApplication
+import androidx.fragment.app.viewModels
 import com.lorrainelanting.maj.R
+import com.lorrainelanting.maj.app.MajApplication
 import com.lorrainelanting.maj.data.model.Product
 import com.lorrainelanting.maj.databinding.FragmentHomeBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
 import com.lorrainelanting.maj.ui.base.BaseFragment
 import com.lorrainelanting.maj.ui.common.LayoutAddToCart
 import com.lorrainelanting.maj.ui.productdetail.ProductDetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     HomeProductAdapter.HomeAdapterListener {
     var adapter: HomeProductAdapter? = null
 
-    private lateinit var viewModel: HomeViewModel
     private lateinit var drawer: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
+
+    override val viewModel: HomeViewModel by viewModels()
 
     companion object {
         const val SORT_LOW_TO_HIGH = 0
@@ -79,12 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     private fun fetchRemoteProducts() {
         (activity?.application as MajApplication).fetchRemoteProducts()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = HomeViewModel()
-        viewModel.initializedRepositories(context)
     }
 
     override fun onItemClick(product: Product) {

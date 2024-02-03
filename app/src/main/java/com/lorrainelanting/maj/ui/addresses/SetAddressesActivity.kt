@@ -2,14 +2,16 @@ package com.lorrainelanting.maj.ui.addresses
 
 import android.os.Bundle
 import android.widget.SearchView
+import androidx.activity.viewModels
 import com.lorrainelanting.maj.R
-import com.lorrainelanting.maj.data.model.DeliveryAddress
 import com.lorrainelanting.maj.databinding.ActivitySetAddressesBinding
 import com.lorrainelanting.maj.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 abstract class SetAddressesActivity : BaseActivity<ActivitySetAddressesBinding>(), AddressAdapter.AddressAdapterListener {
     protected var list = ArrayList<String>()
-    protected var viewModel = DeliveryAddressViewModel()
+    override val viewModel: DeliveryAddressViewModel by viewModels()
 
     var adapter: AddressAdapter? = null
 
@@ -22,11 +24,6 @@ abstract class SetAddressesActivity : BaseActivity<ActivitySetAddressesBinding>(
         binding.rvAddresses.adapter = adapter
 
         adapter?.update(list)
-
-        viewModel.injectDeliveryAddress(this)
-
-//        val delAddress = DeliveryAddress()
-//        viewModel.getDeliveryAddressLiveData(delAddress.id)
 
         binding.layoutToolbarSearch.searchViewAddress.setOnQueryTextListener(onSearchQuery())
     }

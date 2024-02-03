@@ -1,10 +1,10 @@
 package com.lorrainelanting.maj.ui.profile
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputEditText
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.DeliveryAddress
@@ -12,9 +12,11 @@ import com.lorrainelanting.maj.data.model.User
 import com.lorrainelanting.maj.databinding.FragmentProfileBinding
 import com.lorrainelanting.maj.ui.addresses.SetCityActivity
 import com.lorrainelanting.maj.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
-    private var viewModel = ProfileViewModel()
+    override val viewModel: ProfileViewModel by viewModels()
 
     override fun getLayoutId(): Int = R.layout.fragment_profile
 
@@ -91,11 +93,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 Toast.makeText(requireContext(), "Profile save successfully.", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel.initializedRepositories(context)
     }
 
     private fun setEditTextSelection(

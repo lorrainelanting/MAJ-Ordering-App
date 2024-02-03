@@ -16,10 +16,10 @@ interface CartContentDao {
     fun getItem(id: String): LiveData<CartContent>
 
     @Query("SELECT * FROM cart_content_table WHERE productId = :id LIMIT 1")
-    fun getItemByProduct(id: String): CartContent?
+    suspend fun getItemByProduct(id: String): CartContent?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(item: CartContent)
+    suspend fun insert(item: CartContent)
 
     @Update
     fun update(item: CartContent)

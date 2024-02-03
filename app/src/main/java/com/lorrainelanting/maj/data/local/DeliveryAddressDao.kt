@@ -13,10 +13,10 @@ interface DeliveryAddressDao {
     fun getAddress(id: String): LiveData<DeliveryAddress>
 
     @Query("SELECT * FROM delivery_address_table ORDER BY createdAtTimeStamp ASC LIMIT 1")
-    fun getDeliveryAddress(): DeliveryAddress?
+    suspend fun getDeliveryAddress(): DeliveryAddress?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(deliveryAddress: DeliveryAddress)
+    suspend fun insert(deliveryAddress: DeliveryAddress)
 
     @Update
     fun update(deliveryAddress: DeliveryAddress)

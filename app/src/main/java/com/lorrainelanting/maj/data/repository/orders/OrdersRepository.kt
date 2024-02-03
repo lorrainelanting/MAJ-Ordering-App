@@ -13,7 +13,7 @@ interface OrdersRepository {
 
     fun getItemByGroup(id: String) : OrderGroup?
 
-    fun save(deliveryOption: Int, status: String, deliveryDate: Long)
+    suspend fun save(deliveryOption: Int, status: String, deliveryDate: Long)
 
     fun update(orderGroup: OrderGroup)
 

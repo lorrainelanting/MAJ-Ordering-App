@@ -1,14 +1,32 @@
 package com.lorrainelanting.maj.ui.addresses
 
-import android.content.Context
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
-import com.lorrainelanting.maj.di.Injection
+import com.lorrainelanting.maj.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DeliveryAddressViewModel : ViewModel() {
-    lateinit var repository: DeliveryAddressRepository
+@HiltViewModel
+class DeliveryAddressViewModel @Inject constructor(
+    private val deliveryAddressRepository: DeliveryAddressRepository
+    ) : BaseViewModel() {
 
-    fun injectDeliveryAddress(context: Context) {
-        repository = Injection.provideDeliveryAddressRepository(context)
+    fun saveBarangay(barangay: String) {
+        viewModelScope.launch {
+            deliveryAddressRepository.saveBarangay(barangay)
+        }
+    }
+
+    fun saveCity(city: String) {
+        viewModelScope.launch {
+            deliveryAddressRepository.saveCity(city)
+        }
+    }
+
+    fun saveStreet(street: String) {
+        viewModelScope.launch {
+            deliveryAddressRepository.saveStreet(street)
+        }
     }
 }

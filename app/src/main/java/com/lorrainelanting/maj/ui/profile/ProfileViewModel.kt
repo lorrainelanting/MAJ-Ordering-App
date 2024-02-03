@@ -1,9 +1,19 @@
 package com.lorrainelanting.maj.ui.profile
 
+import androidx.lifecycle.viewModelScope
 import com.lorrainelanting.maj.data.model.User
+import com.lorrainelanting.maj.data.repository.deliveryaddress.DeliveryAddressRepository
+import com.lorrainelanting.maj.data.repository.user.UserRepository
 import com.lorrainelanting.maj.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel : BaseViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val deliveryAddressRepository: DeliveryAddressRepository
+) : BaseViewModel() {
     val usersLiveData by lazy { userRepository.getList() }
     val deliveryAddressLiveData by lazy { deliveryAddressRepository.getList() }
 
@@ -12,6 +22,8 @@ class ProfileViewModel : BaseViewModel() {
     }
 
     fun insertDeliveryNote(notes: String) {
-        deliveryAddressRepository.saveOtherNotes(notes)
+        viewModelScope.launch {
+            deliveryAddressRepository.saveOtherNotes(notes)
+        }
     }
 }

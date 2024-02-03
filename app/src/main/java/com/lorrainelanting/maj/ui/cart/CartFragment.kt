@@ -1,25 +1,27 @@
 package com.lorrainelanting.maj.ui.cart
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.CartContent
 import com.lorrainelanting.maj.data.util.CurrencyUtil
 import com.lorrainelanting.maj.databinding.FragmentCartBinding
 import com.lorrainelanting.maj.ui.base.BaseFragment
 import com.lorrainelanting.maj.ui.checkout.CheckOutActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CartFragment : BaseFragment<FragmentCartBinding>(),
     CartContentsAdapter.CartContentsAdapterListener {
     var adapter: CartContentsAdapter? = null
-    lateinit var viewModel: CartViewModel
 
     private var cartFragmentListener: CartFragmentListener? = null
+    override val viewModel: CartViewModel by viewModels()
 
     override fun getLayoutId(): Int = R.layout.fragment_cart
 
@@ -34,18 +36,14 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
         viewModel.cartContentsLiveData.observe(viewLifecycleOwner) { list ->
             list.let {
-                val cartContents = mutableListOf<CartContentsAdapter.Content>()
+                val contents = mutableListOf<CartContentsAdapter.Content>()
+
                 for (cartContent in list) {
-                    viewModel.getProduct(cartContent.productId).let { product ->
-                        cartContents.add(
-                            CartContentsAdapter.Content(
-                                cartContent,
-                                product
-                            )
-                        )
+                    fetchProduct(cartContent.productId)
+                    viewModel.state.observe(viewLifecycleOwner) {
+                        handleState(state = it, contents = contents, cartContent = cartContent)
                     }
                 }
-                adapter?.update(cartContents)
                 //  Empty cart message
                 if (list.isEmpty()) {
                     binding.txtEmptyCart.visibility = View.VISIBLE
@@ -58,7 +56,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
                     binding.frameSummary.visibility = View.VISIBLE
                     binding.frameDivider.visibility = View.VISIBLE
                 }
-                binding.txtResultTotalAmt.text = CurrencyUtil.format(computeTotal(cartContents))
+                binding.txtResultTotalAmt.text = CurrencyUtil.format(computeTotal(contents))
             }
         }
 
@@ -72,6 +70,31 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
 
     }
 
+    private fun fetchProduct(id: String) {
+        viewModel.fetchProduct(id)
+    }
+
+    private fun handleState(
+        state: CartState,
+        cartContent: CartContent,
+        contents: MutableList<CartContentsAdapter.Content>
+    ) {
+        when (state) {
+            is CartState.FetchedProduct -> {
+                contents.add(
+                    CartContentsAdapter.Content(
+                        cartContent,
+                        state.product
+                    )
+                )
+                adapter?.update(contents)
+            }
+            else -> {
+
+            }
+        }
+    }
+
     private fun computeTotal(list: List<CartContentsAdapter.Content>): Double {
         var total = 0.00
         for (item in list) {
@@ -79,12 +102,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>(),
             total += subTotal
         }
         return total
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = CartViewModel()
-        viewModel.initializedRepositories(context)
     }
 
     override fun onItemClick(cartContent: CartContent) {

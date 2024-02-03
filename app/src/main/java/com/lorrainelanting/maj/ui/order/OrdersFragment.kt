@@ -1,20 +1,22 @@
 package com.lorrainelanting.maj.ui.order
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayout
 import com.lorrainelanting.maj.R
 import com.lorrainelanting.maj.data.model.OrderGroup
-import com.lorrainelanting.maj.data.util.Constants
+import com.lorrainelanting.maj.data.util.*
 import com.lorrainelanting.maj.databinding.FragmentOrdersBinding
 import com.lorrainelanting.maj.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
     OrdersContentAdapter.OrdersContentAdapterListener {
 
-    lateinit var viewModel: OrderViewModel
+    override val viewModel: OrderViewModel by viewModels()
 
     private var orderFragmentListener: OrderFragmentListener? = null
     private var orderType = COMPLETED
@@ -98,12 +100,6 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = OrderViewModel()
-        viewModel.initializedRepositories(context)
-    }
-
     fun setOrderFragmentListener(listener: OrderFragmentListener) {
         this.orderFragmentListener = listener
     }
@@ -117,12 +113,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
     }
 
     override fun onMoveToCompletedBtnClick(orderGroup: OrderGroup) {
-        if (orderGroup.deliveryOption == Constants.OPTION_DELIVER) {
-            orderGroup.status = Constants.STATUS_DELIVERED
+        if (orderGroup.deliveryOption == OPTION_DELIVER) {
+            orderGroup.status = STATUS_DELIVERED
         }
 
-        if (orderGroup.deliveryOption == Constants.OPTION_PICK_UP) {
-            orderGroup.status = Constants.STATUS_PICKED_UP
+        if (orderGroup.deliveryOption == OPTION_PICK_UP) {
+            orderGroup.status = STATUS_PICKED_UP
         }
 
         viewModel.updateOrderGroup(orderGroup)
@@ -143,12 +139,12 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>(),
         return when (orderType) {
             ACTIVE -> {
                 contents.filter { order ->
-                    order.status == Constants.STATUS_PLACED_ORDER
+                    order.status == STATUS_PLACED_ORDER
                 }
             }
             COMPLETED -> {
                 contents.filter { order ->
-                    order.status == Constants.STATUS_DELIVERED || order.status == Constants.STATUS_PICKED_UP
+                    order.status == STATUS_DELIVERED || order.status == STATUS_PICKED_UP
                 }
             }
             else -> {
